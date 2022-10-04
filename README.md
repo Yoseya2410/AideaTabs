@@ -38,8 +38,8 @@ Ctrl+空格 执行搜索框中的脚本代码
 
 ### 自定义脚本快捷键：
 
-Alt+/ Alt+。 Alt+，
+Alt+/ Alt+. Alt+，
 
 ### 重置对应的自定义脚本：
 
-Ctr+/  Ctr+。 Ctr+，
+Ctr+/  Ctr+. Ctr+，
