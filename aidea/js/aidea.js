@@ -9,7 +9,7 @@ try {
       var UAvalue = "1"; //如果为移动端则赋值为"1"
     }
   }
-} catch (err) { }
+} catch (err) {}
 
 //禁用右键
 window.onload = function () {
@@ -170,13 +170,19 @@ function search() {
         fastseek();
         document.getElementById("more").style.display = "none";
         document.getElementById("visit").style.display = "inline";
+        document.getElementById("stow").style.display = "none";
+        document.getElementById("alltype").style.display = "none";
       } else {
         if (isEmail(surl)) {
           window.location.href = "mailto:" + surl;
         } else {
           fastseek();
-          document.getElementById("more").style.display = "inline";
           document.getElementById("visit").style.display = "none";
+          var stowvalu = window.localStorage.getItem(stowvalu);
+          if (stowvalu == null || stowvalu == "null" || stowvalu == "") {
+            document.getElementById("more").style.display = "inline";
+          } else {
+          }
         }
       }
     }
@@ -198,6 +204,8 @@ var searchlogo = document.getElementById("searchlogo");
 searchlogo.onclick = function () {
   none();
   document.getElementById("dropdown-menu").style.display = "inline";
+  document.getElementById("more").style.display = "inline";
+  document.getElementById("box").style.display = "none";
 };
 
 //引擎菜单选项事件
@@ -376,6 +384,11 @@ urlbutton6.onmouseup = function (e) {
   }
 };
 
+surl = document.getElementById("search_input").value;
+surl.onpropertychange = function () {
+  alert("1");
+};
+
 /*搜索提交事件 */
 var search_bar = document.getElementById("search_bar");
 search_bar.onsubmit = function () {
@@ -423,6 +436,13 @@ search_bar.onsubmit = function () {
 document.onkeydown = onKeyDown;
 function onKeyDown() {
   if (window.event.ctrlKey && window.event.keyCode === 40) {
+    document.getElementById("box").style.display = "inline";
+    document.getElementById("url").style.display = "none";
+    document.getElementById("stow").style.display = "none";
+    document.getElementById("alltype").style.display = "none";
+    document.getElementById("dropdown-menu").style.display = "none";
+  }
+  if (window.event.ctrlKey && window.event.keyCode === 38) {
     document.getElementById("box").style.display = "none";
   }
   if (window.event.ctrlKey && window.event.keyCode === 32) {
@@ -434,7 +454,7 @@ function onKeyDown() {
     } else {
       document.getElementById("search_input").value = historyvalue;
     }
-    return false
+    return false;
   }
   if (window.event.altKey && window.event.keyCode === 67) {
     if (searchlogo == null) {
@@ -448,6 +468,7 @@ function onKeyDown() {
   }
   if (window.event.keyCode === 46) {
     document.getElementById("search_input").value = "";
+    document.getElementById("url").style.display = "none";
   }
   if (window.event.altKey && window.event.keyCode === 188) {
     localStorageruncode("alt+,");
@@ -461,6 +482,9 @@ function onKeyDown() {
   if (window.event.altKey && window.event.keyCode === 40) {
     surl = document.getElementById("search_input").value;
     document.getElementById("dropdown-menu").style.display = "none";
+    document.getElementById("visit").style.display = "none";
+    document.getElementById("more").style.display = "none";
+    document.getElementById("stow").style.display = "inline";
     if (surl == "") {
     } else {
       //显示更多url选项
@@ -487,10 +511,10 @@ function onKeyDown() {
     var signkey1 = window.localStorage.getItem("signkey1");
     if (signkey1 == null || signkey1 == "null" || signkey1 == "") {
       if (surl == "") {
-      window.location.href = "https://www.baidu.com";
-    } else {
-      window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
-    }
+        window.location.href = "https://www.baidu.com";
+      } else {
+        window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
+      }
     } else {
       var altkey1 = window.localStorage.getItem("alt+1");
       if (altkey1 == null || altkey1 == "null" || altkey1 == "") {
@@ -555,7 +579,8 @@ function onKeyDown() {
       if (surl == "") {
         window.location.href = "https://www.bilibili.com";
       } else {
-        window.location.href = "https://search.bilibili.com/all?keyword=" + surl;
+        window.location.href =
+          "https://search.bilibili.com/all?keyword=" + surl;
       }
     } else {
       var altkey4 = window.localStorage.getItem("alt+4");
@@ -692,7 +717,6 @@ function onKeyDown() {
       if (isbeauty == false) {
       }
     }
-
   }
   if (window.event.ctrlKey && window.event.keyCode === 55) {
     var isbeauty = confirm("你要重置快捷键Alt+7吗？");
@@ -757,7 +781,10 @@ function onKeyDown() {
       }
     }
   }
-
+  //ctrl+S
+  if (window.event.ctrlKey && window.event.keyCode === 83) {
+    return false;
+  }
 }
 
 /*搜索框转换功能*/
@@ -822,6 +849,69 @@ targetArea.ondrop = function (e) {
   e = e || window.event;
   var file = e.dataTransfer.files[0];
   base64(file);
+};
+
+/*图标自定义*/
+document.getElementById("logo").onmouseup = function (e) {
+  if (e.button == 1) {
+    var isbeauty = confirm("你要恢复默认标志吗？");
+    if (isbeauty == true) {
+      window.localStorage.removeItem("logo");
+      location.reload();
+    } else {
+    }
+  }
+};
+
+var logo = document.getElementById("logo");
+var logosetlogo = window.localStorage.getItem("logo");
+if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+} else {
+  logo.src = logosetlogo;
+}
+
+function setlogo(file) {
+  if (file) {
+    if (/image/.test(file.type)) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        window.localStorage.setItem("logo", reader.result);
+        var logo = document.getElementById("logo");
+        var logosetlogo = window.localStorage.getItem("logo");
+        logo.src = logosetlogo;
+      };
+    } else {
+      alert("请选择图片格式文件");
+    }
+  }
+}
+//点击事件替代(右键点击)
+var logoArea = document.getElementById("logo");
+logoArea.oncontextmenu = function () {
+  logofile.click();
+  return false; //阻止浏览器的默认的行为
+};
+//控件选中
+logofile.onchange = function () {
+  var file = logofile.files[0];
+  setlogo(file);
+};
+addEvent(logoArea, "dragenter", preventDefault);
+addEvent(logoArea, "dragover", preventDefault);
+addEvent(logoArea, "dragleave", preventDefault);
+addEvent(logoArea, "drop", preventDefault);
+logoArea.ondragenter = function (e) {
+  //拖动到目标位置事件
+};
+logoArea.ondragleave = function (e) {
+  //离开目标位置事件
+};
+//拖拽选中
+logoArea.ondrop = function (e) {
+  e = e || window.event;
+  var file = e.dataTransfer.files[0];
+  setlogo(file);
 };
 
 /*URL跳转搜索*/
@@ -907,12 +997,14 @@ more.onclick = function () {
   alltype.style.display = "inline";
   stow.style.display = "inline";
   more.style.display = "none";
+  window.localStorage.setItem("stowvalu", "on");
 };
 
 stow.onclick = function () {
   alltype.style.display = "none";
   stow.style.display = "none";
   more.style.display = "inline";
+  window.localStorage.removeItem("stowvalu");
 };
 
 //更多
