@@ -9,15 +9,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
-<body >
-  <img class="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
+<body>
+  <img class="logo" id="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
   <div class="search_part">
     <form id="search_bar" class="search_bar">
       <span id="targetArea">
         <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
         <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
           placeholder="搜索或输入网址" id="search_input" />
-          <!--暂时停用
+        <!--暂时停用
         <datalist id="url_list">
           <option label="超文本传输协议" value="http://"></option>
           <option label="超文本安全传输协议" value="https://"></option>
@@ -28,42 +28,42 @@
       </span>
     </form>
   </div>
-  
-    <div class="dropdown-menu" id="dropdown-menu" >
-      <a class="dropdown-item" id="defgoogle">谷歌</a>
-      <a class="dropdown-item" id="defbaidu">百度</a>
-      <a class="dropdown-item" id="defbing">必应</a>
-      <a class="dropdown-item" id="defcustomize">自定义</a>
-      <a class="dropdown-item" id="defdefault">默认</a>
-    </div>
+
+  <div class="dropdown-menu" id="dropdown-menu">
+    <a class="dropdown-item" id="defgoogle">谷歌</a>
+    <a class="dropdown-item" id="defbaidu">百度</a>
+    <a class="dropdown-item" id="defbing">必应</a>
+    <a class="dropdown-item" id="defcustomize">自定义</a>
+    <a class="dropdown-item" id="defdefault">默认</a>
+  </div>
 
   <div class="url_scroll" id="content">
     <div id="url" class="url_part none">
-      <button type="button none" class="url" id="visit" >
+      <button type="button none" class="url" id="visit">
         访问
       </button>
       <button type="button" class="url" id="baidu">
         Baidu
       </button>
-      <button type="button" class="url" id="google" >
+      <button type="button" class="url" id="google">
         Google
       </button>
-      <button type="button" class="url" id="bing" >
+      <button type="button" class="url" id="bing">
         Bing
       </button>
-      <button type="button" class="url" id="bilibili" >
+      <button type="button" class="url" id="bilibili">
         bilibili
       </button>
-      <button type="button" class="url" id="zhihu" >
+      <button type="button" class="url" id="zhihu">
         知乎
       </button>
-      <button type="button" class="url" id="github" >
+      <button type="button" class="url" id="github">
         GitHub
       </button>
-      <button type="button" class="url" id="more" >
+      <button type="button" class="url" id="more">
         更多
       </button>
-      <button type="button" class="stow none" id="stow" >
+      <button type="button" class="stow none" id="stow">
         收起
       </button>
     </div>
@@ -196,10 +196,10 @@
     <div class="genduo">
       <img class="typelogo" src="aidea/img/fy.png" title="翻译" />
       <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="googletranslate" >
+        <button type="button" class="typeurl" id="googletranslate">
           Google翻译
         </button>
-        <button type="button" class="typeurl" id="baidufanyi" >
+        <button type="button" class="typeurl" id="baidufanyi">
           百度翻译
         </button>
         <button type="button" class="typeurl" id="deepl">
@@ -214,20 +214,21 @@
       </div>
     </div>
   </div>
-  <input id="file1" class="none" type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css">
-<style>
- 
-</style>
+  <input id="file1" class="none" type="file"
+    accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css">
+    <input id="logofile" class="none" type="file" accept="image/gif,image/png">
 
   <div id="box" class="tag_part none">
-    <!--书签模板
-<div class="tag">
-      <a href="">
-      <p><img class="icon" src="aidea/img/add.png" ></p>
+
+    <div class="tag">
+      <div class="tag-show">
+        <a href="">
+          <p><img class="icon" src="aidea/img/add.png"></p>
+        </a>
+      </div>
       <p class="tagname">书签名称</p>
-      </a>
-     </div>
--->
+    </div>
+
   </div>
   <script type="text/javascript" src="aidea/js/aidea.js"></script>
 </body>
