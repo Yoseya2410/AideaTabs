@@ -1,45 +1,41 @@
 # Aidea起始页
-一款极简风格的浏览器主页，多平台快速搜索，拥有系统的快捷键功能，自动跟随浏览器外观，你可以定制属于自己的搜索方式。目前这是项目是一个针对基于chromium内核浏览器的扩展，其目的是为了打造一个简洁，实用，可高度自定义的浏览器主页
+Like its name, Aidea is born of an idea. It has simple pages, supports dark color mode, and has rich shortcut keys. You can use it to customize your own search methods.
 
-### 鼠标键：
+### Address bar:
 
-右键更改按钮的搜索引擎,中键重置按钮设置
-
-右键点击搜索框选择或拖拽图片或文本文件到搜索框，文件自动转换为base64
-
-### 键盘快捷键：
-
-Alt+1 用百度搜索
-
-Alt+2 用谷歌搜索
-
-Alt+3 用必应搜索
-
-Alt+4 哔哩哔哩搜索
-
-Alt+5 知乎搜索
-
-Alt+6 github搜索
-
-如果想自定义Alt+1到Alt+6的快捷键，可以先使用Ctrl+1到Ctrl+6 重置自定义，然后再用Alt+1到Alt+6重新自定义这些搜索(只针对搜索框中有内容时有效，如果搜索框无内容时默认打开上列默认搜索的官网)
-
-Alt+7~0 自定义搜索
-
-Ctrl+7~0 重置自定义
+Enter a in the address bar and press the tab key to search on some common platforms
 
 
-Alt+↑ 收回搜索选择栏
+### Right click menu bar:
 
-Alt+↓ 展开搜索选择栏
+Select the content in the webpage, right-click to open the menu, click Search in the menu: select the search platform to search the selected content
 
-Del 清空搜索框内容
 
-Ctrl+空格 执行搜索框中的脚本代码
+### Mouse button:
 
-### 自定义脚本快捷键：
+Right click to change the search engine of the button
 
-Alt+/ Alt+. Alt+，
+Middle key reset button setting
 
-### 重置对应的自定义脚本：
+Right click the custom logo on the logo, and middle click to restore the default logo. You can replace it with your own brand logo
 
-Ctr+/  Ctr+. Ctr+，
+Right click the search box to select or drag the image or text file to the search box, and the file will be automatically converted to base64
+
+
+### Keyboard shortcuts:
+
+Alt+1~6 Some commonly used translations, sorted by search options
+
+Alt+7~0 Custom Search
+
+Ctrl+7~0 Reset Customization
+
+Del clears the contents of the search box
+
+
+
+If you want to customize the shortcut keys of Alt+1~6, you can first use Ctrl+1~6 to reset the customization, and then use Alt+1~6 to re customize these searches (only valid when there is content in the search box, if there is no content in the search box, the official website of the above default search will be opened by default)
+
+
+
+After the webpage is loaded, use Alt+G to open the free editing mode. You can edit the webpage content at will. Press Alt+G again to close the editing mode
