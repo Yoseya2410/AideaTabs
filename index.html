@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" id="all">
+<html lang="en" id="all">
 
 <head>
   <meta charset="utf-8" />
-  <title>Aidea起始页</title>
+  <title>AideaTabs</title>
   <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
   <link rel="shortcut icon" href="tablogo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,34 +16,23 @@
       <span id="targetArea">
         <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
         <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
-          placeholder="搜索或输入网址" id="search_input" />
-        <!--暂时停用
-        <datalist id="url_list">
-          <option label="超文本传输协议" value="http://"></option>
-          <option label="超文本安全传输协议" value="https://"></option>
-          <option label="超文本传输协议" value="ftp://"></option>
-          <option label="本地文件传输协议" value="file://"></option>
-        </datalist>
-        -->
+          placeholder="Search or enter web address" id="search_input" />
       </span>
     </form>
   </div>
 
   <div class="dropdown-menu" id="dropdown-menu">
-    <a class="dropdown-item" id="defgoogle">谷歌</a>
-    <a class="dropdown-item" id="defbaidu">百度</a>
-    <a class="dropdown-item" id="defbing">必应</a>
-    <a class="dropdown-item" id="defcustomize">自定义</a>
-    <a class="dropdown-item" id="defdefault">默认</a>
+    <a class="dropdown-item" id="defgoogle">Google</a>
+    <a class="dropdown-item" id="defbing">Bing</a>
+    <a class="dropdown-item" id="defbaidu">Yandex</a>
+    <a class="dropdown-item" id="defcustomize">customize</a>
+    <a class="dropdown-item" id="defdefault">default</a>
   </div>
 
   <div class="url_scroll" id="content">
     <div id="url" class="url_part none">
       <button type="button none" class="url" id="visit">
-        访问
-      </button>
-      <button type="button" class="url" id="baidu">
-        Baidu
+        Visit
       </button>
       <button type="button" class="url" id="google">
         Google
@@ -51,184 +40,43 @@
       <button type="button" class="url" id="bing">
         Bing
       </button>
+      <button type="button" class="url" id="baidu">
+        Yahoo
+      </button>
       <button type="button" class="url" id="bilibili">
-        bilibili
+        Youtube
       </button>
       <button type="button" class="url" id="zhihu">
-        知乎
+        Wikipedia
       </button>
       <button type="button" class="url" id="github">
         GitHub
       </button>
       <button type="button" class="url" id="more">
-        更多
+        Translate
       </button>
       <button type="button" class="stow none" id="stow">
-        收起
+        Stow
       </button>
     </div>
   </div>
 
-  <div class="alltype none" id="alltype">
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/xcx.png" title="常用" style="margin-top: 0px" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="baidubaike">
-          百度百科
-        </button>
-        <button type="button" class="typeurl" id="sougobaike" title="搜狗科学百科">
-          科学百科
-        </button>
-        <button type="button" class="typeurl" id="wikipedia">
-          维基百科
-        </button>
-        <button type="button" class="typeurl" id="douban">
-          豆瓣
-        </button>
-        <button type="button" class="typeurl" id="weibo">
-          微博
-        </button>
-        <button type="button" class="typeurl" id="csdn">
-          CSDN
-        </button>
-        <button type="button" class="typeurl" id="gitee">
-          Gitee
-        </button>
-      </div>
-    </div>
-
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/spjx.png" title="视频" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="txvideo">
-          腾讯视频
-        </button>
-        <button type="button" class="typeurl" id="aiqiyi">
-          爱奇艺
-        </button>
-        <button type="button" class="typeurl" id="youku">
-          优酷视频
-        </button>
-        <button type="button" class="typeurl" id="youtube">
-          Youtube
-        </button>
-        <button type="button" class="typeurl" id="cctv">
-          CCTV
-        </button>
-        <button type="button" class="typeurl" id="mangguotv">
-          芒果TV
-        </button>
-        <button type="button" class="typeurl hidden" id="videoanalysis"></button>
-      </div>
-    </div>
-
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/yyg.png" title="音乐" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="qqmusic">
-          QQ音乐
-        </button>
-        <button type="button" class="typeurl" id="wangyiyun">
-          网易云
-        </button>
-        <button type="button" class="typeurl" id="kugou">
-          酷狗
-        </button>
-        <button type="button" class="typeurl" id="applemusic">
-          Apple
-        </button>
-        <button type="button" class="typeurl" id="spotify">
-          Spotify
-        </button>
-        <button type="button" class="typeurl hidden" id=""></button>
-        <button type="button" class="typeurl hidden" id=""></button>
-      </div>
-    </div>
-
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/txc.png" title="图片" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="pexels">
-          Pexels
-        </button>
-        <button type="button" class="typeurl" id="unsplash">
-          Unsplash
-        </button>
-        <button type="button" class="typeurl" id="pixabay">
-          pixabay
-        </button>
-        <button type="button" class="typeurl" id="iconfinder" title="矢量图标库">
-          iconfinder
-        </button>
-        <button type="button" class="typeurl" id="poliigon" title="模型贴图库">
-          poliigon
-        </button>
-        <button type="button" class="typeurl hidden" id=""></button>
-        <button type="button" class="typeurl hidden" id=""></button>
-      </div>
-    </div>
-
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/sys.png" title="书籍" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="zlibrary">
-          Zlibrary
-        </button>
-        <button type="button" class="typeurl" id="dangdang" title="当当云阅读">
-          当当阅读
-        </button>
-        <button type="button" class="typeurl" id="kongfz" title="孔夫子旧书网">
-          孔旧书网
-        </button>
-        <button type="button" class="typeurl" id="bookschina">
-          中图网
-        </button>
-        <button type="button" class="typeurl" id="zggjtsg" title="中国国家数字图书馆">
-          国家图书馆
-        </button>
-        <button type="button" class="typeurl" id="shuge">
-          书格
-        </button>
-        <button type="button" class="typeurl hidden" id=""></button>
-      </div>
-    </div>
-
-    <div class="genduo">
-      <img class="typelogo" src="aidea/img/fy.png" title="翻译" />
-      <div id="url" class="url_part">
-        <button type="button" class="typeurl" id="googletranslate">
-          Google翻译
-        </button>
-        <button type="button" class="typeurl" id="baidufanyi">
-          百度翻译
-        </button>
-        <button type="button" class="typeurl" id="deepl">
-          Deepl
-        </button>
-        <button type="button" class="typeurl" id="sougoufanyi">
-          搜狗翻译
-        </button>
-        <button type="button" class="typeurl hidden" id=""></button>
-        <button type="button" class="typeurl hidden" id=""></button>
-        <button type="button" class="typeurl hidden" id=""></button>
-      </div>
-    </div>
-  </div>
   <input id="file1" class="none" type="file"
     accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css">
-    <input id="logofile" class="none" type="file" accept="image/gif,image/png">
+  <input id="logofile" class="none" type="file" accept="image/gif,image/png">
 
   <div id="box" class="tag_part none">
 
     <div class="tag">
+      <!--
       <div class="tag-show">
         <a href="">
           <p><img class="icon" src="aidea/img/add.png"></p>
         </a>
       </div>
-      <p class="tagname">书签名称</p>
+      <p class="tagname">Tagname</p>
     </div>
-
+-->
   </div>
   <script type="text/javascript" src="aidea/js/aidea.js"></script>
 </body>

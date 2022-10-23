@@ -30,7 +30,7 @@ img {
 
 /*图标样式 */
 img.logo {
-  width:auto;
+  width: auto;
   height: 150px;
   margin-top: 10%;
 }
@@ -109,20 +109,20 @@ span {
   user-select: none;
 }
 
-.tag-show{
-background-color: #f3f4f6;
-width: 3.6rem;
-height: 3.6rem;
-position: relative;
-display: inline-block;
-border-radius: 50%;
-user-select: none;
+.tag-show {
+  background-color: #f3f4f6;
+  width: 3.6rem;
+  height: 3.6rem;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  user-select: none;
 }
 
-.tag-show:hover{
+.tag-show:hover {
   box-shadow: 0 1px 6px rgba(32, 33, 36, 0.175);
   border-color: rgba(223, 225, 229, 0);
-  }
+}
 
 /*书签名称样式*/
 .tagname {
@@ -171,9 +171,9 @@ user-select: none;
   background: #288cff linear-gradient(180deg, #247fe8, #247fe8) repeat-x;
 }
 
-.search_bar:hover{
-box-shadow: 0 1px 6px rgba(32, 33, 36, 0.175);
-border-color: rgba(223, 225, 229, 0);
+.search_bar:hover {
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.175);
+  border-color: rgba(223, 225, 229, 0);
 }
 
 .url_part {
@@ -222,11 +222,6 @@ border-color: rgba(223, 225, 229, 0);
   width: 80px;
   height: 30px;
   user-select: none;
-}
-
-.alltype {
-  margin: 0px;
-  animation: fadeInDown 0.6s;
 }
 
 /*隐藏滚动条*/
@@ -462,17 +457,19 @@ border-color: rgba(223, 225, 229, 0);
   }
 }
 
-@media screen and (max-width: 700px) {}
+@media screen and (max-width: 700px) {
+}
 
 /*缺省模式*/
-@media (prefers-color-scheme: no-preference) {}
+@media (prefers-color-scheme: no-preference) {
+}
 
 /*浅色模式*/
-@media (prefers-color-scheme: light) {}
+@media (prefers-color-scheme: light) {
+}
 
 /*深色模式 */
 @media (prefers-color-scheme: dark) {
-
   html,
   body {
     background-color: #202124;
@@ -501,9 +498,10 @@ border-color: rgba(223, 225, 229, 0);
     color: #adadad;
   }
 
+  /*此方法已弃用
   img.logo {
     content: url(../img/darklogo2.png);
-  }
+  }*/
 
   .tagname {
     color: #949494;

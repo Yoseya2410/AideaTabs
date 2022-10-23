@@ -9,7 +9,7 @@ try {
       var UAvalue = "1"; //如果为移动端则赋值为"1"
     }
   }
-} catch (err) {}
+} catch (err) { }
 
 //禁用右键
 window.onload = function () {
@@ -171,7 +171,7 @@ function search() {
         document.getElementById("more").style.display = "none";
         document.getElementById("visit").style.display = "inline";
         document.getElementById("stow").style.display = "none";
-        document.getElementById("alltype").style.display = "none";
+        
       } else {
         if (isEmail(surl)) {
           window.location.href = "mailto:" + surl;
@@ -193,14 +193,23 @@ function search() {
 function none() {
   document.getElementById("url").style.display = "none";
   document.getElementById("visit").style.display = "none";
-  document.getElementById("alltype").style.display = "none";
   document.getElementById("stow").style.display = "none";
   window.localStorage.setItem("history", surl);
 }
 
 /*引擎切换*/
-//显示切换菜单
 var searchlogo = document.getElementById("searchlogo");
+var dromenu = document.getElementById("dropdown-menu");
+var timenull = null;
+//鼠标离开搜索引擎菜单后自动关闭菜单
+dromenu.onmouseover = dromenu.onmouseover = function () {
+  if (timenull) clearTimeout(timenull);
+  dromenu.style.display = "block";
+  dromenu.onmouseout = dromenu.onmouseout = function () {
+    dromenu.style.display = "none";
+  };
+};
+//点击搜索图标显示搜索引擎菜单
 searchlogo.onclick = function () {
   none();
   document.getElementById("dropdown-menu").style.display = "inline";
@@ -221,7 +230,7 @@ defgoogle.onclick = function () {
   document.getElementById("search_input").focus();
 };
 defbaidu.onclick = function () {
-  window.localStorage.setItem("engine", "https://www.baidu.com/s?ie=&wd=");
+  window.localStorage.setItem("engine", "https://yandex.com/search/?text=");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
 };
@@ -234,12 +243,12 @@ defcustomize.onclick = function () {
   var enginevalue = window.localStorage.getItem("engine");
   if (enginevalue == null || enginevalue == "null" || enginevalue == "") {
     var Response = prompt(
-      "请输入要设置的搜索引擎URL",
-      "例如:https://www.google.com/search?q="
+      "Please enter the search engine URL to set",
+      "for instance,https://www.google.com/search?q="
     );
     window.localStorage.setItem("engine", Response);
   } else {
-    var Response = prompt("请输入要设置的搜索引擎URL", enginevalue);
+    var Response = prompt("Please enter the search engine URL to set", enginevalue);
     if (Response) {
       window.localStorage.setItem("engine", Response);
     } else {
@@ -255,28 +264,102 @@ defdefault.onclick = function () {
 };
 
 /*按钮URL自定义*/
+var urlbutton1 = document.getElementById("baidu");
+var urlbutton2 = document.getElementById("google");
+var urlbutton3 = document.getElementById("bing");
 var urlbutton4 = document.getElementById("bilibili");
 var urlbutton5 = document.getElementById("zhihu");
 var urlbutton6 = document.getElementById("github");
+var urlbutton7 = document.getElementById("more");
 
 //按钮更改填写
-urlbutton4.oncontextmenu = function () {
-  var beauty = confirm("你要更改此按钮的搜索引擎吗？");
+urlbutton1.oncontextmenu = function () {
+  var beauty = confirm("Do you want to change the search engine for this button");
   if (beauty) {
-    var buttoname = prompt("请给按钮命名");
+    var buttoname = prompt("Please name the button");
+    if (buttoname) {
+      window.localStorage.setItem("buttonName1", buttoname);
+      var namevalue = window.localStorage.getItem("buttonName1");
+      urlbutton1.innerHTML = namevalue;
+      var buttonurl = prompt("Please enter the changed search engine URL");
+      if (buttonurl) {
+        window.localStorage.setItem("buttonUrl1", buttonurl);
+      } else if (buttonurl === "") {
+        alert("You didn't fill in the content");
+      } else {
+      }
+    } else if (buttoname === "") {
+      alert("You didn't fill in the content");
+    } else {
+    }
+  } else {
+  }
+  return false;
+};
+urlbutton2.oncontextmenu = function () {
+  var beauty = confirm("Do you want to change the search engine for this button");
+  if (beauty) {
+    var buttoname = prompt("Please name the button");
+    if (buttoname) {
+      window.localStorage.setItem("buttonName2", buttoname);
+      var namevalue = window.localStorage.getItem("buttonName2");
+      urlbutton2.innerHTML = namevalue;
+      var buttonurl = prompt("Please enter the changed search engine URL");
+      if (buttonurl) {
+        window.localStorage.setItem("buttonUrl2", buttonurl);
+      } else if (buttonurl === "") {
+        alert("You didn't fill in the content");
+      } else {
+      }
+    } else if (buttoname === "") {
+      alert("You didn't fill in the content");
+    } else {
+    }
+  } else {
+  }
+  return false;
+};
+urlbutton3.oncontextmenu = function () {
+  var beauty = confirm("Do you want to change the search engine for this button");
+  if (beauty) {
+    var buttoname = prompt("Please name the button");
+    if (buttoname) {
+      window.localStorage.setItem("buttonName3", buttoname);
+      var namevalue = window.localStorage.getItem("buttonName3");
+      urlbutton3.innerHTML = namevalue;
+      var buttonurl = prompt("Please enter the changed search engine URL");
+      if (buttonurl) {
+        window.localStorage.setItem("buttonUrl3", buttonurl);
+      } else if (buttonurl === "") {
+        alert("You didn't fill in the content");
+      } else {
+      }
+    } else if (buttoname === "") {
+      alert("You didn't fill in the content");
+    } else {
+    }
+  } else {
+  }
+  return false;
+};
+
+urlbutton4.oncontextmenu = function () {
+  var beauty = confirm("Do you want to change the search engine for this button");
+  if (beauty) {
+    var buttoname = prompt("Please name the button");
     if (buttoname) {
       window.localStorage.setItem("buttonName4", buttoname);
       var namevalue = window.localStorage.getItem("buttonName4");
       urlbutton4.innerHTML = namevalue;
-      var buttonurl = prompt("请输入更改的搜索引擎URL");
+      var buttonurl = prompt("Please enter the changed search engine URL");
       if (buttonurl) {
         window.localStorage.setItem("buttonUrl4", buttonurl);
       } else if (buttonurl === "") {
-        alert("你没有填写内容");
+        alert("You didn't fill in the content");
       } else {
       }
     } else if (buttoname === "") {
-      alert("你没有填写内容");
+      alert("You didn't fill in the content");
     } else {
     }
   } else {
@@ -285,22 +368,22 @@ urlbutton4.oncontextmenu = function () {
 };
 
 urlbutton5.oncontextmenu = function () {
-  var beauty = confirm("你要更改此按钮的搜索引擎吗？");
+  var beauty = confirm("Do you want to change the search engine for this button");
   if (beauty) {
-    var buttoname = prompt("请给按钮命名");
+    var buttoname = prompt("Please name the button");
     if (buttoname) {
       window.localStorage.setItem("buttonName5", buttoname);
       var namevalue = window.localStorage.getItem("buttonName5");
       urlbutton5.innerHTML = namevalue;
-      var buttonurl = prompt("请输入更改的搜索引擎URL");
+      var buttonurl = prompt("Please enter the changed search engine URL");
       if (buttonurl) {
         window.localStorage.setItem("buttonUrl5", buttonurl);
       } else if (buttonurl === "") {
-        alert("你没有填写内容");
+        alert("You didn't fill in the content");
       } else {
       }
     } else if (buttoname === "") {
-      alert("你没有填写内容");
+      alert("You didn't fill in the content");
     } else {
     }
   } else {
@@ -308,22 +391,45 @@ urlbutton5.oncontextmenu = function () {
   return false;
 };
 urlbutton6.oncontextmenu = function () {
-  var beauty = confirm("你要更改此按钮的搜索引擎吗？");
+  var beauty = confirm("Do you want to change the search engine for this button");
   if (beauty) {
-    var buttoname = prompt("请给按钮命名");
+    var buttoname = prompt("Please name the button");
     if (buttoname) {
       window.localStorage.setItem("buttonName6", buttoname);
       var namevalue = window.localStorage.getItem("buttonName6");
       urlbutton6.innerHTML = namevalue;
-      var buttonurl = prompt("请输入更改的搜索引擎URL");
+      var buttonurl = prompt("Please enter the changed search engine URL");
       if (buttonurl) {
         window.localStorage.setItem("buttonUrl6", buttonurl);
       } else if (buttonurl === "") {
-        alert("你没有填写内容");
+        alert("You didn't fill in the content");
       } else {
       }
     } else if (buttoname === "") {
-      alert("你没有填写内容");
+      alert("You didn't fill in the content");
+    } else {
+    }
+  } else {
+  }
+  return false;
+};
+urlbutton7.oncontextmenu = function () {
+  var beauty = confirm("Do you want to change the search engine for this button");
+  if (beauty) {
+    var buttoname = prompt("Please name the button");
+    if (buttoname) {
+      window.localStorage.setItem("buttonName7", buttoname);
+      var namevalue = window.localStorage.getItem("buttonName7");
+      urlbutton7.innerHTML = namevalue;
+      var buttonurl = prompt("Please enter the changed search engine URL");
+      if (buttonurl) {
+        window.localStorage.setItem("buttonUrl7", buttonurl);
+      } else if (buttonurl === "") {
+        alert("You didn't fill in the content");
+      } else {
+      }
+    } else if (buttoname === "") {
+      alert("You didn't fill in the content");
     } else {
     }
   } else {
@@ -332,10 +438,26 @@ urlbutton6.oncontextmenu = function () {
 };
 
 //更改按钮名称
+var namevalue1 = window.localStorage.getItem("buttonName1");
+var namevalue2 = window.localStorage.getItem("buttonName2");
+var namevalue3 = window.localStorage.getItem("buttonName3");
 var namevalue4 = window.localStorage.getItem("buttonName4");
 var namevalue5 = window.localStorage.getItem("buttonName5");
 var namevalue6 = window.localStorage.getItem("buttonName6");
+var namevalue7 = window.localStorage.getItem("buttonName7");
 
+if (namevalue1 == null || namevalue1 == "null" || namevalue1 == "") {
+} else {
+  urlbutton1.innerHTML = namevalue1;
+}
+if (namevalue2 == null || namevalue2 == "null" || namevalue2 == "") {
+} else {
+  urlbutton2.innerHTML = namevalue2;
+}
+if (namevalue3 == null || namevalue3 == "null" || namevalue3 == "") {
+} else {
+  urlbutton3.innerHTML = namevalue3;
+}
 if (namevalue4 == null || namevalue4 == "null" || namevalue4 == "") {
 } else {
   urlbutton4.innerHTML = namevalue4;
@@ -348,33 +470,70 @@ if (namevalue6 == null || namevalue6 == "null" || namevalue6 == "") {
 } else {
   urlbutton6.innerHTML = namevalue6;
 }
+if (namevalue7 == null || namevalue7 == "null" || namevalue7 == "") {
+} else {
+  urlbutton7.innerHTML = namevalue7;
+}
 
 //重置按钮设置
+urlbutton1.onmouseup = function (e) {
+  if (e.button == 1) {
+    var clearbeauty1 = confirm("Do you want to reset this button?");
+    if (clearbeauty1) {
+      window.localStorage.removeItem("buttonName1");
+      window.localStorage.removeItem("buttonUrl1");
+      urlbutton1.innerHTML = "Yahoo";
+    } else {
+    }
+  }
+};
+urlbutton2.onmouseup = function (e) {
+  if (e.button == 1) {
+    var clearbeauty2 = confirm("Do you want to reset this button?");
+    if (clearbeauty2) {
+      window.localStorage.removeItem("buttonName2");
+      window.localStorage.removeItem("buttonUrl2");
+      urlbutton2.innerHTML = "Google";
+    } else {
+    }
+  }
+};
+urlbutton3.onmouseup = function (e) {
+  if (e.button == 1) {
+    var clearbeauty3 = confirm("Do you want to reset this button?");
+    if (clearbeauty3) {
+      window.localStorage.removeItem("buttonName3");
+      window.localStorage.removeItem("buttonUrl3");
+      urlbutton3.innerHTML = "Bing";
+    } else {
+    }
+  }
+};
 urlbutton4.onmouseup = function (e) {
   if (e.button == 1) {
-    var clearbeauty4 = confirm("你要重置此按钮吗？");
+    var clearbeauty4 = confirm("Do you want to reset this button?");
     if (clearbeauty4) {
       window.localStorage.removeItem("buttonName4");
       window.localStorage.removeItem("buttonUrl4");
-      urlbutton4.innerHTML = "bilibili";
+      urlbutton4.innerHTML = "Youtube";
     } else {
     }
   }
 };
 urlbutton5.onmouseup = function (e) {
   if (e.button == 1) {
-    var clearbeauty5 = confirm("你要重置此按钮吗？");
+    var clearbeauty5 = confirm("Do you want to reset this button?");
     if (clearbeauty5) {
       window.localStorage.removeItem("buttonName5");
       window.localStorage.removeItem("buttonUrl5");
-      urlbutton5.innerHTML = "知乎";
+      urlbutton5.innerHTML = "Wikipedia";
     } else {
     }
   }
 };
 urlbutton6.onmouseup = function (e) {
   if (e.button == 1) {
-    var clearbeauty6 = confirm("你要重置此按钮吗？");
+    var clearbeauty6 = confirm("Do you want to reset this button?");
     if (clearbeauty6) {
       window.localStorage.removeItem("buttonName6");
       window.localStorage.removeItem("buttonUrl6");
@@ -384,9 +543,16 @@ urlbutton6.onmouseup = function (e) {
   }
 };
 
-surl = document.getElementById("search_input").value;
-surl.onpropertychange = function () {
-  alert("1");
+urlbutton7.onmouseup = function (e) {
+  if (e.button == 1) {
+    var clearbeauty7 = confirm("Do you want to reset this button?");
+    if (clearbeauty7) {
+      window.localStorage.removeItem("buttonName7");
+      window.localStorage.removeItem("buttonUrl7");
+      urlbutton7.innerHTML = "Translate";
+    } else {
+    }
+  }
 };
 
 /*搜索提交事件 */
@@ -439,7 +605,6 @@ function onKeyDown() {
     document.getElementById("box").style.display = "inline";
     document.getElementById("url").style.display = "none";
     document.getElementById("stow").style.display = "none";
-    document.getElementById("alltype").style.display = "none";
     document.getElementById("dropdown-menu").style.display = "none";
   }
   if (window.event.ctrlKey && window.event.keyCode === 38) {
@@ -489,7 +654,7 @@ function onKeyDown() {
     } else {
       //显示更多url选项
       document.getElementById("url").style.display = "inline";
-      document.getElementById("alltype").style.display = "inline";
+      
     }
     return false;
   }
@@ -500,27 +665,26 @@ function onKeyDown() {
     } else {
       //隐藏更多url选项
       document.getElementById("url").style.display = "none";
-      document.getElementById("alltype").style.display = "none";
     }
     return false;
   }
 
   //快捷键自定义
-  if (window.event.altKey && window.event.keyCode === 49) {
+  if (window.event.altKey && window.event.keyCode === 51) {
     surl = document.getElementById("search_input").value;
     var signkey1 = window.localStorage.getItem("signkey1");
     if (signkey1 == null || signkey1 == "null" || signkey1 == "") {
       if (surl == "") {
-        window.location.href = "https://www.baidu.com";
+        window.location.href = "http://yahoo.com";
       } else {
-        window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
+        window.location.href = "http://yahoo.com/search?p=" + surl;
       }
     } else {
       var altkey1 = window.localStorage.getItem("alt+1");
       if (altkey1 == null || altkey1 == "null" || altkey1 == "") {
         localStoragecustomkey("alt+1");
         if (surl == "") {
-          window.location.href = "https://www.baidu.com";
+          window.location.href = "http://yahoo.com";
         } else {
           localStoragecustomkey("alt+1");
         }
@@ -528,7 +692,7 @@ function onKeyDown() {
     }
   }
 
-  if (window.event.altKey && window.event.keyCode === 50) {
+  if (window.event.altKey && window.event.keyCode === 49) {
     surl = document.getElementById("search_input").value;
     var signkey2 = window.localStorage.getItem("signkey2");
     if (signkey2 == null || signkey2 == "null" || signkey2 == "") {
@@ -551,7 +715,7 @@ function onKeyDown() {
     }
   }
 
-  if (window.event.altKey && window.event.keyCode === 51) {
+  if (window.event.altKey && window.event.keyCode === 50) {
     surl = document.getElementById("search_input").value;
     var signkey3 = window.localStorage.getItem("signkey3");
     if (signkey3 == null || signkey3 == "null" || signkey3 == "") {
@@ -577,10 +741,10 @@ function onKeyDown() {
     var signkey4 = window.localStorage.getItem("signkey4");
     if (signkey4 == null || signkey4 == "null" || signkey4 == "") {
       if (surl == "") {
-        window.location.href = "https://www.bilibili.com";
+        window.location.href = "https://www.youtube.com";
       } else {
         window.location.href =
-          "https://search.bilibili.com/all?keyword=" + surl;
+          "https://www.youtube.com/results?search_query=" + surl;
       }
     } else {
       var altkey4 = window.localStorage.getItem("alt+4");
@@ -588,7 +752,7 @@ function onKeyDown() {
         localStoragecustomkey("alt+4");
       } else {
         if (surl == "") {
-          window.location.href = "https://www.bilibili.com";
+          window.location.href = "https://www.youtube.com";
         } else {
           localStoragecustomkey("alt+4");
         }
@@ -601,9 +765,9 @@ function onKeyDown() {
     var signkey5 = window.localStorage.getItem("signkey5");
     if (signkey5 == null || signkey5 == "null" || signkey5 == "") {
       if (surl == "") {
-        window.location.href = "https://www.zhihu.com";
+        window.location.href = "https://en.wikipedia.org";
       } else {
-        window.location.href = "https://www.zhihu.com/search?q=" + surl;
+        window.location.href = "https://en.wikipedia.org/w/index.php?search=" + surl;
       }
     } else {
       var altkey5 = window.localStorage.getItem("alt+5");
@@ -611,7 +775,7 @@ function onKeyDown() {
         localStoragecustomkey("alt+5");
       } else {
         if (surl == "") {
-          window.location.href = "https://www.zhihu.com";
+          window.location.href = "https://en.wikipedia.org";
         } else {
           localStoragecustomkey("alt+5");
         }
@@ -865,10 +1029,40 @@ document.getElementById("logo").onmouseup = function (e) {
 
 var logo = document.getElementById("logo");
 var logosetlogo = window.localStorage.getItem("logo");
-if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+//刷新或启动时更换图标事件
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+if (systemTheme.matches) {
+  if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+    logo.src = "aidea/img/darklogo2.png";
+  } else {
+    logo.src = logosetlogo;
+  }
 } else {
-  logo.src = logosetlogo;
+  if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+    logo.src = "aidea/img/logo.png";
+  } else {
+    logo.src = logosetlogo;
+  }
 }
+//更改模式时更换图标事件
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", (event) => {
+    if (event.matches) {
+      if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+        logo.src = "aidea/img/darklogo2.png";
+      } else {
+        logo.src = logosetlogo;
+      }
+    } else {
+      if (logosetlogo == null || logosetlogo == "null" || logosetlogo == "") {
+        logo.src = "aidea/img/logo.png";
+      } else {
+        logo.src = logosetlogo;
+      }
+    }
+    location.reload();
+  });
 
 function setlogo(file) {
   if (file) {
@@ -914,6 +1108,31 @@ logoArea.ondrop = function (e) {
   setlogo(file);
 };
 
+//点击菜单外的位置隐藏菜单
+var dropdownMenu = document.getElementById("dropdown-menu");
+
+var urlMenu = document.getElementById("url");
+
+var stowButton = document.getElementById("stow");
+window.onclick = function (event) {
+  if (event.target.id == "dropdown-menu" || event.target.id == "searchlogo") {
+    //点击到这些元素所执行的事件
+    return; //如果点击了这些元素则在这里结束，不再隐藏菜单
+  }
+  dropdownMenu.style.display = "none";
+
+  if (
+    event.target.id == "url" ||
+    event.target.id == "search_input" ||
+    event.target.id == "more" ||
+    event.target.id == "stow"
+  ) {
+    return;
+  }
+  urlMenu.style.display = "none";
+  stowButton.style.display = "none";
+};
+
 /*URL跳转搜索*/
 var visit = document.getElementById("visit");
 var baidu = document.getElementById("baidu");
@@ -941,17 +1160,35 @@ visit.onclick = function () {
 };
 baidu.onclick = function () {
   surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
+  var urlvalue = window.localStorage.getItem("buttonUrl1");
+  if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
+    window.location.href = "http://yahoo.com/search?p=" + surl;
+  } else {
+    window.location.href =
+      urlvalue + document.getElementById("search_input").value;
+  }
   none();
 };
 google.onclick = function () {
   surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.google.com/search?q=" + surl;
+  var urlvalue = window.localStorage.getItem("buttonUrl2");
+  if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
+    window.location.href = "https://www.google.com/search?q=" + surl;
+  } else {
+    window.location.href =
+      urlvalue + document.getElementById("search_input").value;
+  }
   none();
 };
 bing.onclick = function () {
   surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.bing.com/search?q=" + surl;
+  var urlvalue = window.localStorage.getItem("buttonUrl3");
+  if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
+    window.location.href = "https://www.bing.com/search?q=" + surl;
+  } else {
+    window.location.href =
+      urlvalue + document.getElementById("search_input").value;
+  }
   none();
 };
 bilibili.onclick = function () {
@@ -991,242 +1228,48 @@ github.onclick = function () {
 /*显示更多*/
 var more = document.getElementById("more");
 var stow = document.getElementById("stow");
-var alltype = document.getElementById("alltype");
+
 
 more.onclick = function () {
-  alltype.style.display = "inline";
-  stow.style.display = "inline";
-  more.style.display = "none";
-  window.localStorage.setItem("stowvalu", "on");
+  surl = document.getElementById("search_input").value;
+  var urlvalue = window.localStorage.getItem("buttonUrl7");
+  if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
+  //stow.style.display = "inline";
+  //more.style.display = "none";
+  //window.localStorage.setItem("stowvalu", "on");
+  window.location.href = "https://translate.google.com/?text=" + surl;
+  /*
+  var beauty = confirm("Do you want to change the search engine for this button");
+  if (beauty) {
+    var buttoname = prompt("Please name the button");
+    if (buttoname) {
+      window.localStorage.setItem("buttonName7", buttoname);
+      var namevalue = window.localStorage.getItem("buttonName7");
+      urlbutton7.innerHTML = namevalue;
+      var buttonurl = prompt("Please enter the changed search engine URL");
+      if (buttonurl) {
+        window.localStorage.setItem("buttonUrl7", buttonurl);
+      } else if (buttonurl === "") {
+        alert("You didn't fill in the content");
+      } else {
+      }
+    } else if (buttoname === "") {
+      alert("You didn't fill in the content");
+    } else {
+    }
+  } else {
+  }
+  return false;
+*/
+  } else {
+    window.location.href =
+      urlvalue + document.getElementById("search_input").value;
+  }
 };
 
 stow.onclick = function () {
-  alltype.style.display = "none";
+
   stow.style.display = "none";
   more.style.display = "inline";
   window.localStorage.removeItem("stowvalu");
-};
-
-//更多
-var baidubaike = document.getElementById("baidubaike");
-var sougobaike = document.getElementById("sougobaike");
-var wikipedia = document.getElementById("wikipedia");
-var douban = document.getElementById("douban");
-var weibo = document.getElementById("weibo");
-var csdn = document.getElementById("csdn");
-var gitee = document.getElementById("gitee");
-
-baidubaike.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://baike.baidu.com/item/" + surl;
-  none();
-};
-sougobaike.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href =
-    "https://baike.sogou.com/kexue/searchList.htm?query=" + surl;
-  none();
-};
-wikipedia.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href =
-    "https://zh.wikipedia.org/w/index.php?search=" +
-    surl +
-    "&title=Special%3A%E6%90%9C%E7%B4%A2&fulltext=%E6%90%9C%E7%B4%A2&ns0=1";
-  none();
-};
-douban.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.douban.com/search?q=" + surl;
-  none();
-};
-weibo.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://s.weibo.com/weibo?q=" + surl;
-  none();
-};
-csdn.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://so.csdn.net/so/search?q=" + surl;
-  none();
-};
-gitee.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://search.gitee.com/?q=" + surl;
-  none();
-};
-
-//视频
-var txvideo = document.getElementById("txvideo");
-var aiqiyi = document.getElementById("aiqiyi");
-var youku = document.getElementById("youku");
-var youtube = document.getElementById("youtube");
-var cctv = document.getElementById("cctv");
-var mangguotv = document.getElementById("mangguotv");
-
-txvideo.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://v.qq.com/x/search/?q=" + surl;
-  none();
-};
-aiqiyi.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://so.iqiyi.com/so/q_" + surl;
-  none();
-};
-youku.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://so.youku.com/search_video/q_" + surl;
-  none();
-};
-youtube.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.youtube.com/results?search_query=" + surl;
-  none();
-};
-cctv.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://search.cctv.com/search.php?qtext=" + surl;
-  none();
-};
-mangguotv.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://so.mgtv.com/so?k=" + surl;
-  none();
-};
-
-//音乐
-var qqmusic = document.getElementById("qqmusic");
-var wangyiyun = document.getElementById("wangyiyun");
-var kugou = document.getElementById("kugou");
-var applemusic = document.getElementById("applemusic");
-var more = document.getElementById("more");
-
-qqmusic.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://y.qq.com/n/ryqq/search?w=" + surl;
-  none();
-};
-wangyiyun.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://music.163.com/#/search/m/?s=" + surl;
-  none();
-};
-kugou.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href =
-    "https://www.kugou.com/yy/html/search.html#searchType=song&searchKeyWord=" +
-    surl;
-  none();
-};
-applemusic.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://music.apple.com/cn/search?term=" + surl;
-  none();
-};
-spotify.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://open.spotify.com/search/" + surl;
-  none();
-};
-
-//图片
-var pexels = document.getElementById("pexels");
-var unsplash = document.getElementById("unsplash");
-var pixabay = document.getElementById("pixabay");
-var iconfinder = document.getElementById("iconfinder");
-var poliigon = document.getElementById("poliigon");
-
-pexels.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.pexels.com/zh-cn/search/" + surl;
-  none();
-};
-unsplash.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://unsplash.com/s/photos/" + surl;
-  none();
-};
-pixabay.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://pixabay.com/zh/images/search/" + surl;
-  none();
-};
-iconfinder.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.iconfinder.com/search?q=" + surl;
-  none();
-};
-poliigon.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.poliigon.com/search/" + surl;
-  none();
-};
-
-//书籍
-var zlibrary = document.getElementById("zlibrary");
-var dangdang = document.getElementById("dangdang");
-var kongfz = document.getElementById("kongfz");
-var bookschina = document.getElementById("bookschina");
-var zggjtsg = document.getElementById("zggjtsg");
-var shuge = document.getElementById("shuge");
-
-zlibrary.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://1lib.tk/s/" + surl;
-  none();
-};
-dangdang.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href =
-    "http://e.dangdang.com/newsearchresult_page.html?keyword=" + surl;
-  none();
-};
-kongfz.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://search.kongfz.com/item_result/?key=" + surl;
-  none();
-};
-bookschina.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "http://www.bookschina.com/book_find2/?stp=" + surl;
-  none();
-};
-zggjtsg.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href =
-    "http://read.nlc.cn/advanceSearch/allRes?searchWord=" + surl;
-  none();
-};
-shuge.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://new.shuge.org/?s=" + surl;
-  none();
-};
-
-//翻译
-var googletranslate = document.getElementById("googletranslate");
-var baidufanyi = document.getElementById("baidufanyi");
-var deepl = document.getElementById("deepl");
-var sougoufanyi = document.getElementById("sougoufanyi");
-
-googletranslate.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://translate.google.cn/?text=" + surl;
-  none();
-};
-baidufanyi.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://fanyi.baidu.com/#en/zh/" + surl;
-  none();
-};
-deepl.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://www.deepl.com/translator#en/zh/" + surl;
-  none();
-};
-sougoufanyi.onclick = function () {
-  surl = document.getElementById("search_input").value;
-  window.location.href = "https://fanyi.sogou.com/text?keyword=" + surl;
-  none();
 };
