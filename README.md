@@ -34,8 +34,7 @@ Del clears the contents of the search box
 
 
 
-If you want to customize the shortcut keys of Alt+1~6,
-you can first use Ctrl+1~6 to reset the customization, and then use Alt+1~6 to re customize these searches (only valid when there is content in the search box, if there is no content in the search box, the official website of the above default search will be opened by default)
+If you want to customize the shortcut keys of from Alt+1 to 6,you can first use from Ctrl+1 to 6 to reset the customization, and then use Alt+1~6 to re customize these searches (only valid when there is content in the search box, if there is no content in the search box, the official website of the above default search will be opened by default)
 
 
 
