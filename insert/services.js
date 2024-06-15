@@ -16,7 +16,7 @@ window.onload = function () {
     var altpg = window.localStorage.getItem("altpg");
     if (window.event.altKey && window.event.keyCode === 71) {
       if (altpg == null || altpg == "null" || altpg == "") {
-        var isbeauty = confirm("Do you want to start God mode?");
+        var isbeauty = confirm("你要启动编辑模式吗？");
         if (isbeauty == true) {
           document.body.contentEditable = "true";
           document.designMode = "on";
@@ -24,7 +24,7 @@ window.onload = function () {
           window.localStorage.setItem("altpg", "1");
         }
       } else {
-        var isbeauty = confirm("Do you want to turn off God Mode?");
+        var isbeauty = confirm("你要关闭编辑模式吗？");
         if (isbeauty == true) {
           document.body.contentEditable = "false";
           void 0;

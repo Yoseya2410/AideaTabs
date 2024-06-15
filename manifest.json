@@ -1,14 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "__MSG_name_en__",
-  "version": "0.1.4",
-  "description": "__MSG_extension_des_en__",
+  "name": "__MSG_name_zh__",
+  "version": "0.1.5",
+  "description": "__MSG_extension_des_zh__",
   "icons": {
     "16": "icon/logo_16.png",
     "32": "tablogo.png",
     "48": "icon/logo_48.png",
     "128": "icon/logo_128.png"
   },
+
   "background": {
     "service_worker": "background.js"
   },
@@ -27,10 +28,10 @@
   "host_permissions": ["*://*/*"],
   "omnibox": { "keyword": "a" },
   "chrome_url_overrides": { "newtab": "index.html" },
-  "default_locale": "en",
-  
+  "default_locale": "zh_CN",
+
   "action": {
-    "default_title": "__MSG_add_to_home_en__",
+    "default_title": "__MSG_add_to_home_zh__",
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icon/logo_16.png",
@@ -39,4 +40,5 @@
       "128": "icon/logo_128.png"
     }
   }
+  
 }
