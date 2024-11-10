@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Aidea起始页</title>
-    <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
-    <link rel="shortcut icon" href="tablogo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="text/javascript" src="aidea/js/jquery.min.js"></script>
-  </head>
 
-  <body id="all">
-    <section class="background" data-spotlight="fullscreen">
-      <img
-        class="logo"
-        id="logo"
-        src="aidea/img/logo.png"
-        title="&copy; 2022 Yoseya. All rights"
-      />
+<head>
+  <meta charset="utf-8" />
+  <title>Aidea起始页</title>
+  <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
+  <link rel="shortcut icon" href="tablogo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script type="text/javascript" src="aidea/js/jquery.min.js"></script>
+  <script src="aidea/js/marked.min.js"></script>
+</head>
+
+<body id="all">
+  <section class="background" data-spotlight="fullscreen">
+    <img class="logo" id="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
+
+    <div id="contents">
+      <div style="display: flex ;justify-content: center ;">
+        <div id="chat_window" >
+          <div id="chat_print">
+          <div id="output" style="text-align: left;"></div>
+        </div>
+        </div>
+      </div>
+
       <div class="search_part">
         <form id="search_bar" class="search_bar">
           <span id="targetArea">
-            <img
-              class="searchlogo"
-              id="searchlogo"
-              height="30px"
-              src="aidea/img/sousuo.png"
-              title="切换引擎"
-            />
-            <input
-              class="search"
-              type="text"
-              list="url_list"
-              value=""
-              clientidmode="Static"
-              autocomplete="off"
-              placeholder="搜索或输入网址"
-              id="search_input"
-            />
+            <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png" title="Aidea intelligence" />
+            <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
+            <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
+              placeholder="搜索或输入网址" id="search_input" />
           </span>
         </form>
       </div>
 
       <div class="dropdown-menu" id="dropdown-menu">
+        <a class="dropdown-item" id="defAI">智慧搜索</a>
         <a class="dropdown-item" id="defgoogle">谷歌</a>
         <a class="dropdown-item" id="defbaidu">百度</a>
         <a class="dropdown-item" id="defbing">必应</a>
@@ -67,25 +62,16 @@
         <!--二级菜单留着备用-->
       </div>
 
-      <input
-        id="file1"
-        class="none"
-        type="file"
-        accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css"
-      />
-      <input
-        id="logofile"
-        class="none"
-        type="file"
-        accept="image/gif,image/png"
-      />
+      <input id="file1" class="none" type="file"
+        accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css" />
+      <input id="logofile" class="none" type="file" accept="image/gif,image/png" />
 
       <div id="box" class="tag_part none">
         <!--暂时停用
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/xcx.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">常用</p>
@@ -94,7 +80,7 @@
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/spjx.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">视频</p>
@@ -103,7 +89,7 @@
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/yyg.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">音乐</p>
@@ -112,7 +98,7 @@
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/txc.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">图片</p>
@@ -121,7 +107,7 @@
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/book.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">书籍</p>
@@ -130,14 +116,16 @@
       <div class="tag">
         <div class="tag-show">
           <a href="">
-            <p><img class="icon" src="aidea/img/xs.png" /></p>
+            <p><img class="icon" src="" /></p>
           </a>
         </div>
         <p class="tagname">学术</p>
       </div>
 -->
       </div>
-      <script type="text/javascript" src="aidea/js/aidea.js"></script>
-    </section>
-  </body>
+    </div>
+    <script type="text/javascript" src="aidea/js/aidea.js"></script>
+
+</body>
+
 </html>
