@@ -171,7 +171,7 @@ const output = document.getElementById('output');
 
 // 调用 Qwen API 获取回复
 async function callQwen(message) {
-  const apiKey = 'sk-c2df74a9cd76485fa001c84d30806771'; // 替换为你的 API Key
+  const apiKey = ''; // 替换为你的 API Key
   const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
   const payload = {
     model: "qwen-plus",  // 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
