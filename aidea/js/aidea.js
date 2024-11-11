@@ -171,7 +171,7 @@ const output = document.getElementById('output');
 
 // 调用 Qwen API 获取回复
 async function callQwen(message) {
-  const apiKey = ''; // 替换为你的 API Key
+  const apiKey = 'sk-c2df74a9cd76485fa001c84d30806771'; // 替换为你的 API Key
   const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
   const payload = {
     model: "qwen-plus",  // 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
@@ -285,7 +285,6 @@ aisearchlogo.onclick = function () {
   
 };
 
-
 //判断搜索模式
 var searchMode = localStorage.getItem('searchMode');
 if (searchMode == null|| searchMode == "null" || searchMode == "") {
@@ -297,10 +296,6 @@ if (searchMode == null|| searchMode == "null" || searchMode == "") {
   document.getElementById("search_input").placeholder = "有什么问题尽管问我";
 
 }
-
-
-
-
 
 //引擎菜单选项事件
 var defAI = document.getElementById("defAI");
@@ -489,9 +484,24 @@ search_bar.onsubmit = function () {
       return false;
     } else {
       //智慧搜索
-      var chatWindow = document.getElementById("chat_window").style.height
-      if (chatWindow = "0") {
-        document.getElementById("chat_window").style.height = "300px";
+
+      const chatWindow = document.getElementById('chat_window');
+      if (chatWindow.style.height = "0") {
+
+        if (window.innerWidth <= 500) {
+          chatWindow.style.height = '370px';
+        } else {
+          if (window.innerWidth <= 560) {
+            chatWindow.style.height = '360px';
+          } else {
+            if (window.innerWidth <= 750) {
+              chatWindow.style.height = '350px';
+            } else {
+              chatWindow.style.height = "300px";
+            }
+          }
+        }
+
         setTimeout(function () {
           sendMessage()
         }, 1000);

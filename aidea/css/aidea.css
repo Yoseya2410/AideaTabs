@@ -133,14 +133,16 @@ span {
   align-self: flex-end;
   float: right;
   clear: both;
+  box-shadow: 0 0 2px rgba(70, 70, 40, 0.255);
 }
 
 .message-bubble.bot {
-  background-color: #e0e0e0;
+  background-color: #fbfbfb;
   color: black;
   align-self: flex-start;
   float: left;
   clear: both;
+  box-shadow: 0 0 2px rgba(70, 70, 40, 0.255);
 }
 
 .message-bubble > p {
@@ -157,6 +159,22 @@ span {
   font-family: monospace;
   unicode-bidi: isolate;
   white-space: pre;
+}
+
+code {
+  display: block;
+  max-width: 100%; /* 代码块的最大宽度不会超过父元素 */
+  max-height: 100%; /* 代码块的最大高度不会超过父元素 */
+  overflow: auto; /* 如果代码块内容过多，将出现滚动条 */
+  white-space: pre-wrap; /* 自动换行，避免水平滚动 */
+  background-color: #eeeeee; /* 背景色 */
+  color: #333; /* 字体颜色 */
+  padding: 10px; /* 内边距 */
+  font-family: monospace; /* 等宽字体 */
+  box-sizing: border-box;
+  border-radius: 5px; /* 圆角边框 */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #output {
@@ -189,7 +207,6 @@ span {
 #output::-ms-scrollbar {
   display: none;
 }
-
 
 /*书签图标排版目录样式 */
 #content {
@@ -414,6 +431,8 @@ span {
   text-decoration: none;
   background: #288cff linear-gradient(180deg, #489dff, #288cff) repeat-x;
 }
+
+
 
 /*动画样式*/
 @-webkit-keyframes flipInX {
@@ -733,11 +752,17 @@ span {
   }
 }
 
+@media screen and (max-width: 560px) {
+  #search_input {
+    width: 89%;
+  }
+}
+
 @media screen and (max-width: 500px) {
   img.logo {
     width: 110px;
     height: 110px;
-    margin-top: 15%;
+    margin-top: 35%;
   }
 }
 
@@ -829,16 +854,20 @@ span {
   }
 
   #chat_window {
-    background-color:#2d2e30;
+    background-color: #2d2e30;
   }
   .message-bubble.user {
     background-color: #1f429f;
     color: white;
   }
-  
+
   .message-bubble.bot {
-    background-color:#262626;
+    background-color: #262626;
     color: rgb(255, 255, 255);
   }
 
+  code {
+    background-color: #2c2c2c; /* 背景色 */
+    color: #ffffff; /* 字体颜色 */
+  }
 }
