@@ -45,6 +45,38 @@ function getCookie(cname) {
   }
   return "";
 }
+
+//从字符串中提取域名
+function extractDomain(url) {
+  const domainRegex = /https?:\/\/(www\.)?([^\/]+)/;
+  const match = url.match(domainRegex);
+  return match ? match[2] : null;
+}
+
+//从字符串中提取一级域名
+function extractPrimaryDomain(url) {
+  try {
+    const hostname = new URL(url).hostname;
+    const parts = hostname.split('.').reverse();
+    if (parts.length > 1) {
+      return `${parts[1]}.${parts[0]}`;
+    }
+    return hostname;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 //自定义快捷键(localStorage方法)
 function localStoragecustomkey(key) {
   var storevalue = window.localStorage.getItem(key);
@@ -59,11 +91,23 @@ function localStoragecustomkey(key) {
       window.localStorage.setItem(key, Response);
     }
   } else {
-    var searchValue = document.getElementById("search_input").value;
-    var finalUrl = storevalue.replace('%s', encodeURIComponent(searchValue));
-    window.location.href = finalUrl
+    // 快捷键搜索事件
+    const searchInput = document.getElementById('search_input');
+    if (searchInput.value.trim()) {
+      // 当搜索框有内容
+      var searchValue = document.getElementById("search_input").value;
+      var finalUrl = storevalue.replace('%s', encodeURIComponent(searchValue));
+      window.location.href = finalUrl
+    } else {
+      // 当搜索框无内容
+      var finalUrl = extractPrimaryDomain(storevalue)
+      window.location.href = "http://" + finalUrl
+      console.log(finalUrl);
+    }
+
   }
 }
+
 
 //重置快捷键(localStorage方法)
 function handleResetShortcut(keyCode, altKey, signKey) {
@@ -269,10 +313,10 @@ dromenu.onmouseover = dromenu.onmouseover = function () {
 };
 //点击搜索图标显示搜索引擎菜单
 searchlogo.onclick = function () {
-    none();
-    document.getElementById("dropdown-menu").style.display = "inline";
-    document.getElementById("more").style.display = "inline";
-    document.getElementById("box").style.display = "none";
+  none();
+  document.getElementById("dropdown-menu").style.display = "inline";
+  document.getElementById("more").style.display = "inline";
+  document.getElementById("box").style.display = "none";
 };
 //点击智慧搜索图标
 var aisearchlogo = document.getElementById("aisearchlogo")
@@ -282,12 +326,12 @@ aisearchlogo.onclick = function () {
   document.getElementById("searchlogo").style.display = "inline";
   document.getElementById("search_input").placeholder = "搜索或输入网址";
   document.getElementById("chat_window").style.height = "0";
-  
+
 };
 
 //判断搜索模式
 var searchMode = localStorage.getItem('searchMode');
-if (searchMode == null|| searchMode == "null" || searchMode == "") {
+if (searchMode == null || searchMode == "null" || searchMode == "") {
   document.getElementById("aisearchlogo").style.display = "none";
   document.getElementById("searchlogo").style.display = "inline";
 } else {
@@ -445,10 +489,11 @@ search_bar.onsubmit = function () {
   surl = document.getElementById("search_input").value;
   var searchMode = localStorage.getItem('searchMode');
   var enginevalue = localStorage.getItem("engine");
-  
+  document.getElementById("box").style.display = "none";
+
   if (surl == "") {
   } else {
-    if (searchMode == null|| searchMode == "null" || searchMode == "") {
+    if (searchMode == null || searchMode == "null" || searchMode == "") {
 
       if (enginevalue == null || enginevalue == "null" || enginevalue == "") {
         search();
@@ -485,6 +530,7 @@ search_bar.onsubmit = function () {
     } else {
       //智慧搜索
 
+      //对话框屏幕适配
       const chatWindow = document.getElementById('chat_window');
       if (chatWindow.style.height = "0") {
 
@@ -501,7 +547,7 @@ search_bar.onsubmit = function () {
             }
           }
         }
-
+        //等对话框完全展开后再对话
         setTimeout(function () {
           sendMessage()
         }, 1000);
@@ -513,101 +559,124 @@ search_bar.onsubmit = function () {
   return false;
 };
 
+//选中搜索框事件
+document.addEventListener('DOMContentLoaded', function () {
+  const search_input = document.getElementById('search_input');
+  search_input.addEventListener('focus', function () {
+    document.getElementById("box").style.display = "none";
+  });
+});
+
 /*快捷键功能*/
 document.onkeydown = onKeyDown;
 function onKeyDown() {
-  if (window.event.ctrlKey && window.event.keyCode === 40) {
-    document.getElementById("box").style.display = "inline";
-    document.getElementById("url").style.display = "none";
-    document.getElementById("stow").style.display = "none";
-    document.getElementById("alltype").style.display = "none";
-    document.getElementById("dropdown-menu").style.display = "none";
-  }
-  if (window.event.ctrlKey && window.event.keyCode === 38) {
-    document.getElementById("box").style.display = "none";
-  }
-
-  if (window.event.altKey && window.event.keyCode === 72) {
-    var historyvalue = window.localStorage.getItem("history");
-    if (historyvalue == null || historyvalue == "null" || historyvalue == "") {
-    } else {
-      document.getElementById("search_input").value = historyvalue;
-    }
-    return false;
-  }
-  if (window.event.altKey && window.event.keyCode === 67) {
-    if (searchlogo == null) {
-      document.getElementById("dropdown-menu").style.display = "inline";
-      none();
-      searchlogo = 1;
-    } else {
-      document.getElementById("dropdown-menu").style.display = "none";
-      searchlogo = null;
-    }
-  }
-  if (window.event.keyCode === 46) {
-    document.getElementById("search_input").value = "";
-    document.getElementById("url").style.display = "none";
-  }
-  if (window.event.altKey && window.event.keyCode === 40) {
-    surl = document.getElementById("search_input").value;
-    document.getElementById("dropdown-menu").style.display = "none";
-    document.getElementById("visit").style.display = "none";
-    document.getElementById("more").style.display = "none";
-    document.getElementById("stow").style.display = "inline";
-    if (surl == "") {
-    } else {
-      //显示更多url选项
-      document.getElementById("url").style.display = "inline";
-      document.getElementById("alltype").style.display = "inline";
-    }
-    return false;
-  }
-
-  if (window.event.altKey && window.event.keyCode === 38) {
-    surl = document.getElementById("search_input").value;
-    if (surl == "") {
-    } else {
-      //隐藏更多url选项
+  const set1 = localStorage.getItem("set1");
+  if (set1 === null) {
+    //显示/隐藏主页下拉圆形选项
+    if (window.event.ctrlKey && window.event.keyCode === 40) {
+      document.getElementById("box").style.display = "inline";
       document.getElementById("url").style.display = "none";
+      document.getElementById("stow").style.display = "none";
       document.getElementById("alltype").style.display = "none";
+      document.getElementById("dropdown-menu").style.display = "none";
     }
-    return false;
+    if (window.event.ctrlKey && window.event.keyCode === 38) {
+      document.getElementById("box").style.display = "none";
+    }
+
+    //搜索框填入上次搜索的内容
+    if (window.event.altKey && window.event.keyCode === 72) {
+      var historyvalue = window.localStorage.getItem("history");
+      if (historyvalue == null || historyvalue == "null" || historyvalue == "") {
+      } else {
+        document.getElementById("search_input").value = historyvalue;
+      }
+      return false;
+    }
+
+    if (window.event.altKey && window.event.keyCode === 67) {
+      if (searchlogo == null) {
+        document.getElementById("dropdown-menu").style.display = "inline";
+        none();
+        searchlogo = 1;
+      } else {
+        document.getElementById("dropdown-menu").style.display = "none";
+        searchlogo = null;
+      }
+    }
+    if (window.event.keyCode === 46) {
+      document.getElementById("search_input").value = "";
+      document.getElementById("url").style.display = "none";
+    }
+
+    /*下拉搜索项（历史遗留）
+    if (window.event.altKey && window.event.keyCode === 40) {
+      surl = document.getElementById("search_input").value;
+      document.getElementById("dropdown-menu").style.display = "none";
+      document.getElementById("visit").style.display = "none";
+      document.getElementById("more").style.display = "none";
+      document.getElementById("stow").style.display = "inline";
+      if (surl == "") {
+      } else {
+        //显示更多url选项
+        document.getElementById("url").style.display = "inline";
+        document.getElementById("alltype").style.display = "inline";
+      }
+      return false;
+    }
+  
+    if (window.event.altKey && window.event.keyCode === 38) {
+      surl = document.getElementById("search_input").value;
+      if (surl == "") {
+      } else {
+        //隐藏更多url选项
+        document.getElementById("url").style.display = "none";
+        document.getElementById("alltype").style.display = "none";
+      }
+      return false;
+    }
+  
+  */
+
+    const shortcuts = {
+      49: '1',
+      50: '2',
+      51: '3',
+      52: '4',
+      53: '5',
+      54: '6',
+      55: '7',
+      56: '8',
+      57: '9',
+      48: '0',
+      188: ',',
+      190: '.',
+      191: '/'
+    };
+
+    //快捷键自定义
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey && shortcuts[event.keyCode]) {
+        const key = `alt+${shortcuts[event.keyCode]}`;
+        localStoragecustomkey(key);
+      }
+    });
+    //重置快捷键
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && shortcuts[event.keyCode]) {
+        const altKey = shortcuts[event.keyCode];
+        const signKey = `signkey${altKey}`; // 只有数字键有 signKey
+        handleResetShortcut(event.keyCode, altKey, signKey);
+      }
+    });
+
+  } else if (set1 === '1') {
+    console.log('快捷键已关闭，请从管理扩展中打开');
+  } else {
+    console.log('localStorage 键值错误', set1);
   }
 
-  const shortcuts = {
-    49: '1',
-    50: '2',
-    51: '3',
-    52: '4',
-    53: '5',
-    54: '6',
-    55: '7',
-    56: '8',
-    57: '9',
-    48: '0',
-    188: ',',
-    190: '.',
-    191: '/'
-  };
-
-  //快捷键自定义
-  document.addEventListener('keydown', (event) => {
-    if (event.altKey && shortcuts[event.keyCode]) {
-      const key = `alt+${shortcuts[event.keyCode]}`;
-      localStoragecustomkey(key);
-    }
-  });
-  //重置快捷键
-  document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey && shortcuts[event.keyCode]) {
-      const altKey = shortcuts[event.keyCode];
-      const signKey = `signkey${altKey}`; // 只有数字键有 signKey
-      handleResetShortcut(event.keyCode, altKey, signKey);
-    }
-  });
-
-  //重定义 ctrl+S 防止对页面进行保存
+  //重定义 ctrl+S 屏蔽页面保存
   if (window.event.ctrlKey && window.event.keyCode === 83) {
     return false;
   }
@@ -830,7 +899,7 @@ baidu.onclick = function () {
   } else {
     var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
     window.location.href = finalUrl;
-    
+
   }
   none();
 };
