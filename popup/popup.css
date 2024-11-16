@@ -7,7 +7,8 @@ body {
   margin: 0;
   padding: 0;
   width: 250px;
-  height: 250px;
+  height: 270px;
+  font-size: 100%;
 }
 
 /*顶部图标样式*/
@@ -54,7 +55,28 @@ body {
 
 /*选项列表样式*/
 .set-list {
-  margin: 10px;
+  margin: 8px;
+  padding: 5px;
+  max-height: 181px;
+  overflow-y: auto;
+}
+
+.set-list::-webkit-scrollbar {
+  width: 3px; /* 滚动条宽度 */
+  margin-right: 5px;
+}
+
+.set-list::-webkit-scrollbar-track {
+  background: transparent; /* 滚动条轨道背景色 */
+}
+
+.set-list::-webkit-scrollbar-thumb {
+  background: rgba(114, 114, 114, 0.2); /* 滚动条拇指背景色 */
+  border-radius: 4px; /* 滚动条拇指圆角 */
+}
+
+.set-list::-webkit-scrollbar-thumb:hover {
+  background: #00000050; /* 滚动条拇指悬停时背景色 */
 }
 
 .set-item {
@@ -150,6 +172,11 @@ input:checked + label:before {
   box-sizing: border-box;
 }
 
+/*默认隐藏所有模型的列表*/
+.modelSet {
+  display: none;
+}
+
 /*深色模式 */
 @media (prefers-color-scheme: dark) {
   html,
@@ -193,6 +220,10 @@ input:checked + label:before {
   .set-item select {
     background-color: #2d2e30;
     color: #c4c4c4;
-
   }
+  /* 在滚动条悬停时 */
+  .set-list::-webkit-scrollbar-thumb:hover {
+    background: #ffffff50;
+  }
+  
 }

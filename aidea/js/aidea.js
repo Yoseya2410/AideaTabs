@@ -67,14 +67,63 @@ function extractPrimaryDomain(url) {
   }
 }
 
+// Dialog 弹窗 
+//dialog1.open() 打开弹窗  dialog1.close()关闭弹窗
+class Dialog {
+  constructor(modalElement, options = {}) {
+    this.dialog = modalElement;
+    this.options = {
+      closeOnOutsideClick: true,
+      ...options
+    };
 
+    this.closeButton = this.dialog.querySelector('.close');
+    this.init(); // 初始化弹窗
+  }
 
+  // 初始化弹窗
+  init() {
+    this.closeButton.addEventListener('click', () => this.close()); // 绑定关闭按钮点击事件
+    if (this.options.closeOnOutsideClick) {
+      window.addEventListener('click', this.handleOutsideClick.bind(this)); // 绑定点击外部关闭事件
+    }
+  }
 
+  // 处理点击外部关闭弹窗
+  handleOutsideClick(event) {
+    if (event.target === this.dialog) {
+      this.close(); // 关闭弹窗
+    }
+  }
 
+  // 打开弹窗
+  open() {
+    this.dialog.classList.add('show');
+  }
 
+  // 关闭弹窗
+  close() {
+    this.dialog.classList.remove('show');
+    this.dialog.addEventListener('transitionend', this.handleTransitionEnd.bind(this)); // 监听过渡结束事件
+  }
 
+  // 处理过渡结束事件
+  handleTransitionEnd(event) {
+    if (!this.dialog.classList.contains('show')) { // 如果弹窗已关闭
+      // 移除样式保证弹窗二次使用
+      this.dialog.style.removeProperty('visibility');
+      this.dialog.style.removeProperty('opacity');
+      this.dialog.style.removeProperty('backdrop-filter');
+    }
+    this.dialog.removeEventListener('transitionend', this.handleTransitionEnd.bind(this)); // 移除过渡结束事件监听器
+  }
+}
 
+// 初始化 Dialog 弹窗
+const dialog1 = new Dialog(document.getElementById('dialog1'));
 
+// 将 markdown 解析为 HTML
+$markbody.innerHTML = marked.parse($marktext.value);
 
 
 //自定义快捷键(localStorage方法)
@@ -208,48 +257,167 @@ function none() {
   window.localStorage.setItem("history", surl);
 }
 
+const apikey1 = localStorage.getItem('apikey1');
+const apikey2 = localStorage.getItem('apikey2');
+const apikey3 = localStorage.getItem('apikey3');
+const systemPromptValue = [
+  "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information",
+  "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
+  "Refine and directly answer questions"
+].join("\n")
+
+// 配置大模型
+const config = {
+  apis: {
+    moonshot: {
+      apiKey: apikey2,
+      url: 'https://api.moonshot.cn/v1/chat/completions',
+      model: 'moonshot-v1-8k',
+      systemPrompt: systemPromptValue,
+      temperature: 0.3,
+    },
+    qwen: {
+      apiKey: apikey1,
+      url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+      model: 'qwen-plus',
+      systemPrompt: systemPromptValue,
+    },
+    AideaIntelligence: {
+      apiKey: "",
+      url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+      model: 'qwen-turbo',
+      systemPrompt: systemPromptValue,
+    },
+    openai: {
+      apiKey: apikey3,
+      url: 'https://api.openai.com/v1/chat/completions',
+      model: 'gpt-4o-mini',
+      systemPrompt: systemPromptValue,
+    },
+  }
+};
+
 // 获取聊天显示区域和用户输入框
 const chatPrint = document.getElementById('chat_print');
 const userInput = document.getElementById('search_input');
 const output = document.getElementById('output');
 
-// 调用 Qwen API 获取回复
-async function callQwen(message) {
-  const apiKey = ''; // 替换为你的 API Key
-  const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
-  const payload = {
-    model: "qwen-plus",  // 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
-    messages: [
-      { role: "system", content: "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information" },
-      { role: "system", content: "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe" },
-      { role: "system", content: "Refine and directly answer questions" },
-      { role: "user", content: message }
-    ],
-  };
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log(JSON.stringify(data));
-
-    // 逐字显示机器人回复
-    typeText('bot', data.choices[0].message.content);
-  } catch (error) {
-    console.error('Error:', error);
+// 初始化累积计数器
+function initializeTokenCounters() {
+  if (!localStorage.getItem('totalPromptTokens')) {
+    localStorage.setItem('totalPromptTokens', 0);
+  }
+  if (!localStorage.getItem('totalCompletionTokens')) {
+    localStorage.setItem('totalCompletionTokens', 0);
   }
 }
+
+// 创建 API 调用器
+function createApiCaller(apiConfig) {
+  return async function callApi(message) {
+    const payload = {
+      model: apiConfig.model,
+      messages: [
+        { role: "system", content: apiConfig.systemPrompt },
+        { role: "user", content: message }
+      ],
+      temperature: 0.3,
+    };
+
+    try {
+      const response = await fetch(apiConfig.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiConfig.apiKey}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        const modelclassExist = localStorage.getItem("modelclass");
+        if (modelclassExist) {
+          if (response.status === 401) {
+            typeText('bot',
+              `🤔 你的密钥出现了问题，请按照我说的一步一步进行排查：
+
+**1. 请检查你的 API 密钥是否填写**:
+
+😒你不会是忘记填写 API 密钥了吧？使用第三方模型是需要填写密钥的！如果没有密钥就去平台申请。若你使用的是 Aidea Intelligence，请联系工程师 Yoseya，他会帮你解决这个问题。
+
+**2. 请检查你的 API 密钥是否正确**:
+
+🥱怎么会有人连 API 密钥都能填错，我想这个人应该不会是你吧。
+
+**3. 请检查你的 API 密钥是否失效**:
+
+😴如果前两步都没有问题，那就是你的 API 密钥失效了，去供应商那里看看吧，我先休息了。`
+
+            );
+          } else if (response.status === 429) {
+            //typeText('bot', `😭没钱了，快去充钱`);
+          }else {
+            console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+            typeText('bot', `😵请求失败: ${response.status} ${response.statusText}`);
+          }
+        } else {
+          typeText('bot',
+            `你好，欢迎使用 Aidea 智慧搜索！👏
+
+现在，你需要在 扩展 ——> AideaTabs 中进行设置，选择你使用的模型，告诉我你的偏好。让我们在网络中开启新的旅途！🗺️`
+          );
+        }
+
+
+        return;
+      }
+
+      const data = await response.json();
+      //用于调试智慧搜索API响应
+      //console.log(JSON.stringify(data));
+
+      // 获取 tokens 数量
+      const promptTokens = data.usage.prompt_tokens;
+      const completionTokens = data.usage.completion_tokens;
+      const modelBilling = localStorage.getItem("modelclass");
+      
+      // 累积 tokens 数量
+      let totalPromptTokens = parseInt(localStorage.getItem('totalPromptTokens'));
+      let totalCompletionTokens = parseInt(localStorage.getItem('totalCompletionTokens'));
+      //当使用 Aidea Intelligence 时累积 tokens
+      if (modelBilling == "Aidea") {
+        totalPromptTokens += promptTokens;
+        totalCompletionTokens += completionTokens;
+      }
+      // 保存到 localStorage
+      localStorage.setItem('totalPromptTokens', totalPromptTokens);
+      localStorage.setItem('totalCompletionTokens', totalCompletionTokens);
+
+      // 控制台输出累积的 tokens 数
+      //console.log(`Total Prompt Tokens: ${totalPromptTokens}\nTotal Completion Tokens: ${totalCompletionTokens}`);
+
+      // 逐字显示机器人回复
+      typeText('bot', data.choices[0].message.content);
+    } catch (error) {
+      //console.error('Error:', error);
+      typeText('bot', '😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：' + error);
+    }
+  };
+}
+
+/*对话框输出函数说明：
+addMessage() 直接在对话框输出
+typeText() 在对话框逐字输出
+*/
+
+// 创建API调用器实例
+const apiCallers = {
+  Moonshot: createApiCaller(config.apis.moonshot),
+  Qwen: createApiCaller(config.apis.qwen),
+  Aidea: createApiCaller(config.apis.AideaIntelligence),
+  OpenAI: createApiCaller(config.apis.openai),
+};
 
 // 发送消息函数
 function sendMessage() {
@@ -262,8 +430,17 @@ function sendMessage() {
   // 清空输入框
   userInput.value = '';
 
-  // 调用 Qwen API 获取回复
-  callQwen(message);
+  // 根据选择调用相应的API
+  const selectedApi = localStorage.getItem('modelclass');
+  if (selectedApi) {
+    apiCallers[selectedApi](message);
+  } else {
+    typeText('bot',
+      `你好，欢迎使用 Aidea 智慧搜索！👏
+
+现在，你需要在 扩展 → AideaTabs 中进行设置，选择你使用的模型，告诉我你的偏好。让我们在网络中开启新的旅途！🗺️`
+    );
+  }
 }
 
 // 添加消息到聊天记录
@@ -290,12 +467,29 @@ function typeText(role, text) {
       messageElement.innerHTML = marked.parse(text.slice(0, index + 1));
       index++;
       output.scrollTop = output.scrollHeight;
-      setTimeout(typeNextCharacter, 30); // 每30毫秒输出一个字符
+
+      // 机器人说话换气（模仿人说话的状态）
+      const currentChar = text[index - 1];
+      let delay;
+      if (currentChar.match(/[.。!！？?]/)) {
+        delay = 700; // 如果是 .。!！？?，延迟800毫秒
+      } else if (currentChar.match(/[、，,：:]/)) {
+        delay = 450; // 如果是 、，,，延迟500毫秒
+      } else {
+        delay = 45; // 其他字符，延迟40毫秒
+      }
+
+      setTimeout(typeNextCharacter, delay);
     }
   }
 
-  typeNextCharacter(); // 开始打字
+  typeNextCharacter(); // 开始打字效果
 }
+
+// 初始化 token 计数器
+initializeTokenCounters();
+
+
 
 /*引擎切换*/
 var searchlogo = document.getElementById("searchlogo");
@@ -671,7 +865,7 @@ function onKeyDown() {
     });
 
   } else if (set1 === '1') {
-    console.log('快捷键已关闭，请从管理扩展中打开');
+    console.log('快捷键已关闭，请从扩展设置中打开');
   } else {
     console.log('localStorage 键值错误', set1);
   }

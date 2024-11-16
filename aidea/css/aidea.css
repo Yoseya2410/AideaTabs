@@ -4,6 +4,10 @@
 }
 
 body {
+  font-size: 100%;
+}
+
+#main {
   text-align: center;
   background-color: #ffffff;
   margin: 0%;
@@ -20,6 +24,14 @@ body {
 
 a {
   text-decoration: none;
+  color: #0486ff;
+}
+
+.dialog-content code,
+kbd,
+em {
+  font-family: ui-monospace, "Menlo", "Monaco", "Consolas", "Liberation Mono",
+    "Courier New", monospace;
 }
 
 /* 禁止所有的img被选中*/
@@ -145,7 +157,7 @@ span {
   box-shadow: 0 0 2px rgba(70, 70, 40, 0.255);
 }
 
-.message-bubble > p {
+.message-bubble>p {
   display: block;
   margin-block-start: 0em;
   margin-block-end: 0em;
@@ -154,7 +166,7 @@ span {
   unicode-bidi: isolate;
 }
 
-.message-bubble > pre {
+.message-bubble>pre {
   display: block;
   font-family: monospace;
   unicode-bidi: isolate;
@@ -163,22 +175,31 @@ span {
 
 code {
   display: block;
-  max-width: 100%; /* 代码块的最大宽度不会超过父元素 */
-  max-height: 100%; /* 代码块的最大高度不会超过父元素 */
-  overflow: auto; /* 如果代码块内容过多，将出现滚动条 */
-  white-space: pre-wrap; /* 自动换行，避免水平滚动 */
-  background-color: #eeeeee; /* 背景色 */
-  color: #333; /* 字体颜色 */
-  padding: 10px; /* 内边距 */
-  font-family: monospace; /* 等宽字体 */
+  max-width: 100%;
+  /* 代码块的最大宽度不会超过父元素 */
+  max-height: 100%;
+  /* 代码块的最大高度不会超过父元素 */
+  overflow: auto;
+  /* 如果代码块内容过多，将出现滚动条 */
+  white-space: pre-wrap;
+  /* 自动换行，避免水平滚动 */
+  background-color: #eeeeee;
+  /* 背景色 */
+  color: #333;
+  /* 字体颜色 */
+  padding: 10px;
+  /* 内边距 */
+  font-family: monospace;
+  /* 等宽字体 */
   box-sizing: border-box;
-  border-radius: 5px; /* 圆角边框 */
+  border-radius: 5px;
+  /* 圆角边框 */
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 #output {
-  font-size: 19px;
+  font-size: 17px;
   resize: none;
   background-color: transparent;
   width: 100%;
@@ -432,7 +453,185 @@ code {
   background: #288cff linear-gradient(180deg, #489dff, #288cff) repeat-x;
 }
 
+/* dialog 弹窗 */
+.dialog {
+  visibility: hidden;
+  /* 默认隐藏 */
+  opacity: 0;
+  /* 初始透明度为0 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(160, 160, 160, 0.27);
+  /* 半透明黑色背景 */
+  backdrop-filter: blur(0px);
+  /* 初始状态无模糊 */
+  transition: opacity 0.2s ease-in-out, backdrop-filter 0.5s ease-in-out,
+    visibility 0.2s ease-in-out;
+  /* 平滑过渡效果 */
+}
 
+.dialog.show {
+  visibility: visible;
+  /* 显示 */
+  opacity: 1;
+  /* 不透明 */
+  backdrop-filter: blur(10px);
+  /* 显示时的模糊效果 */
+}
+
+.dialog-content {
+  background-color: #f6f6f6b9;
+  margin: 5% auto;
+  padding: 20px;
+  border: 0px solid #888;
+  max-height: 75%;
+  max-width: 80%;
+  /* 最大宽度 */
+  border-radius: 10px;
+  /* 圆角 */
+  box-shadow: 0 0 3px rgba(56, 56, 56, 0.2);
+  /* 立体感 */
+  overflow-y: auto;
+}
+
+/* dialog 弹窗滚动条样式 */
+.dialog-content::-webkit-scrollbar {
+  width: 5px;
+  /* 滚动条宽度 */
+}
+
+.dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+  /* 滚动条轨道背景色 */
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background: rgba(108, 108, 108, 0.2);
+  /* 滚动条拇指背景色 */
+  border-radius: 4px;
+  /* 滚动条拇指圆角 */
+}
+
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #00000027;
+  /* 滚动条拇指悬停时背景色 */
+}
+
+/* dialog 弹窗元素样式*/
+
+/*公有样式*/
+.dialog-content p,
+code,
+th,
+td,
+li {
+  font-size: 16px;
+}
+
+.dialog-content ol,
+p,
+ul {
+  line-height: 1.7;
+}
+
+ol,
+ul {
+  padding-left: 1.2em;
+}
+
+.dialog-content code,
+kbd,
+em {
+  font-family: ui-monospace, "Menlo", "Monaco", "Consolas", "Liberation Mono",
+    "Courier New", monospace;
+}
+
+/*标题*/
+.dialog-content h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.dialog-content h1 {
+  font-size: 2.2rem;
+}
+
+.dialog-content h2 {
+  font-size: 1.65rem;
+  padding-bottom: 0.3rem;
+}
+
+/*文本*/
+.dialog-content p {
+  font-size: 16px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+}
+
+/*代码块*/
+.dialog-content code {
+  background-color: #d3d3d34a;
+}
+
+/*行内代码*/
+.dialog-content em {
+  color: #33495c;
+  padding: 0.25rem 0.5rem;
+  margin: 0;
+  font-size: 0.85em;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+/*表格*/
+.dialog-content table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.dialog-content td,
+th {
+  border: 1px solid #c6c7c8;
+  padding: 0.6em 1em;
+}
+
+/*kbd元素*/
+.dialog-content kbd {
+  background: #eee;
+  border: 0.15rem solid #ddd;
+  border-bottom: 0.25rem solid #ddd;
+  border-radius: 0.15rem;
+  padding: 0 0.15em;
+}
+
+/*内容区块*/
+.dialog-content blockquote {
+  font-size: 1rem;
+  color: #999;
+  border-left: 0.2rem solid #dfe2e5;
+  margin: 1rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+}
+
+.dialog-content blockquote>p {
+  margin: 0;
+}
 
 /*动画样式*/
 @-webkit-keyframes flipInX {
@@ -767,17 +966,17 @@ code {
 }
 
 /*缺省模式*/
-@media (prefers-color-scheme: no-preference) {
-}
+@media (prefers-color-scheme: no-preference) {}
 
 /*浅色模式*/
-@media (prefers-color-scheme: light) {
-}
+@media (prefers-color-scheme: light) {}
 
 /*深色模式 */
 @media (prefers-color-scheme: dark) {
-  html,
-  body {
+
+  #main,
+  body,
+  html {
     background-color: #202124;
   }
 
@@ -856,6 +1055,7 @@ code {
   #chat_window {
     background-color: #2d2e30;
   }
+
   .message-bubble.user {
     background-color: #1f429f;
     color: white;
@@ -867,7 +1067,65 @@ code {
   }
 
   code {
-    background-color: #2c2c2c; /* 背景色 */
-    color: #ffffff; /* 字体颜色 */
+    background-color: #2c2c2c;
+    /* 背景色 */
+    color: #ffffff;
+    /* 字体颜色 */
+  }
+
+  /* dialog 弹窗 */
+  .dialog {
+    background: rgba(0, 0, 0, 0.27);
+    /* 半透明黑色背景 */
+  }
+
+  .dialog-content {
+    background-color: #0e0e0eb9;
+  }
+
+  .dialog-content h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  th,
+  td {
+    color: #eee;
+  }
+
+  /*代码块*/
+  .dialog-content code {
+    background-color: #2e2e2e4a;
+  }
+
+  /*行内代码*/
+  .dialog-content em {
+    color: #aaaaaa;
+    background-color: #2e2e2e4a;
+  }
+
+  /*表格*/
+  .dialog-content td,
+  th {
+    border: 1px solid #eee;
+  }
+
+  /*kbd元素*/
+  .dialog-content kbd {
+    background: #1a1a1a;
+    border: 0.15rem solid #232323;
+    border-bottom: 0.25rem solid #2d2d2d;
+  }
+
+  /*内容区块*/
+  .dialog-content blockquote {
+    font-size: 1rem;
+    color: #999;
+    border-left: 0.2rem solid #dfe2e5;
+    margin: 1rem 0;
+    padding: 0.25rem 0 0.25rem 1rem;
   }
 }

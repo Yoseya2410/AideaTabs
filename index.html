@@ -8,66 +8,69 @@
   <link rel="shortcut icon" href="tablogo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="aidea/js/marked.min.js"></script>
+
 </head>
 
 <body id="all">
-  <section class="background" data-spotlight="fullscreen">
-    <img class="logo" id="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
+  <div id="main">
+    <section class="background" data-spotlight="fullscreen">
+      <img class="logo" id="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
 
-    <div id="contents">
-      <div style="display: flex ;justify-content: center ;">
-        <div id="chat_window">
-          <div id="chat_print">
-            <div id="output" style="text-align: left;"></div>
+      <div id="contents">
+        <div style="display: flex ;justify-content: center ;">
+          <div id="chat_window">
+            <div id="chat_print">
+              <div id="output" style="text-align: left;"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="search_part">
-        <form id="search_bar" class="search_bar">
-          <span id="targetArea">
-            <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png" title="Aidea intelligence" />
-            <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
-            <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
-              placeholder="搜索或输入网址" id="search_input" />
-          </span>
-        </form>
-      </div>
-
-
-      <div class="dropdown-menu" id="dropdown-menu">
-        <a class="dropdown-item" id="defAI">智慧搜索</a>
-        <a class="dropdown-item" id="defgoogle">谷歌</a>
-        <a class="dropdown-item" id="defbaidu">百度</a>
-        <a class="dropdown-item" id="defbing">必应</a>
-        <a class="dropdown-item" id="defcustomize">自定义</a>
-        <a class="dropdown-item" id="defdefault">默认</a>
-      </div>
-
-      <div class="url_scroll" id="content">
-        <div id="url" class="url_part none">
-          <button type="button none" class="url" id="visit">访问</button>
-          <button type="button" class="url" id="baidu">Baidu</button>
-          <button type="button" class="url" id="google">Google</button>
-          <button type="button" class="url" id="bing">Bing</button>
-          <button type="button" class="url" id="bilibili">bilibili</button>
-          <button type="button" class="url" id="zhihu">知乎</button>
-          <button type="button" class="url" id="github">GitHub</button>
-          <button type="button" class="url" id="more">翻译</button>
-          <button type="button" class="stow none" id="stow">收起</button>
+        <div class="search_part">
+          <form id="search_bar" class="search_bar">
+            <span id="targetArea">
+              <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png"
+                title="Aidea intelligence" />
+              <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
+              <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
+                placeholder="搜索或输入网址" id="search_input" />
+            </span>
+          </form>
         </div>
-      </div>
 
-      <div class="alltype none" id="alltype">
-        <!--二级菜单留着备用-->
-      </div>
 
-      <input id="file1" class="none" type="file"
-        accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css" />
-      <input id="logofile" class="none" type="file" accept="image/gif,image/png" />
+        <div class="dropdown-menu" id="dropdown-menu">
+          <a class="dropdown-item" id="defAI">智慧搜索</a>
+          <a class="dropdown-item" id="defgoogle">谷歌</a>
+          <a class="dropdown-item" id="defbaidu">百度</a>
+          <a class="dropdown-item" id="defbing">必应</a>
+          <a class="dropdown-item" id="defcustomize">自定义</a>
+          <a class="dropdown-item" id="defdefault">默认</a>
+        </div>
 
-      <div id="box" class="tag_part none">
-        <!--暂时停用
+        <div class="url_scroll" id="content">
+          <div id="url" class="url_part none">
+            <button type="button none" class="url" id="visit">访问</button>
+            <button type="button" class="url" id="baidu">Baidu</button>
+            <button type="button" class="url" id="google">Google</button>
+            <button type="button" class="url" id="bing">Bing</button>
+            <button type="button" class="url" id="bilibili">bilibili</button>
+            <button type="button" class="url" id="zhihu">知乎</button>
+            <button type="button" class="url" id="github">GitHub</button>
+            <button type="button" class="url" id="more">翻译</button>
+            <button type="button" class="stow none" id="stow">收起</button>
+          </div>
+        </div>
+
+        <div class="alltype none" id="alltype">
+          <!--二级菜单留着备用-->
+        </div>
+
+        <input id="file1" class="none" type="file"
+          accept="image/gif,image/jpeg,image/jpg,image/png,image/x-icon,text/javascript,text/plain,text/html,text/css" />
+        <input id="logofile" class="none" type="file" accept="image/gif,image/png" />
+
+        <div id="box" class="tag_part none">
+          <!--暂时停用
       <div class="tag">
         <div class="tag-show">
           <a href="">
@@ -122,12 +125,64 @@
         <p class="tagname"> </p>
       </div>
 -->
+        </div>
       </div>
+  </div>
 
-      
+  <!-- dialog 弹窗 -->
+  <div id="dialog1" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+      <div id="$markbody"></div>
+      <custom-tip title="Linked files are not treated as assets" color="#646cff24" text_color="#3c3c43">
+        PDFs or other documents referenced by links within markdown files are not automatically treated as assets. To
+        make linked files accessible, you must manually place them within the <a
+          href="#the-public-directory"><code>public</code></a> directory of your project.
+      </custom-tip>
+
     </div>
-    <script type="text/javascript" src="aidea/js/aidea.js"></script>
+  </div>
 
+
+<!--Markdown 文本-->
+  <!--弹窗信息文本-->
+  <textarea id="$marktext" style="display:none">
+# Hello World
+*Write* `your` **Markdown** here.<kbd>Ctrl</kbd>
+```c
+int i = 1
+```
+- 哈哈哈
+- 你好
+
+1. apple
+2. banana
+
+> 23542
+>
+> dsvfgb
+
+| 标题   | 标题   | 标题   |
+| ------ | ------ | ------ |
+| 单元格 | 单元格 | 单元格 |
+| 单元格 | 单元格 | 单元格 |
+# 这是一级标题
+
+## 这是二级标题
+  
+### 这是三级标题
+  
+#### 这是四级标题
+  
+##### 这是五级标题
+  
+###### 这是六级标题
+</textarea>
+
+<!--JavaScript-->
+  <script src="./aidea/js/marked.min.js"></script>
+  <script src="./aidea/js/components.js"></script>
+  <script type="text/javascript" src="./aidea/js/aidea.js"></script>
 </body>
 
 </html>

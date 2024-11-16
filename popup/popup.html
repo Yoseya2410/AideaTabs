@@ -2,27 +2,27 @@
 <html lang="zh-cn">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>AideaConsole</title>
-    <link rel="stylesheet" href="popup.css" />
-
+  <meta charset="UTF-8" />
+  <title>AideaConsole</title>
+  <link rel="stylesheet" href="popup.css" />
 </head>
 
 <body>
-    <div id="logo-wrap">
-        <img id="logo" src="logo_48.png" /><span id="logo_text" class="text">Aidea</span>
+  <div id="logo-wrap">
+    <img id="logo" src="logo_48.png" /><span id="logo_text" class="text">Aidea</span>
+  </div>
+
+  <div class="set-list">
+    <div class="set-item">
+      <span class="set_text">关闭快捷键</span>
+      <div class="switch">
+        <input type="checkbox" id="toggle1" />
+        <label for="toggle1"></label>
+        <!--localStorageKey:set1-->
+      </div>
     </div>
 
-    <div class="set-list">
-        <div class="set-item">
-            <span class="set_text">关闭快捷键</span>
-            <div class="switch">
-                <input type="checkbox" id="toggle1" />
-                <label for="toggle1"></label>
-            </div>
-        </div>
-
-        <!--开关选项
+    <!--开关选项
         <div class="set-item">
             <span class="set_text">项目2</span>
             <div class="switch">
@@ -31,28 +31,98 @@
             </div>
         </div>
         -->
-        <div class="set-item">
-        <select id="model_list" name="model_list">
-            <option value="" disabled selected>智慧搜索</option>
-            <option value="Aidea">Aidea Intelligence</option>
-            <option value="Qwen">Qwen</option>
-            <option value="Moonshot">Moonshot</option>
-          </select>
+    <div class="set-item">
+      <select id="model_list" name="model_list">
+        <option value="" disabled selected>智慧搜索</option>
+        <option value="Aidea">Aidea Intelligence</option>
+        <option value="Qwen">Qwen</option>
+        <option value="Moonshot">Moonshot</option>
+        <option value="OpenAI">GPT-4o</option>
+      </select>
+    </div>
+
+    <!--Aidea Intelligence 配置-->
+    <div id="AideaIntelligence_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="toggle2" />
+          <label for="toggle2"></label>
+          <!--localStorageKey:set2-->
         </div>
+      </div>
 
-
-        <div class="set-item" id="apikey">
-            <input type="text" id="apikey_input" name="apikey_inpu" placeholder="输入API密钥">
-       </div>
-
-
+      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
+        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Aidea_temperature"></seek-bar>
     </div>
 
-    <div id="info-wrap">
-        <a id="info-a" href="https://yoseya.top" class="text" target="_blank">&copy; 2022 Yoseya. All rights</a>
-        <div id="versionWrap">V0.1.5 <span id="versionBox"></span></div>
+    <!--Qwen 配置-->
+    <div id="Qwen_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="toggle3" />
+          <label for="toggle3"></label>
+          <!--localStorageKey:set3-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
+        <input type="password" id="QwenKey_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
+        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Qwen_temperature"></seek-bar>
     </div>
-    <script src="popup.js"></script>
+
+    <!--Moonshot 配置-->
+    <div id="Moonshot_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="toggle4" />
+          <label for="toggle4"></label>
+          <!--localStorageKey:set4-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
+        <input type="password" id="MoonshotKey_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="1" min="0" step="0.1" id="volume1" value="0.3" text="T"
+        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Moonshot_temperature"></seek-bar>
+    </div>
+
+    <!--OpenAI 配置-->
+    <div id="OpenAI_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="toggle5" />
+          <label for="toggle5"></label>
+          <!--localStorageKey:set5-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
+        <input type="password" id="OpenAI_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
+        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="OpenAI_temperature"></seek-bar>
+    </div>
+
+
+  </div>
+
+
+  <div id="info-wrap">
+    <a id="info-a" href="https://yoseya.top" class="text" target="_blank">&copy; 2022 Yoseya. All rights</a>
+    <div id="versionWrap">V0.1.5 <span id="versionBox"></span></div>
+  </div>
+  <script src="/aidea/js/components.js"></script>
+  <script src="popup.js"></script>
 </body>
 
 </html>
