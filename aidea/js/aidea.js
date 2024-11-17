@@ -260,11 +260,19 @@ function none() {
 const apikey1 = localStorage.getItem('apikey1');
 const apikey2 = localStorage.getItem('apikey2');
 const apikey3 = localStorage.getItem('apikey3');
-const systemPromptValue = [
-  "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information",
-  "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
-  "Refine and directly answer questions"
-].join("\n")
+
+// 初始化历史对话记录
+let messageslist = [
+  {
+    role: "system",
+    content: [
+      "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information",
+      "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
+      "Refine and directly answer questions"
+    ].join("\n")
+  }
+];
+
 
 // 配置大模型
 const config = {
@@ -273,26 +281,21 @@ const config = {
       apiKey: apikey2,
       url: 'https://api.moonshot.cn/v1/chat/completions',
       model: 'moonshot-v1-8k',
-      systemPrompt: systemPromptValue,
-      temperature: 0.3,
     },
     qwen: {
       apiKey: apikey1,
       url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       model: 'qwen-plus',
-      systemPrompt: systemPromptValue,
     },
     AideaIntelligence: {
       apiKey: "",
       url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       model: 'qwen-turbo',
-      systemPrompt: systemPromptValue,
     },
     openai: {
       apiKey: apikey3,
       url: 'https://api.openai.com/v1/chat/completions',
       model: 'gpt-4o-mini',
-      systemPrompt: systemPromptValue,
     },
   }
 };
@@ -317,10 +320,7 @@ function createApiCaller(apiConfig) {
   return async function callApi(message) {
     const payload = {
       model: apiConfig.model,
-      messages: [
-        { role: "system", content: apiConfig.systemPrompt },
-        { role: "user", content: message }
-      ],
+      messages: messageslist,
       temperature: 0.3,
     };
 
@@ -356,7 +356,7 @@ function createApiCaller(apiConfig) {
 
             );
           } else if (response.status === 429) {
-            //typeText('bot', `😭没钱了，快去充钱`);
+            //typeText('bot', ``);
           }else {
             console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
             typeText('bot', `😵请求失败: ${response.status} ${response.statusText}`);
@@ -399,6 +399,9 @@ function createApiCaller(apiConfig) {
 
       // 逐字显示机器人回复
       typeText('bot', data.choices[0].message.content);
+
+      // 将机器人回复添加到历史对话记录
+      messageslist.push(data.choices[0].message);
     } catch (error) {
       //console.error('Error:', error);
       typeText('bot', '😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：' + error);
@@ -426,6 +429,9 @@ function sendMessage() {
 
   // 显示用户消息
   addMessage('user', message);
+
+  // 将用户消息添加到历史对话记录
+  messageslist.push({ role: "user", content: message });
 
   // 清空输入框
   userInput.value = '';
