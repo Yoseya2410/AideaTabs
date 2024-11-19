@@ -492,7 +492,7 @@ code {
   max-height: 75%;
   max-width: 80%;
   /* 最大宽度 */
-  border-radius: 10px;
+  border-radius: 12px;
   /* 圆角 */
   box-shadow: 0 0 3px rgba(56, 56, 56, 0.2);
   /* 立体感 */
@@ -513,7 +513,7 @@ code {
 .dialog-content::-webkit-scrollbar-thumb {
   background: rgba(108, 108, 108, 0.2);
   /* 滚动条拇指背景色 */
-  border-radius: 4px;
+  border-radius: 10px;
   /* 滚动条拇指圆角 */
 }
 

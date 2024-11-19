@@ -151,7 +151,7 @@ function localStoragecustomkey(key) {
       // 当搜索框无内容
       var finalUrl = extractPrimaryDomain(storevalue)
       window.location.href = "http://" + finalUrl
-      console.log(finalUrl);
+      //console.log(finalUrl);
     }
 
   }
@@ -261,6 +261,14 @@ const apikey1 = localStorage.getItem('apikey1');
 const apikey2 = localStorage.getItem('apikey2');
 const apikey3 = localStorage.getItem('apikey3');
 
+const aidea_search = JSON.parse(localStorage.getItem('set3'));
+const qwen_search = JSON.parse(localStorage.getItem('set4'));
+
+const Moonshot_temperature = parseFloat(localStorage.getItem('SeekBarMoonshot_temperature'));
+const Qwen_temperature = parseFloat(localStorage.getItem('SeekBarQwen_temperature'));
+const Aidea_temperature = parseFloat(localStorage.getItem('SeekBarAidea_temperature'));
+const OpenAI_temperature = parseFloat(localStorage.getItem('SeekBarOpenAI_temperature'));
+
 // 初始化历史对话记录
 let messageslist = [
   {
@@ -281,21 +289,27 @@ const config = {
       apiKey: apikey2,
       url: 'https://api.moonshot.cn/v1/chat/completions',
       model: 'moonshot-v1-8k',
+      temperature: Moonshot_temperature,
     },
     qwen: {
       apiKey: apikey1,
       url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       model: 'qwen-plus',
+      enable_search: qwen_search,
+      temperature: Qwen_temperature,
     },
     AideaIntelligence: {
       apiKey: "",
       url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       model: 'qwen-turbo',
+      enable_search: aidea_search,
+      temperature: Aidea_temperature,
     },
     openai: {
       apiKey: apikey3,
       url: 'https://api.openai.com/v1/chat/completions',
       model: 'gpt-4o-mini',
+      temperature: OpenAI_temperature,
     },
   }
 };
@@ -321,7 +335,13 @@ function createApiCaller(apiConfig) {
     const payload = {
       model: apiConfig.model,
       messages: messageslist,
-      temperature: 0.3,
+      enable_search: apiConfig.enable_search,
+      //moonshot temperature
+      temperature: apiConfig.temperature,
+      parameters: {
+        //qwen temperature
+        temperature: apiConfig.temperature
+      }
     };
 
     try {
@@ -356,8 +376,8 @@ function createApiCaller(apiConfig) {
 
             );
           } else if (response.status === 429) {
-            //typeText('bot', ``);
-          }else {
+            typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+          } else {
             console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
             typeText('bot', `😵请求失败: ${response.status} ${response.statusText}`);
           }
@@ -368,7 +388,6 @@ function createApiCaller(apiConfig) {
 现在，你需要在 扩展 ——> AideaTabs 中进行设置，选择你使用的模型，告诉我你的偏好。让我们在网络中开启新的旅途！🗺️`
           );
         }
-
 
         return;
       }
@@ -381,7 +400,7 @@ function createApiCaller(apiConfig) {
       const promptTokens = data.usage.prompt_tokens;
       const completionTokens = data.usage.completion_tokens;
       const modelBilling = localStorage.getItem("modelclass");
-      
+
       // 累积 tokens 数量
       let totalPromptTokens = parseInt(localStorage.getItem('totalPromptTokens'));
       let totalCompletionTokens = parseInt(localStorage.getItem('totalCompletionTokens'));
@@ -400,8 +419,15 @@ function createApiCaller(apiConfig) {
       // 逐字显示机器人回复
       typeText('bot', data.choices[0].message.content);
 
-      // 将机器人回复添加到历史对话记录
-      messageslist.push(data.choices[0].message);
+      //记忆开关，若开关关闭，机器人将无法知道它自己说了什么
+      if (localStorage.getItem('set2')) {
+        // 将机器人回复添加到历史对话记录
+        messageslist.push(data.choices[0].message);
+        //console.log("已开启记忆")
+      } else {
+        //console.log("关闭记忆")
+      }
+
     } catch (error) {
       //console.error('Error:', error);
       typeText('bot', '😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：' + error);
@@ -771,7 +797,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.onkeydown = onKeyDown;
 function onKeyDown() {
   const set1 = localStorage.getItem("set1");
-  if (set1 === null) {
+  if (!set1) {
     //显示/隐藏主页下拉圆形选项
     if (window.event.ctrlKey && window.event.keyCode === 40) {
       document.getElementById("box").style.display = "inline";
@@ -870,10 +896,8 @@ function onKeyDown() {
       }
     });
 
-  } else if (set1 === '1') {
-    console.log('快捷键已关闭，请从扩展设置中打开');
   } else {
-    console.log('localStorage 键值错误', set1);
+    //console.log('快捷键已关闭，请从扩展设置中打开');
   }
 
   //重定义 ctrl+S 屏蔽页面保存

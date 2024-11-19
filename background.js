@@ -28,7 +28,7 @@ function openUrlCurrentTab(url) {
 }
 //地址栏搜索功能
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
-  console.log("inputChanged: " + text);
+  //console.log("inputChanged: " + text);
   if (!text) return;
   suggest([
     { content: "百度搜索 " + text, description: "百度搜索 " + text },
@@ -42,7 +42,7 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
 });
 // 当用户接收关键字建议时触发
 chrome.omnibox.onInputEntered.addListener((text) => {
-  console.log("inputEntered: " + text);
+  //console.log("inputEntered: " + text);
   if (!text) return;
   var href = "";
   if (text.endsWith("使用说明"))

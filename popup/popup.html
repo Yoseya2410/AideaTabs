@@ -41,23 +41,17 @@
       </select>
     </div>
 
-    <!--Aidea Intelligence 配置-->
-    <div id="AideaIntelligence_Set" class="modelSet">
-      <div class="set-item">
-        <span class="set_text">联网搜索</span>
-        <div class="switch">
+    <div class="set-item">
+      <span class="set_text">开启记忆</span>
+      <div class="switch">
           <input type="checkbox" id="toggle2" />
           <label for="toggle2"></label>
           <!--localStorageKey:set2-->
-        </div>
       </div>
+  </div>
 
-      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
-        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Aidea_temperature"></seek-bar>
-    </div>
-
-    <!--Qwen 配置-->
-    <div id="Qwen_Set" class="modelSet">
+    <!--Aidea Intelligence 配置-->
+    <div id="AideaIntelligence_Set" class="modelSet">
       <div class="set-item">
         <span class="set_text">联网搜索</span>
         <div class="switch">
@@ -67,16 +61,12 @@
         </div>
       </div>
 
-      <div class="set-item" id="apikey">
-        <input type="password" id="QwenKey_input" name="apikey_input" placeholder="输入API密钥" />
-      </div>
-
       <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
-        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Qwen_temperature"></seek-bar>
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 2)" data-id="Aidea_temperature"></seek-bar>
     </div>
 
-    <!--Moonshot 配置-->
-    <div id="Moonshot_Set" class="modelSet">
+    <!--Qwen 配置-->
+    <div id="Qwen_Set" class="modelSet">
       <div class="set-item">
         <span class="set_text">联网搜索</span>
         <div class="switch">
@@ -87,15 +77,15 @@
       </div>
 
       <div class="set-item" id="apikey">
-        <input type="password" id="MoonshotKey_input" name="apikey_input" placeholder="输入API密钥" />
+        <input type="password" id="QwenKey_input" name="apikey_input" placeholder="输入API密钥" />
       </div>
 
-      <seek-bar name="volume" max="1" min="0" step="0.1" id="volume1" value="0.3" text="T"
-        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="Moonshot_temperature"></seek-bar>
+      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 2)" data-id="Qwen_temperature"></seek-bar>
     </div>
 
-    <!--OpenAI 配置-->
-    <div id="OpenAI_Set" class="modelSet">
+    <!--Moonshot 配置-->
+    <div id="Moonshot_Set" class="modelSet">
       <div class="set-item">
         <span class="set_text">联网搜索</span>
         <div class="switch">
@@ -106,20 +96,39 @@
       </div>
 
       <div class="set-item" id="apikey">
+        <input type="password" id="MoonshotKey_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="1" min="0" step="0.1" id="volume1" value="0.3" text="T"
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 1]" data-id="Moonshot_temperature"></seek-bar>
+    </div>
+
+    <!--OpenAI 配置-->
+    <div id="OpenAI_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="toggle6" />
+          <label for="toggle6"></label>
+          <!--localStorageKey:set6-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
         <input type="password" id="OpenAI_input" name="apikey_input" placeholder="输入API密钥" />
       </div>
 
       <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
-        title="Temperature &#10 参数越高创造性越强，越低准确率越高" data-id="OpenAI_temperature"></seek-bar>
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 2)" data-id="OpenAI_temperature"></seek-bar>
     </div>
 
-
+    
   </div>
 
 
   <div id="info-wrap">
-    <a id="info-a" href="https://yoseya.top" class="text" target="_blank">&copy; 2022 Yoseya. All rights</a>
-    <div id="versionWrap">V0.1.5 <span id="versionBox"></span></div>
+    <a id="info-a" href="https://github.com/Yoseya2410/AideaTabs" class="text" target="_blank">MIT Licensed | </a><a id="info-a" href="https://yoseya.top" class="text" target="_blank"> &copy;  Yoseya</a>
+    <div id="versionWrap"><span id="versionBox"></span></div>
   </div>
   <script src="/aidea/js/components.js"></script>
   <script src="popup.js"></script>

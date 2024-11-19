@@ -5,7 +5,7 @@ function initializeToggles() {
         // 遍历每个开关
         const key = `set${index + 1}`; // 生成对应的 localStorage 键名
         const value = localStorage.getItem(key); // 从 localStorage 中获取值
-        if (value === "1") {
+        if (value) {
             // 如果值为 '1'
             toggle.checked = true; // 设置开关为选中状态
         } else {
@@ -52,11 +52,11 @@ function addChangeListeners() {
             const key = `set${index + 1}`; // 生成对应的 localStorage 键名
             if (this.checked) {
                 // 如果开关被选中
-                localStorage.setItem(key, "1"); // 将值设置为 '1'
-                console.log(`项目${index + 1}开关已打开，localStorage: ${key} = 1`); // 输出日志
+                localStorage.setItem(key, JSON.stringify(true)); // 将值设置为 '1'
+                //console.log(`项目${index + 1}开关已打开，localStorage: ${key} = 1`); // 输出日志
             } else {
                 localStorage.removeItem(key); // 如果开关未被选中，移除对应的键值对
-                console.log(`项目${index + 1}开关已关闭，localStorage: ${key} = null`); // 输出日志
+                //console.log(`项目${index + 1}开关已关闭，localStorage: ${key} = null`); // 输出日志
             }
         });
     });
@@ -90,24 +90,6 @@ function inputShowAPI() {
     }
 }
 
-/* 回车保存API密钥
-function EnterSaveAPI() {
-    const QwenKey_input = document.getElementById("QwenKey_input");
-    const MoonshotKey_input = document.getElementById("MoonshotKey_input");
-    document.getElementById("QwenKey_input")
-        .addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                localStorage.setItem("apikey1", QwenKey_input.value);
-            }
-        });
-    document.getElementById("MoonshotKey_input")
-        .addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                localStorage.setItem("apikey2", MoonshotKey_input.value);
-            }
-        });
-}
-*/
 
 // 离开输入框自动保存API密钥
 document.addEventListener('DOMContentLoaded', function () {
@@ -132,7 +114,12 @@ window.onload = function () {
     InitializeModelSetList(); //初始化大模型设置列表
     inputShowAPI() // 在API密钥输入框中显示保存的密钥
     addChangeListeners(); // 为每个开关添加 change 事件监听器
-    //EnterSaveAPI() //空格键保存 API 密钥
+
+    // 初始化版本号
+    localStorage.setItem("version", "0.1.5");//设置当前版本号
+    const versionWrap = document.getElementById('versionWrap');
+    const version = localStorage.getItem("version");
+    versionWrap.textContent = 'V'+version;
 
     //智慧搜索下拉菜单初始化
     const savedValue = localStorage.getItem("modelclass");
