@@ -29,7 +29,9 @@ class CustomTip extends HTMLElement {
                 }
                 .custom-block a{
                     font-size: 16px;
-                    
+                    color: #006aff;
+                    text-decoration: none;
+                    font-weight: bolder;
                 }
                 .custom-block {
                 margin: 16px 0;

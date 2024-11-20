@@ -70,7 +70,6 @@ model_list.addEventListener("change", function () {
     InitializeModelSetList(); //刷新模型设置列表
 });
 
-
 // 在API密钥输入框中显示保存的密钥
 function inputShowAPI() {
     const QwenKey_input = document.getElementById("QwenKey_input");
@@ -89,7 +88,6 @@ function inputShowAPI() {
         OpenAI_input.value = apikey3;
     }
 }
-
 
 // 离开输入框自动保存API密钥
 document.addEventListener('DOMContentLoaded', function () {
@@ -116,10 +114,9 @@ window.onload = function () {
     addChangeListeners(); // 为每个开关添加 change 事件监听器
 
     // 初始化版本号
-    localStorage.setItem("version", "0.1.5");//设置当前版本号
+    const manifest = chrome.runtime.getManifest(); // 获取 manifest.json 的内容
     const versionWrap = document.getElementById('versionWrap');
-    const version = localStorage.getItem("version");
-    versionWrap.textContent = 'V'+version;
+    versionWrap.textContent = 'V' + manifest.version;
 
     //智慧搜索下拉菜单初始化
     const savedValue = localStorage.getItem("modelclass");

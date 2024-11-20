@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Aidea起始页</title>
+  <title>AideaTabs</title>
   <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
   <link rel="shortcut icon" href="tablogo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -133,13 +133,12 @@
   <div id="dialog1" class="dialog">
     <div class="dialog-content">
       <span class="close"></span>
-      <div id="$markbody"></div>
+      <div id="$markbody1"></div>
       <custom-tip title="Linked files are not treated as assets" color="#646cff24" text_color="#3c3c43">
         PDFs or other documents referenced by links within markdown files are not automatically treated as assets. To
         make linked files accessible, you must manually place them within the <a
           href="#the-public-directory"><code>public</code></a> directory of your project.
       </custom-tip>
-
 
       <text-picture-right src="">
         <h1>使用 Google 密码管理工具创建的通行密钥现在可在计算机和 Android 设备上使用</h1>
@@ -150,8 +149,6 @@
             <li>使用 Google 密码管理工具 PIN 码或 Android 设备屏锁即可在多部设备上使用通行密钥。</li>
         </ol>
     </text-picture-right>
-
-
 
     <text-picture-left src="">
       <h1>使用 Google 密码管理工具创建的通行密钥现在可在计算机和 Android 设备上使用</h1>
@@ -166,10 +163,19 @@
     </div>
   </div>
 
+  <!-- dialog 弹窗示例
+  <div id="dialog2" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+
+    </div>
+  </div>
+  -->
+
 
 <!--Markdown 文本-->
   <!--弹窗信息文本-->
-  <textarea id="$marktext" style="display:none">
+  <textarea id="$marktext1" style="display:none">
 # Hello World
 *Write* `your` **Markdown** here.<kbd>Ctrl</kbd>
 ```c

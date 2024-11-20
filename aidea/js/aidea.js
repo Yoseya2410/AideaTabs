@@ -1,5 +1,5 @@
 surl = document.getElementById("search_input").value;
-/*定位到搜索框 */
+//定位到搜索框
 document.getElementById("search_input").focus();
 //判断用户代理是否为移动端
 try {
@@ -119,12 +119,12 @@ class Dialog {
   }
 }
 
-// 初始化 Dialog 弹窗
+// 注册 Dialog 弹窗
 const dialog1 = new Dialog(document.getElementById('dialog1'));
+//const dialog2 = new Dialog(document.getElementById('dialog2'));
 
 // 将 markdown 解析为 HTML
-$markbody.innerHTML = marked.parse($marktext.value);
-
+$markbody1.innerHTML = marked.parse($marktext1.value);
 
 //自定义快捷键(localStorage方法)
 function localStoragecustomkey(key) {
@@ -288,7 +288,7 @@ const config = {
     moonshot: {
       apiKey: apikey2,
       url: 'https://api.moonshot.cn/v1/chat/completions',
-      model: 'moonshot-v1-8k',
+      model: 'moonshot-v1-auto',
       temperature: Moonshot_temperature,
     },
     qwen: {
@@ -373,10 +373,36 @@ function createApiCaller(apiConfig) {
 **3. 请检查你的 API 密钥是否失效**:
 
 😴如果前两步都没有问题，那就是你的 API 密钥失效了，去供应商那里看看吧，我先休息了。`
-
             );
           } else if (response.status === 429) {
-            typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+            const error_429 = localStorage.getItem('error_429');
+            if (error_429) {
+              if (error_429 == "1") {
+                typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+                localStorage.setItem("error_429", "2");
+              } else if (error_429 == "2") {
+                typeText('bot', `😡不是说了吗？休息一会！你问什么问？`);
+                localStorage.setItem("error_429", "3");
+              } else if (error_429 == "3") {
+                localStorage.setItem("error_429", "true");
+                typeText('bot', `😵拒绝请求: ${response.status} ${response.statusText}
+ 
+ 拒绝请求有以下几种可能：
+ 
+ **1. 当前并发请求过多，节点限流中，请稍后重试**：
+ 
+ 😤 都说了休息一会，你不听，现在消停了吧！
+ 
+ **2. 资源已耗尽，账户里没钱了**：
+ 
+ 😱 快！快！快！快去充钱！`);
+              } else {
+                typeText('bot', `😵拒绝请求: ${response.status} ${response.statusText}`);
+              }
+            } else {
+              typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+              localStorage.setItem("error_429", "1");
+            }
           } else {
             console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
             typeText('bot', `😵请求失败: ${response.status} ${response.statusText}`);
@@ -391,6 +417,8 @@ function createApiCaller(apiConfig) {
 
         return;
       }
+
+      localStorage.removeItem("error_429");
 
       const data = await response.json();
       //用于调试智慧搜索API响应
@@ -861,9 +889,7 @@ function onKeyDown() {
       }
       return false;
     }
-  
   */
-
     const shortcuts = {
       49: '1',
       50: '2',
@@ -926,8 +952,12 @@ function base64(file) {
 //点击事件替代(右键点击)
 var targetArea = document.getElementById("targetArea");
 targetArea.oncontextmenu = function () {
-  file1.click();
-  return false; //阻止浏览器的默认的行为
+  if (localStorage.getItem('searchMode') == "ai") {
+    //console.log("AI处理文件");
+  }else{
+    file1.click();
+    return false; //阻止浏览器的默认的行为
+  }
 };
 //控件选中
 file1.onchange = function () {
@@ -967,9 +997,13 @@ targetArea.ondragleave = function (e) {
 };
 //拖拽选中
 targetArea.ondrop = function (e) {
-  e = e || window.event;
-  var file = e.dataTransfer.files[0];
-  base64(file);
+  if (localStorage.getItem('searchMode') == "ai") {
+    //console.log("AI处理文件");
+  } else {
+    e = e || window.event;
+    var file = e.dataTransfer.files[0];
+    base64(file);
+  }
 };
 
 /*图标自定义*/
@@ -1209,3 +1243,20 @@ stow.onclick = function () {
   more.style.display = "inline";
   window.localStorage.removeItem("stowvalu");
 };
+
+
+// 仅在作为浏览器扩展时执行
+if (typeof chrome !== 'undefined' && typeof chrome.runtime !== 'undefined') {
+
+  //新版本更新初始化
+  const version = localStorage.getItem("version");
+  const manifest = chrome.runtime.getManifest();
+  if (version != manifest.version) {
+    localStorage.setItem("version", manifest.version);
+    dialog1.open()
+    console.log("执行");
+
+  }
+
+}
+
