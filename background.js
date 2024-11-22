@@ -36,32 +36,30 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
     { content: "必应搜索 " + text, description: "必应搜索 " + text },
     { content: "哔哩哔哩 " + text, description: "哔哩哔哩 " + text },
     { content: "翻译 " + text, description: "翻译 " + text },
-    { content: "知网 " + text, description: "知网 " + text },
     
   ]);
 });
 // 当用户接收关键字建议时触发
 chrome.omnibox.onInputEntered.addListener((text) => {
-  //console.log("inputEntered: " + text);
   if (!text) return;
-  var href = "";
-  if (text.endsWith("使用说明"))
-    href = "https://yoseya.top/aidea/instructions.html";//跳转到使用说明
-  else if (text.startsWith("百度搜索"))
-    href = "https://www.baidu.com/s?ie=UTF-8&wd=" + text.replace("百度搜索 ", "");
-  else if (text.startsWith("谷歌搜索"))
-    href = "https://www.google.com/search?q=" + text.replace("谷歌搜索 ", "");
-  else if (text.startsWith("必应搜索"))
-    href = "https://cn.bing.com/search?q=" + text.replace("必应搜索 ", "");
-  else if (text.startsWith("哔哩哔哩"))
-    href = "https://search.bilibili.com/all?keyword=" + text.replace("哔哩哔哩 ", "");
-  else if (text.startsWith("翻译"))
-    href = "https://fanyi.baidu.com/#en/zh/" + text.replace("翻译 ", "");
-  else if (text.startsWith("知网"))
-    href = "https://kns.cnki.net/kns8/defaultresult/index?kw=" + text.replace("知网 ", "");
-    
-  else
-    href = "https://www.baidu.com/s?ie=UTF-8&wd=" + text;
+
+  let href = "";
+  if (text.endsWith("使用说明")) {
+    href = "https://yoseya.top/aidea/instructions.html"; // 跳转到使用说明
+  } else if (text.startsWith("百度搜索")) {
+    href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text.replace("百度搜索 ", ""));
+  } else if (text.startsWith("谷歌搜索")) {
+    href = "https://www.google.com/search?q=" + encodeURIComponent(text.replace("谷歌搜索 ", ""));
+  } else if (text.startsWith("必应搜索")) {
+    href = "https://cn.bing.com/search?q=" + encodeURIComponent(text.replace("必应搜索 ", ""));
+  } else if (text.startsWith("哔哩哔哩")) {
+    href = "https://search.bilibili.com/all?keyword=" + encodeURIComponent(text.replace("哔哩哔哩 ", ""));
+  } else if (text.startsWith("翻译")) {
+    href = "https://fanyi.baidu.com/#en/zh/" + encodeURIComponent(text.replace("翻译 ", ""));
+  } else {
+    href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text);
+  }
+
   openUrlCurrentTab(href);
 });
 
@@ -97,23 +95,36 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener(function (info) {
-  if (info.menuItemId == "baidum") {
-    chrome.tabs.create({ url: 'https://www.baidu.com/s?ie=utf-8&wd=' + encodeURI(info.selectionText) });
+  if (!info.selectionText) {
+    console.log('No text selected');
+    return;
   }
-});
-chrome.contextMenus.onClicked.addListener(function (info) {
-  if (info.menuItemId == "googlem") {
-    chrome.tabs.create({ url: 'https://www.google.com/search?q=' + encodeURI(info.selectionText) });
+
+  let url = '';
+  switch (info.menuItemId) {
+    case 'baidum':
+      url = 'https://www.baidu.com/s?ie=utf-8&wd=' + encodeURI(info.selectionText);
+      break;
+    case 'googlem':
+      url = 'https://www.google.com/search?q=' + encodeURI(info.selectionText);
+      break;
+    case 'bingm':
+      url = 'https://cn.bing.com/search?q=' + encodeURI(info.selectionText);
+      break;
+    case 'translate':
+      url = 'https://fanyi.baidu.com/#en/zh/' + encodeURI(info.selectionText);
+      break;
+    default:
+      console.log('Unknown menu item clicked');
+      return;
   }
-});
-chrome.contextMenus.onClicked.addListener(function (info) {
-  if (info.menuItemId == "bingm") {
-    chrome.tabs.create({ url: 'https://cn.bing.com/search?q=' + encodeURI(info.selectionText) });
-  }
-});
-chrome.contextMenus.onClicked.addListener(function (info) {
-  if (info.menuItemId == "translate") {
-    chrome.tabs.create({ url: 'https://fanyi.baidu.com/#en/zh/' + encodeURI(info.selectionText) });
+
+  if (url) {
+    chrome.tabs.create({ url: url }, function (tab) {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to create tab:', chrome.runtime.lastError);
+      }
+    });
   }
 });
 
