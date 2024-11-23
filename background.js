@@ -75,7 +75,6 @@ chrome.omnibox.onInputEntered.addListener((text) => {
 
     //href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text);
   }
-  //sk-e18c5f797 c3a44ca9b21 8c4602cc99cd
   //openUrlCurrentTab(href);
 });
 

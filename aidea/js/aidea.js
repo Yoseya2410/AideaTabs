@@ -57,7 +57,7 @@ function extractDomain(url) {
 function extractPrimaryDomain(url) {
   try {
     const hostname = new URL(url).hostname;
-    const parts = hostname.split('.').reverse();
+    const parts = hostname.split(".").reverse();
     if (parts.length > 1) {
       return `${parts[1]}.${parts[0]}`;
     }
@@ -67,25 +67,25 @@ function extractPrimaryDomain(url) {
   }
 }
 
-// Dialog 弹窗 
+// Dialog 弹窗
 //dialog1.open() 打开弹窗  dialog1.close()关闭弹窗
 class Dialog {
   constructor(modalElement, options = {}) {
     this.dialog = modalElement;
     this.options = {
       closeOnOutsideClick: true,
-      ...options
+      ...options,
     };
 
-    this.closeButton = this.dialog.querySelector('.close');
+    this.closeButton = this.dialog.querySelector(".close");
     this.init(); // 初始化弹窗
   }
 
   // 初始化弹窗
   init() {
-    this.closeButton.addEventListener('click', () => this.close()); // 绑定关闭按钮点击事件
+    this.closeButton.addEventListener("click", () => this.close()); // 绑定关闭按钮点击事件
     if (this.options.closeOnOutsideClick) {
-      window.addEventListener('click', this.handleOutsideClick.bind(this)); // 绑定点击外部关闭事件
+      window.addEventListener("click", this.handleOutsideClick.bind(this)); // 绑定点击外部关闭事件
     }
   }
 
@@ -98,29 +98,36 @@ class Dialog {
 
   // 打开弹窗
   open() {
-    this.dialog.classList.add('show');
+    this.dialog.classList.add("show");
   }
 
   // 关闭弹窗
   close() {
-    this.dialog.classList.remove('show');
-    this.dialog.addEventListener('transitionend', this.handleTransitionEnd.bind(this)); // 监听过渡结束事件
+    this.dialog.classList.remove("show");
+    this.dialog.addEventListener(
+      "transitionend",
+      this.handleTransitionEnd.bind(this)
+    ); // 监听过渡结束事件
   }
 
   // 处理过渡结束事件
   handleTransitionEnd(event) {
-    if (!this.dialog.classList.contains('show')) { // 如果弹窗已关闭
+    if (!this.dialog.classList.contains("show")) {
+      // 如果弹窗已关闭
       // 移除样式保证弹窗二次使用
-      this.dialog.style.removeProperty('visibility');
-      this.dialog.style.removeProperty('opacity');
-      this.dialog.style.removeProperty('backdrop-filter');
+      this.dialog.style.removeProperty("visibility");
+      this.dialog.style.removeProperty("opacity");
+      this.dialog.style.removeProperty("backdrop-filter");
     }
-    this.dialog.removeEventListener('transitionend', this.handleTransitionEnd.bind(this)); // 移除过渡结束事件监听器
+    this.dialog.removeEventListener(
+      "transitionend",
+      this.handleTransitionEnd.bind(this)
+    ); // 移除过渡结束事件监听器
   }
 }
 
 // 注册 Dialog 弹窗
-const dialog1 = new Dialog(document.getElementById('dialog1'));
+const dialog1 = new Dialog(document.getElementById("dialog1"));
 //const dialog2 = new Dialog(document.getElementById('dialog2'));
 
 // 将 markdown 解析为 HTML
@@ -135,28 +142,26 @@ function localStoragecustomkey(key) {
       "例如:https://www.google.com/search?q=%s"
     );
     if (Response === null) {
-      history.go(0)
+      history.go(0);
     } else {
       window.localStorage.setItem(key, Response);
     }
   } else {
     // 快捷键搜索事件
-    const searchInput = document.getElementById('search_input');
+    const searchInput = document.getElementById("search_input");
     if (searchInput.value.trim()) {
       // 当搜索框有内容
       var searchValue = document.getElementById("search_input").value;
-      var finalUrl = storevalue.replace('%s', encodeURIComponent(searchValue));
-      window.location.href = finalUrl
+      var finalUrl = storevalue.replace("%s", encodeURIComponent(searchValue));
+      window.location.href = finalUrl;
     } else {
       // 当搜索框无内容
-      var finalUrl = extractPrimaryDomain(storevalue)
-      window.location.href = "http://" + finalUrl
+      var finalUrl = extractPrimaryDomain(storevalue);
+      window.location.href = "http://" + finalUrl;
       //console.log(finalUrl);
     }
-
   }
 }
-
 
 //重置快捷键(localStorage方法)
 function handleResetShortcut(keyCode, altKey, signKey) {
@@ -170,7 +175,7 @@ function handleResetShortcut(keyCode, altKey, signKey) {
       window.localStorage.setItem(signKey, "Registered");
     }
   }
-  history.go(0)
+  history.go(0);
 }
 
 function localStorageresetkey(key) {
@@ -258,34 +263,43 @@ function none() {
 }
 
 // 内测邀请码
-chrome.storage.local.get("testKey", (result) => {
-  if (result && result.testKey) {
-    const testkey = result.testKey;
-    localStorage.setItem("testKey", testkey);
-    //console.log(testkey);
-  } else {
-    //console.log("testKey not found");
-  }
-});
-const Aikey = localStorage.getItem('testKey') + "8c4602cc99cd";
+if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
+  chrome.storage.local.get("testKey", (result) => {
+    if (result && result.testKey) {
+      const testkey = result.testKey;
+      localStorage.setItem("testKey", testkey);
+      //console.log(testkey);
+    } else {
+      //console.log("testKey not found");
+    }
+  });
+  /*用于清除内测邀请码*/
+  chrome.storage.local.clear(() => {
+    //console.log("All data in chrome.storage.local has been cleared.");
+  });
+}
+const Aikey = localStorage.getItem("testKey") + "8c4602cc99cd";
 
-/*用于清除内测邀请码*/
-chrome.storage.local.clear(() => {
-  //console.log("All data in chrome.storage.local has been cleared.");
-});
 
+const apikey1 = localStorage.getItem("apikey1");
+const apikey2 = localStorage.getItem("apikey2");
+const apikey3 = localStorage.getItem("apikey3");
 
-const apikey1 = localStorage.getItem('apikey1');
-const apikey2 = localStorage.getItem('apikey2');
-const apikey3 = localStorage.getItem('apikey3');
+const aidea_search = JSON.parse(localStorage.getItem("set3"));
+const qwen_search = JSON.parse(localStorage.getItem("set4"));
 
-const aidea_search = JSON.parse(localStorage.getItem('set3'));
-const qwen_search = JSON.parse(localStorage.getItem('set4'));
-
-const Moonshot_temperature = parseFloat(localStorage.getItem('SeekBarMoonshot_temperature'));
-const Qwen_temperature = parseFloat(localStorage.getItem('SeekBarQwen_temperature'));
-const Aidea_temperature = parseFloat(localStorage.getItem('SeekBarAidea_temperature'));
-const OpenAI_temperature = parseFloat(localStorage.getItem('SeekBarOpenAI_temperature'));
+const Moonshot_temperature = parseFloat(
+  localStorage.getItem("SeekBarMoonshot_temperature")
+);
+const Qwen_temperature = parseFloat(
+  localStorage.getItem("SeekBarQwen_temperature")
+);
+const Aidea_temperature = parseFloat(
+  localStorage.getItem("SeekBarAidea_temperature")
+);
+const OpenAI_temperature = parseFloat(
+  localStorage.getItem("SeekBarOpenAI_temperature")
+);
 
 // 初始化历史对话记录
 let messageslist = [
@@ -294,56 +308,55 @@ let messageslist = [
     content: [
       "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information",
       "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
-      "Refine and directly answer questions"
-    ].join("\n")
-  }
+      "Refine and directly answer questions",
+    ].join("\n"),
+  },
 ];
-
 
 // 配置大模型
 const config = {
   apis: {
     moonshot: {
       apiKey: apikey2,
-      url: 'https://api.moonshot.cn/v1/chat/completions',
-      model: 'moonshot-v1-auto',
+      url: "https://api.moonshot.cn/v1/chat/completions",
+      model: "moonshot-v1-auto",
       temperature: Moonshot_temperature,
     },
     qwen: {
       apiKey: apikey1,
-      url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-      model: 'qwen-plus',
+      url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+      model: "qwen-plus",
       enable_search: qwen_search,
       temperature: Qwen_temperature,
     },
     AideaIntelligence: {
       apiKey: Aikey,
-      url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-      model: 'qwen-turbo',
+      url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+      model: "qwen-turbo",
       enable_search: aidea_search,
       temperature: Aidea_temperature,
     },
     openai: {
       apiKey: apikey3,
-      url: 'https://api.openai.com/v1/chat/completions',
-      model: 'gpt-4o-mini',
+      url: "https://api.openai.com/v1/chat/completions",
+      model: "gpt-4o-mini",
       temperature: OpenAI_temperature,
     },
-  }
+  },
 };
 
 // 获取聊天显示区域和用户输入框
-const chatPrint = document.getElementById('chat_print');
-const userInput = document.getElementById('search_input');
-const output = document.getElementById('output');
+const chatPrint = document.getElementById("chat_print");
+const userInput = document.getElementById("search_input");
+const output = document.getElementById("output");
 
 // 初始化累积计数器
 function initializeTokenCounters() {
-  if (!localStorage.getItem('totalPromptTokens')) {
-    localStorage.setItem('totalPromptTokens', 0);
+  if (!localStorage.getItem("totalPromptTokens")) {
+    localStorage.setItem("totalPromptTokens", 0);
   }
-  if (!localStorage.getItem('totalCompletionTokens')) {
-    localStorage.setItem('totalCompletionTokens', 0);
+  if (!localStorage.getItem("totalCompletionTokens")) {
+    localStorage.setItem("totalCompletionTokens", 0);
   }
 }
 
@@ -358,18 +371,18 @@ function createApiCaller(apiConfig) {
       temperature: apiConfig.temperature,
       parameters: {
         //qwen temperature
-        temperature: apiConfig.temperature
-      }
+        temperature: apiConfig.temperature,
+      },
     };
 
     try {
       const response = await fetch(apiConfig.url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiConfig.apiKey}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiConfig.apiKey}`,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -378,9 +391,13 @@ function createApiCaller(apiConfig) {
         if (modelclassExist) {
           if (response.status === 401) {
             if (modelclassExist == "Aidea") {
-              typeText('bot', `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码🥳。如果您没有收到邀请，先试试第三方模型🤖吧！`);
+              typeText(
+                "bot",
+                `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码🥳。如果您没有收到邀请，先试试第三方模型🤖吧！`
+              );
             } else {
-              typeText('bot',
+              typeText(
+                "bot",
                 `🤔 你的密钥出现了问题，请按照我说的一步一步进行排查：
 
 **1. 请检查你的 API 密钥是否填写**:
@@ -396,19 +413,20 @@ function createApiCaller(apiConfig) {
 😴如果前两步都没有问题，那就是你的 API 密钥失效了，去供应商那里看看吧，我先休息了。`
               );
             }
-
           } else if (response.status === 429) {
-            const error_429 = localStorage.getItem('error_429');
+            const error_429 = localStorage.getItem("error_429");
             if (error_429) {
               if (error_429 == "1") {
-                typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+                typeText("bot", `😵‍💫用脑过度了，让我休息一会。`);
                 localStorage.setItem("error_429", "2");
               } else if (error_429 == "2") {
-                typeText('bot', `😡不是说了吗？休息一会！你问什么问？`);
+                typeText("bot", `😡不是说了吗？休息一会！你问什么问？`);
                 localStorage.setItem("error_429", "3");
               } else if (error_429 == "3") {
                 localStorage.setItem("error_429", "true");
-                typeText('bot', `😵拒绝请求: ${response.status} ${response.statusText}
+                typeText(
+                  "bot",
+                  `😵拒绝请求: ${response.status} ${response.statusText}
  
  拒绝请求有以下几种可能：
  
@@ -418,20 +436,30 @@ function createApiCaller(apiConfig) {
  
  **2. 资源已耗尽，账户里没钱了**：
  
- 😱 快！快！快！快去充钱！`);
+ 😱 快！快！快！快去充钱！`
+                );
               } else {
-                typeText('bot', `😵拒绝请求: ${response.status} ${response.statusText}`);
+                typeText(
+                  "bot",
+                  `😵拒绝请求: ${response.status} ${response.statusText}`
+                );
               }
             } else {
-              typeText('bot', `😵‍💫用脑过度了，让我休息一会。`);
+              typeText("bot", `😵‍💫用脑过度了，让我休息一会。`);
               localStorage.setItem("error_429", "1");
             }
           } else {
-            console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
-            typeText('bot', `😵请求失败: ${response.status} ${response.statusText}`);
+            console.error(
+              `HTTP error! status: ${response.status}, message: ${errorMessage}`
+            );
+            typeText(
+              "bot",
+              `😵请求失败: ${response.status} ${response.statusText}`
+            );
           }
         } else {
-          typeText('bot',
+          typeText(
+            "bot",
             `你好，欢迎使用 Aidea 智慧搜索！👏
 
 现在，你需要在 扩展 ——> AideaTabs 中进行设置，选择你使用的模型，告诉我你的偏好。让我们在网络中开启新的旅途！🗺️`
@@ -453,35 +481,42 @@ function createApiCaller(apiConfig) {
       const modelBilling = localStorage.getItem("modelclass");
 
       // 累积 tokens 数量
-      let totalPromptTokens = parseInt(localStorage.getItem('totalPromptTokens'));
-      let totalCompletionTokens = parseInt(localStorage.getItem('totalCompletionTokens'));
+      let totalPromptTokens = parseInt(
+        localStorage.getItem("totalPromptTokens")
+      );
+      let totalCompletionTokens = parseInt(
+        localStorage.getItem("totalCompletionTokens")
+      );
       //当使用 Aidea Intelligence 时累积 tokens
       if (modelBilling == "Aidea") {
         totalPromptTokens += promptTokens;
         totalCompletionTokens += completionTokens;
       }
       // 保存到 localStorage
-      localStorage.setItem('totalPromptTokens', totalPromptTokens);
-      localStorage.setItem('totalCompletionTokens', totalCompletionTokens);
+      localStorage.setItem("totalPromptTokens", totalPromptTokens);
+      localStorage.setItem("totalCompletionTokens", totalCompletionTokens);
 
       // 控制台输出累积的 tokens 数
       //console.log(`Total Prompt Tokens: ${totalPromptTokens}\nTotal Completion Tokens: ${totalCompletionTokens}`);
 
       // 逐字显示机器人回复
-      typeText('bot', data.choices[0].message.content);
+      typeText("bot", data.choices[0].message.content);
 
       //记忆开关，若开关关闭，机器人将无法知道它自己说了什么
-      if (localStorage.getItem('set2')) {
+      if (localStorage.getItem("set2")) {
         // 将机器人回复添加到历史对话记录
         messageslist.push(data.choices[0].message);
         //console.log("已开启记忆")
       } else {
         //console.log("关闭记忆")
       }
-
     } catch (error) {
       //console.error('Error:', error);
-      typeText('bot', '😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：' + error);
+      typeText(
+        "bot",
+        "😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：" +
+        error
+      );
     }
   };
 }
@@ -502,23 +537,24 @@ const apiCallers = {
 // 发送消息函数
 function sendMessage() {
   const message = userInput.value.trim(); // 获取并修剪用户输入
-  if (message === '') return; // 如果输入为空，不发送消息
+  if (message === "") return; // 如果输入为空，不发送消息
 
   // 显示用户消息
-  addMessage('user', message);
+  addMessage("user", message);
 
   // 将用户消息添加到历史对话记录
   messageslist.push({ role: "user", content: message });
 
   // 清空输入框
-  userInput.value = '';
+  userInput.value = "";
 
   // 根据选择调用相应的API
-  const selectedApi = localStorage.getItem('modelclass');
+  const selectedApi = localStorage.getItem("modelclass");
   if (selectedApi) {
     apiCallers[selectedApi](message);
   } else {
-    typeText('bot',
+    typeText(
+      "bot",
       `你好，欢迎使用 Aidea 智慧搜索！👏
 
 现在，你需要在 扩展 → AideaTabs 中进行设置，选择你使用的模型，告诉我你的偏好。让我们在网络中开启新的旅途！🗺️`
@@ -528,8 +564,8 @@ function sendMessage() {
 
 // 添加消息到聊天记录
 function addMessage(role, message) {
-  const messageElement = document.createElement('div');
-  messageElement.classList.add('message-bubble', role);
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message-bubble", role);
   messageElement.innerHTML = marked.parse(message);
   output.appendChild(messageElement);
   output.scrollTop = output.scrollHeight;
@@ -537,8 +573,8 @@ function addMessage(role, message) {
 
 // 逐字显示文本
 function typeText(role, text) {
-  const messageElement = document.createElement('div');
-  messageElement.classList.add('message-bubble', role);
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message-bubble", role);
   messageElement.innerHTML = marked.parse(text);
   output.appendChild(messageElement);
   output.scrollTop = output.scrollHeight;
@@ -572,13 +608,10 @@ function typeText(role, text) {
 // 初始化 token 计数器
 initializeTokenCounters();
 
-
-
 /*引擎切换*/
 var searchlogo = document.getElementById("searchlogo");
 var dromenu = document.getElementById("dropdown-menu");
 var timenull = null;
-
 
 //鼠标离开搜索引擎菜单后自动关闭菜单
 dromenu.onmouseover = dromenu.onmouseover = function () {
@@ -596,18 +629,17 @@ searchlogo.onclick = function () {
   document.getElementById("box").style.display = "none";
 };
 //点击智慧搜索图标
-var aisearchlogo = document.getElementById("aisearchlogo")
+var aisearchlogo = document.getElementById("aisearchlogo");
 aisearchlogo.onclick = function () {
   window.localStorage.setItem("searchMode", "");
   document.getElementById("aisearchlogo").style.display = "none";
   document.getElementById("searchlogo").style.display = "inline";
   document.getElementById("search_input").placeholder = "搜索或输入网址";
   document.getElementById("chat_window").style.height = "0";
-
 };
 
 //判断搜索模式
-var searchMode = localStorage.getItem('searchMode');
+var searchMode = localStorage.getItem("searchMode");
 if (searchMode == null || searchMode == "null" || searchMode == "") {
   document.getElementById("aisearchlogo").style.display = "none";
   document.getElementById("searchlogo").style.display = "inline";
@@ -615,7 +647,6 @@ if (searchMode == null || searchMode == "null" || searchMode == "") {
   document.getElementById("aisearchlogo").style.display = "inline";
   document.getElementById("searchlogo").style.display = "none";
   document.getElementById("search_input").placeholder = "有什么问题尽管问我";
-
 }
 
 //引擎菜单选项事件
@@ -689,7 +720,7 @@ const buttonUrlDef = [
   { id: "bilibili", nameKey: "buttonName4", urlKey: "buttonUrl4" },
   { id: "zhihu", nameKey: "buttonName5", urlKey: "buttonUrl5" },
   { id: "github", nameKey: "buttonName6", urlKey: "buttonUrl6" },
-  { id: "more", nameKey: "buttonName7", urlKey: "buttonUrl7" }
+  { id: "more", nameKey: "buttonName7", urlKey: "buttonUrl7" },
 ];
 
 // 按钮更改填写
@@ -714,25 +745,60 @@ function updateButton(buttonConfig, buttonElement) {
 }
 
 // 为每个按钮绑定右键点击事件
-buttonUrlDef.forEach(buttonConfig => {
+buttonUrlDef.forEach((buttonConfig) => {
   const buttonElement = document.getElementById(buttonConfig.id);
   buttonElement.oncontextmenu = () => updateButton(buttonConfig, buttonElement);
 });
 
 // 定义按钮配置
 const searchButtons = [
-  { button: urlbutton1, nameKey: "buttonName1", urlKey: "buttonUrl1", defaultText: "Baidu" },
-  { button: urlbutton2, nameKey: "buttonName2", urlKey: "buttonUrl2", defaultText: "Google" },
-  { button: urlbutton3, nameKey: "buttonName3", urlKey: "buttonUrl3", defaultText: "Bing" },
-  { button: urlbutton4, nameKey: "buttonName4", urlKey: "buttonUrl4", defaultText: "bilibili" },
-  { button: urlbutton5, nameKey: "buttonName5", urlKey: "buttonUrl5", defaultText: "知乎" },
-  { button: urlbutton6, nameKey: "buttonName6", urlKey: "buttonUrl6", defaultText: "GitHub" },
-  { button: urlbutton7, nameKey: "buttonName7", urlKey: "buttonUrl7", defaultText: "翻译" }
+  {
+    button: urlbutton1,
+    nameKey: "buttonName1",
+    urlKey: "buttonUrl1",
+    defaultText: "Baidu",
+  },
+  {
+    button: urlbutton2,
+    nameKey: "buttonName2",
+    urlKey: "buttonUrl2",
+    defaultText: "Google",
+  },
+  {
+    button: urlbutton3,
+    nameKey: "buttonName3",
+    urlKey: "buttonUrl3",
+    defaultText: "Bing",
+  },
+  {
+    button: urlbutton4,
+    nameKey: "buttonName4",
+    urlKey: "buttonUrl4",
+    defaultText: "bilibili",
+  },
+  {
+    button: urlbutton5,
+    nameKey: "buttonName5",
+    urlKey: "buttonUrl5",
+    defaultText: "知乎",
+  },
+  {
+    button: urlbutton6,
+    nameKey: "buttonName6",
+    urlKey: "buttonUrl6",
+    defaultText: "GitHub",
+  },
+  {
+    button: urlbutton7,
+    nameKey: "buttonName7",
+    urlKey: "buttonUrl7",
+    defaultText: "翻译",
+  },
 ];
 
 // 更改按钮名称
 function updateButtonNames() {
-  searchButtons.forEach(buttonConfig => {
+  searchButtons.forEach((buttonConfig) => {
     const nameValue = window.localStorage.getItem(buttonConfig.nameKey);
     if (nameValue && nameValue !== "null" && nameValue !== "") {
       buttonConfig.button.innerHTML = nameValue;
@@ -742,7 +808,7 @@ function updateButtonNames() {
 
 // 重置按钮设置
 function resetButtonSettings() {
-  searchButtons.forEach(buttonConfig => {
+  searchButtons.forEach((buttonConfig) => {
     buttonConfig.button.onmouseup = function (e) {
       if (e.button === 1) {
         const confirmReset = confirm("你要重置此按钮吗？");
@@ -764,14 +830,13 @@ resetButtonSettings();
 var search_bar = document.getElementById("search_bar");
 search_bar.onsubmit = function () {
   surl = document.getElementById("search_input").value;
-  var searchMode = localStorage.getItem('searchMode');
+  var searchMode = localStorage.getItem("searchMode");
   var enginevalue = localStorage.getItem("engine");
   document.getElementById("box").style.display = "none";
 
   if (surl == "") {
   } else {
     if (searchMode == null || searchMode == "null" || searchMode == "") {
-
       if (enginevalue == null || enginevalue == "null" || enginevalue == "") {
         search();
         if (UAvalue == "1") {
@@ -808,17 +873,16 @@ search_bar.onsubmit = function () {
       //智慧搜索
 
       //对话框屏幕适配
-      const chatWindow = document.getElementById('chat_window');
-      if (chatWindow.style.height = "0") {
-
+      const chatWindow = document.getElementById("chat_window");
+      if ((chatWindow.style.height = "0")) {
         if (window.innerWidth <= 500) {
-          chatWindow.style.height = '370px';
+          chatWindow.style.height = "370px";
         } else {
           if (window.innerWidth <= 560) {
-            chatWindow.style.height = '360px';
+            chatWindow.style.height = "360px";
           } else {
             if (window.innerWidth <= 750) {
-              chatWindow.style.height = '350px';
+              chatWindow.style.height = "350px";
             } else {
               chatWindow.style.height = "300px";
             }
@@ -826,10 +890,10 @@ search_bar.onsubmit = function () {
         }
         //等对话框完全展开后再对话
         setTimeout(function () {
-          sendMessage()
+          sendMessage();
         }, 1000);
       } else {
-        sendMessage()
+        sendMessage();
       }
     }
   }
@@ -837,9 +901,9 @@ search_bar.onsubmit = function () {
 };
 
 //选中搜索框事件
-document.addEventListener('DOMContentLoaded', function () {
-  const search_input = document.getElementById('search_input');
-  search_input.addEventListener('focus', function () {
+document.addEventListener("DOMContentLoaded", function () {
+  const search_input = document.getElementById("search_input");
+  search_input.addEventListener("focus", function () {
     document.getElementById("box").style.display = "none";
   });
 });
@@ -864,7 +928,11 @@ function onKeyDown() {
     //搜索框填入上次搜索的内容
     if (window.event.altKey && window.event.keyCode === 72) {
       var historyvalue = window.localStorage.getItem("history");
-      if (historyvalue == null || historyvalue == "null" || historyvalue == "") {
+      if (
+        historyvalue == null ||
+        historyvalue == "null" ||
+        historyvalue == ""
+      ) {
       } else {
         document.getElementById("search_input").value = historyvalue;
       }
@@ -914,37 +982,36 @@ function onKeyDown() {
     }
   */
     const shortcuts = {
-      49: '1',
-      50: '2',
-      51: '3',
-      52: '4',
-      53: '5',
-      54: '6',
-      55: '7',
-      56: '8',
-      57: '9',
-      48: '0',
-      188: ',',
-      190: '.',
-      191: '/'
+      49: "1",
+      50: "2",
+      51: "3",
+      52: "4",
+      53: "5",
+      54: "6",
+      55: "7",
+      56: "8",
+      57: "9",
+      48: "0",
+      188: ",",
+      190: ".",
+      191: "/",
     };
 
     //快捷键自定义
-    document.addEventListener('keydown', (event) => {
+    document.addEventListener("keydown", (event) => {
       if (event.altKey && shortcuts[event.keyCode]) {
         const key = `alt+${shortcuts[event.keyCode]}`;
         localStoragecustomkey(key);
       }
     });
     //重置快捷键
-    document.addEventListener('keydown', (event) => {
+    document.addEventListener("keydown", (event) => {
       if (event.ctrlKey && shortcuts[event.keyCode]) {
         const altKey = shortcuts[event.keyCode];
         const signKey = `signkey${altKey}`; // 只有数字键有 signKey
         handleResetShortcut(event.keyCode, altKey, signKey);
       }
     });
-
   } else {
     //console.log('快捷键已关闭，请从扩展设置中打开');
   }
@@ -967,7 +1034,7 @@ function base64(file) {
       };
     } else {
       //其他类型文件处理,这里暂时用来处理拖进来的文本
-      var text = window.event.dataTransfer.getData('text');
+      var text = window.event.dataTransfer.getData("text");
       document.getElementById("search_input").value = text;
     }
   }
@@ -975,7 +1042,7 @@ function base64(file) {
 //点击事件替代(右键点击)
 var targetArea = document.getElementById("targetArea");
 targetArea.oncontextmenu = function () {
-  if (localStorage.getItem('searchMode') == "ai") {
+  if (localStorage.getItem("searchMode") == "ai") {
     //console.log("AI处理文件");
   } else {
     file1.click();
@@ -1020,7 +1087,7 @@ targetArea.ondragleave = function (e) {
 };
 //拖拽选中
 targetArea.ondrop = function (e) {
-  if (localStorage.getItem('searchMode') == "ai") {
+  if (localStorage.getItem("searchMode") == "ai") {
     //console.log("AI处理文件");
   } else {
     e = e || window.event;
@@ -1178,9 +1245,8 @@ baidu.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
-
   }
   none();
 };
@@ -1190,7 +1256,7 @@ google.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.google.com/search?q=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
   none();
@@ -1201,7 +1267,7 @@ bing.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.bing.com/search?q=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
   none();
@@ -1212,7 +1278,7 @@ bilibili.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://search.bilibili.com/all?keyword=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
   none();
@@ -1223,7 +1289,7 @@ zhihu.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.zhihu.com/search?q=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
   none();
@@ -1234,7 +1300,7 @@ github.onclick = function () {
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://github.com/search?q=" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
   none();
@@ -1255,7 +1321,7 @@ more.onclick = function () {
     //window.localStorage.setItem("stowvalu", "on");
     window.location.href = "https://fanyi.baidu.com/#en/zh/" + surl;
   } else {
-    var finalUrl = urlvalue.replace('%s', encodeURIComponent(surl));
+    var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
   }
 };
@@ -1267,19 +1333,14 @@ stow.onclick = function () {
   window.localStorage.removeItem("stowvalu");
 };
 
-
 // 仅在作为浏览器扩展时执行
-if (typeof chrome !== 'undefined' && typeof chrome.runtime !== 'undefined') {
-
+if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
   //新版本更新初始化
   const version = localStorage.getItem("version");
   const manifest = chrome.runtime.getManifest();
   if (version != manifest.version) {
     localStorage.setItem("version", manifest.version);
-    dialog1.open()
+    dialog1.open();
     console.log("执行");
-
   }
-
 }
-

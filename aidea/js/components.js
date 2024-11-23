@@ -350,6 +350,11 @@ class TextPictureRight extends HTMLElement {
                     margin-bottom: 10px;
                 }
             }
+            @media (prefers-color-scheme: dark) {
+                    h1, p, li {
+                        color:#e1e1db;
+                    }
+                }
         `;
 
         // 将所有内容添加到 shadow DOM
@@ -476,6 +481,11 @@ class TextPictureLeft extends HTMLElement {
                     margin-bottom: 10px;
                 }
             }
+            @media (prefers-color-scheme: dark) {
+                    h1, p, li {
+                        color:#e1e1db;
+                    }
+                }
         `;
 
         // 将所有内容添加到 shadow DOM
