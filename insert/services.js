@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Ctrl+空格 提示框
+  /* Ctrl+空格 提示框
   const tooltip = document.createElement('div');
   tooltip.style.position = 'absolute';
   tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; 
@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', function () {
   tooltip.style.whiteSpace = 'pre-wrap';
   tooltip.style.wordBreak = 'break-all';
   tooltip.style.display = 'none';
-  tooltip.style.zIndex = '99'; 
+  tooltip.style.zIndex = '9999'; 
   tooltip.style.overflow = 'hidden'; 
   tooltip.style.textOverflow = 'ellipsis'; 
-  tooltip.style.display = '-webkit-box';
+  tooltip.style.display = 'none';
   tooltip.style.webkitLineClamp = '5';
   tooltip.style.lineHeight = '1.6'; 
   tooltip.style.borderRadius = "10px"
@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
   });
-
-
+*/
 
 });

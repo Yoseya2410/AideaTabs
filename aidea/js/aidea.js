@@ -257,6 +257,24 @@ function none() {
   window.localStorage.setItem("history", surl);
 }
 
+// 内测邀请码
+chrome.storage.local.get("testKey", (result) => {
+  if (result && result.testKey) {
+    const testkey = result.testKey;
+    localStorage.setItem("testKey", testkey);
+    //console.log(testkey);
+  } else {
+    //console.log("testKey not found");
+  }
+});
+const Aikey = localStorage.getItem('testKey') + "8c4602cc99cd";
+
+/*用于清除内测邀请码*/
+chrome.storage.local.clear(() => {
+  //console.log("All data in chrome.storage.local has been cleared.");
+});
+
+
 const apikey1 = localStorage.getItem('apikey1');
 const apikey2 = localStorage.getItem('apikey2');
 const apikey3 = localStorage.getItem('apikey3');
@@ -299,7 +317,7 @@ const config = {
       temperature: Qwen_temperature,
     },
     AideaIntelligence: {
-      apiKey: "",
+      apiKey: Aikey,
       url: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       model: 'qwen-turbo',
       enable_search: aidea_search,
@@ -359,8 +377,11 @@ function createApiCaller(apiConfig) {
         const modelclassExist = localStorage.getItem("modelclass");
         if (modelclassExist) {
           if (response.status === 401) {
-            typeText('bot',
-              `🤔 你的密钥出现了问题，请按照我说的一步一步进行排查：
+            if (modelclassExist == "Aidea") {
+              typeText('bot', `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码🥳。如果您没有收到邀请，先试试第三方模型🤖吧！`);
+            } else {
+              typeText('bot',
+                `🤔 你的密钥出现了问题，请按照我说的一步一步进行排查：
 
 **1. 请检查你的 API 密钥是否填写**:
 
@@ -373,7 +394,9 @@ function createApiCaller(apiConfig) {
 **3. 请检查你的 API 密钥是否失效**:
 
 😴如果前两步都没有问题，那就是你的 API 密钥失效了，去供应商那里看看吧，我先休息了。`
-            );
+              );
+            }
+
           } else if (response.status === 429) {
             const error_429 = localStorage.getItem('error_429');
             if (error_429) {
@@ -954,7 +977,7 @@ var targetArea = document.getElementById("targetArea");
 targetArea.oncontextmenu = function () {
   if (localStorage.getItem('searchMode') == "ai") {
     //console.log("AI处理文件");
-  }else{
+  } else {
     file1.click();
     return false; //阻止浏览器的默认的行为
   }

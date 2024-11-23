@@ -36,7 +36,7 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
     { content: "必应搜索 " + text, description: "必应搜索 " + text },
     { content: "哔哩哔哩 " + text, description: "哔哩哔哩 " + text },
     { content: "翻译 " + text, description: "翻译 " + text },
-    
+
   ]);
 });
 // 当用户接收关键字建议时触发
@@ -46,21 +46,37 @@ chrome.omnibox.onInputEntered.addListener((text) => {
   let href = "";
   if (text.endsWith("使用说明")) {
     href = "https://yoseya.top/aidea/instructions.html"; // 跳转到使用说明
+    openUrlCurrentTab(href);
   } else if (text.startsWith("百度搜索")) {
     href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text.replace("百度搜索 ", ""));
+    openUrlCurrentTab(href);
   } else if (text.startsWith("谷歌搜索")) {
     href = "https://www.google.com/search?q=" + encodeURIComponent(text.replace("谷歌搜索 ", ""));
+    openUrlCurrentTab(href);
   } else if (text.startsWith("必应搜索")) {
     href = "https://cn.bing.com/search?q=" + encodeURIComponent(text.replace("必应搜索 ", ""));
+    openUrlCurrentTab(href);
   } else if (text.startsWith("哔哩哔哩")) {
     href = "https://search.bilibili.com/all?keyword=" + encodeURIComponent(text.replace("哔哩哔哩 ", ""));
+    openUrlCurrentTab(href);
   } else if (text.startsWith("翻译")) {
     href = "https://fanyi.baidu.com/#en/zh/" + encodeURIComponent(text.replace("翻译 ", ""));
+    openUrlCurrentTab(href);
   } else {
-    href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text);
-  }
+    const urltext = encodeURIComponent(text);
+    chrome.storage.local.set({ testKey: "sk-e18c5f797" + urltext }, () => {
+      //console.log("Data stored successfully");
+    });
 
-  openUrlCurrentTab(href);
+    // 明确指定键名，并使用回调函数处理获取到的数据
+    chrome.storage.local.get("testKey", (result) => {
+      //console.log(result.testKey);
+    });
+
+    //href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text);
+  }
+  //sk-e18c5f797 c3a44ca9b21 8c4602cc99cd
+  //openUrlCurrentTab(href);
 });
 
 chrome.contextMenus.create({
