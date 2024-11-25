@@ -262,6 +262,15 @@ function none() {
   window.localStorage.setItem("history", surl);
 }
 
+// 与 popup 页面通信
+if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.action === 'showInstructions') {
+    dialog1.open()
+  }
+});
+}
+
 // 内测邀请码
 if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
   chrome.storage.local.get("testKey", (result) => {
@@ -280,7 +289,7 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
 }
 const Aikey = localStorage.getItem("testKey") + "8c4602cc99cd";
 
-
+// 智慧搜索
 const apikey1 = localStorage.getItem("apikey1");
 const apikey2 = localStorage.getItem("apikey2");
 const apikey3 = localStorage.getItem("apikey3");

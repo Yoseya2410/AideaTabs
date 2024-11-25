@@ -105,6 +105,16 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem("apikey3", OpenAI_input.value);
     });
 });
+// 与 index 页面通信
+document.addEventListener('DOMContentLoaded', function() {
+    const instructionsButton = document.getElementById('instructions');
+
+    instructionsButton.addEventListener('click', function() {
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'showInstructions' });
+      });
+    });
+  });
 
 // 页面加载时初始化开关状态
 window.onload = function () {

@@ -45,8 +45,8 @@ chrome.omnibox.onInputEntered.addListener((text) => {
 
   let href = "";
   if (text.endsWith("使用说明")) {
-    href = "https://yoseya.top/aidea/instructions.html"; // 跳转到使用说明
-    openUrlCurrentTab(href);
+    //href = "https://yoseya.top/aidea/instructions.html"; // 跳转到使用说明
+    //openUrlCurrentTab(href);
   } else if (text.startsWith("百度搜索")) {
     href = "https://www.baidu.com/s?ie=UTF-8&wd=" + encodeURIComponent(text.replace("百度搜索 ", ""));
     openUrlCurrentTab(href);
