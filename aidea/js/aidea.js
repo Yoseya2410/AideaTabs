@@ -332,7 +332,7 @@ const config = {
     AideaIntelligence: {
       apiKey: Aikey,
       url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-      model: "qwen-turbo",
+      model: "qwen-plus-latest",
       enable_search: aidea_search,
       temperature: Aidea_temperature,
     },
@@ -1319,7 +1319,7 @@ more.onclick = function () {
     //stow.style.display = "inline";
     //more.style.display = "none";
     //window.localStorage.setItem("stowvalu", "on");
-    window.location.href = "https://fanyi.baidu.com/#en/zh/" + surl;
+    window.location.href = "https://fanyi.baidu.com/mtpe-individual/multimodal?query="+ surl +"&lang=auto";
   } else {
     var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;

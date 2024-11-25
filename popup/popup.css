@@ -181,14 +181,14 @@ input:checked + label:before {
 @media (prefers-color-scheme: dark) {
   html,
   body {
-    background-color: #202124;
+    background-color: #141516;
   }
   .text {
     color: #ffffff !important;
   }
 
   .switch label {
-    background-color: #202124;
+    background-color: #141516;
   }
 
   .switch label:before {

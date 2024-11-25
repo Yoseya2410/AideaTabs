@@ -60,7 +60,7 @@ chrome.omnibox.onInputEntered.addListener((text) => {
     href = "https://search.bilibili.com/all?keyword=" + encodeURIComponent(text.replace("哔哩哔哩 ", ""));
     openUrlCurrentTab(href);
   } else if (text.startsWith("翻译")) {
-    href = "https://fanyi.baidu.com/#en/zh/" + encodeURIComponent(text.replace("翻译 ", ""));
+    href = "https://fanyi.baidu.com/mtpe-individual/multimodal?query="+ encodeURIComponent(text.replace("翻译 ", "")) +"&lang=auto" ;
     openUrlCurrentTab(href);
   } else {
     const urltext = encodeURIComponent(text);
@@ -127,7 +127,7 @@ chrome.contextMenus.onClicked.addListener(function (info) {
       url = 'https://cn.bing.com/search?q=' + encodeURI(info.selectionText);
       break;
     case 'translate':
-      url = 'https://fanyi.baidu.com/#en/zh/' + encodeURI(info.selectionText);
+      url = "https://fanyi.baidu.com/mtpe-individual/multimodal?query="+ encodeURI(info.selectionText) +"&lang=en2zh" ;
       break;
     default:
       console.log('Unknown menu item clicked');

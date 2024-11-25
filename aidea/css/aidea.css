@@ -991,11 +991,16 @@ th {
   #main,
   body,
   html {
-    background-color: #202124;
+    background-color: #141516;
   }
 
   .search_bar {
-    background-color: #2d2e30;
+    background-color: #2d2e3065;
+
+  }
+
+  .search_bar:hover {
+    box-shadow: 0 0 3px rgba(0, 106, 255, 0.500);
   }
 
   #search_input {
@@ -1067,7 +1072,7 @@ th {
   }
 
   #chat_window {
-    background-color: #2d2e30;
+    background-color: #2d2e3065;
   }
 
   .message-bubble.user {
