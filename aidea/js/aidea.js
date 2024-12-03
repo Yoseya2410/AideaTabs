@@ -674,17 +674,17 @@ defAI.onclick = function () {
 };
 
 defgoogle.onclick = function () {
-  window.localStorage.setItem("engine", "https://www.google.com/search?q=");
+  window.localStorage.setItem("engine", "https://www.google.com/search?q=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
 };
 defbaidu.onclick = function () {
-  window.localStorage.setItem("engine", "https://www.baidu.com/s?ie=&wd=");
+  window.localStorage.setItem("engine", "https://www.baidu.com/s?wd=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
 };
 defbing.onclick = function () {
-  window.localStorage.setItem("engine", "https://www.bing.com/search?q=");
+  window.localStorage.setItem("engine", "https://www.bing.com/search?q=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
 };
@@ -692,12 +692,12 @@ defcustomize.onclick = function () {
   var enginevalue = window.localStorage.getItem("engine");
   if (enginevalue == null || enginevalue == "null" || enginevalue == "") {
     var Response = prompt(
-      "请输入要设置的搜索引擎URL",
-      "例如:https://www.google.com/search?q="
+      "请输入要设置的搜索引擎URL（%s表示搜索内容）",
+      "例如:https://www.google.com/search?q=%s"
     );
     window.localStorage.setItem("engine", Response);
   } else {
-    var Response = prompt("请输入要设置的搜索引擎URL", enginevalue);
+    var Response = prompt("请输入要设置的搜索引擎URL（%s表示搜索内容）", enginevalue);
     if (Response) {
       window.localStorage.setItem("engine", Response);
     } else {
@@ -871,8 +871,8 @@ search_bar.onsubmit = function () {
           if (isEmail(surl)) {
             window.location.href = "mailto:" + surl;
           } else {
-            window.location.href =
-              enginevalue + document.getElementById("search_input").value;
+            const searchValue = enginevalue.replace("%s", document.getElementById("search_input").value);
+            window.location.href = searchValue
           }
         }
         return false;
