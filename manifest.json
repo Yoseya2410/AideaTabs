@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_name_zh__",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "__MSG_extension_des_zh__",
   "icons": {
     "16": "icon/logo_16.png",

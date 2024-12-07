@@ -290,6 +290,9 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
 const Aikey = localStorage.getItem("testKey") + "8c4602cc99cd";
 
 // 智慧搜索
+const def_interface = localStorage.getItem("def_interface");
+const def_modelType = localStorage.getItem("def_modelType");
+const apikey0 = localStorage.getItem("apikey0");
 const apikey1 = localStorage.getItem("apikey1");
 const apikey2 = localStorage.getItem("apikey2");
 const apikey3 = localStorage.getItem("apikey3");
@@ -297,14 +300,17 @@ const apikey3 = localStorage.getItem("apikey3");
 const aidea_search = JSON.parse(localStorage.getItem("set3"));
 const qwen_search = JSON.parse(localStorage.getItem("set4"));
 
+const def_temperature = parseFloat(
+  localStorage.getItem("SeekBardef_temperature")
+);
+const Aidea_temperature = parseFloat(
+  localStorage.getItem("SeekBarAidea_temperature")
+);
 const Moonshot_temperature = parseFloat(
   localStorage.getItem("SeekBarMoonshot_temperature")
 );
 const Qwen_temperature = parseFloat(
   localStorage.getItem("SeekBarQwen_temperature")
-);
-const Aidea_temperature = parseFloat(
-  localStorage.getItem("SeekBarAidea_temperature")
 );
 const OpenAI_temperature = parseFloat(
   localStorage.getItem("SeekBarOpenAI_temperature")
@@ -325,11 +331,18 @@ let messageslist = [
 // 配置大模型
 const config = {
   apis: {
-    moonshot: {
-      apiKey: apikey2,
-      url: "https://api.moonshot.cn/v1/chat/completions",
-      model: "moonshot-v1-auto",
-      temperature: Moonshot_temperature,
+    AideaIntelligence: {
+      apiKey: Aikey,
+      url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+      model: "qwen-plus-latest",
+      enable_search: aidea_search,
+      temperature: Aidea_temperature,
+    },
+    defmodel: {
+      apiKey: apikey0,
+      url: def_interface,
+      model: def_modelType,
+      temperature: def_temperature,
     },
     qwen: {
       apiKey: apikey1,
@@ -338,12 +351,11 @@ const config = {
       enable_search: qwen_search,
       temperature: Qwen_temperature,
     },
-    AideaIntelligence: {
-      apiKey: Aikey,
-      url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-      model: "qwen-plus-latest",
-      enable_search: aidea_search,
-      temperature: Aidea_temperature,
+    moonshot: {
+      apiKey: apikey2,
+      url: "https://api.moonshot.cn/v1/chat/completions",
+      model: "moonshot-v1-auto",
+      temperature: Moonshot_temperature,
     },
     openai: {
       apiKey: apikey3,
@@ -351,6 +363,8 @@ const config = {
       model: "gpt-4o-mini",
       temperature: OpenAI_temperature,
     },
+    
+    
   },
 };
 
@@ -537,10 +551,12 @@ typeText() 在对话框逐字输出
 
 // 创建API调用器实例
 const apiCallers = {
-  Moonshot: createApiCaller(config.apis.moonshot),
-  Qwen: createApiCaller(config.apis.qwen),
+  defmodel: createApiCaller(config.apis.defmodel),
   Aidea: createApiCaller(config.apis.AideaIntelligence),
+  Qwen: createApiCaller(config.apis.qwen),
+  Moonshot: createApiCaller(config.apis.moonshot),
   OpenAI: createApiCaller(config.apis.openai),
+  
 };
 
 // 发送消息函数
@@ -1350,6 +1366,5 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
   if (version != manifest.version) {
     localStorage.setItem("version", manifest.version);
     dialog1.open();
-    console.log("执行");
   }
 }

@@ -16,22 +16,27 @@ function initializeToggles() {
 
 // 初始化大模型设置列表
 function InitializeModelSetList() {
+    const def_Set = document.getElementById("def_Set");
     const AideaIntelligence_Set = document.getElementById("AideaIntelligence_Set");
     const Qwen_Set = document.getElementById("Qwen_Set");
     const Moonshot_Set = document.getElementById("Moonshot_Set");
     const OpenAI_Set = document.getElementById("OpenAI_Set");
-
+    
     const modelclass = localStorage.getItem("modelclass");
 
     // 先把所有模型的设置列表隐藏
+    def_Set.style.display = "none";
     AideaIntelligence_Set.style.display = "none";
     Qwen_Set.style.display = "none";
     Moonshot_Set.style.display = "none";
     OpenAI_Set.style.display = "none";
+   
 
     //再显示当前使用模型的设置列表
     if (modelclass == "Aidea") {
         AideaIntelligence_Set.style.display = "inline";
+    } else if (modelclass == "defmodel") {
+        def_Set.style.display = "inline";
     } else if (modelclass == "Qwen") {
         Qwen_Set.style.display = "inline";
     } else if (modelclass == "Moonshot") {
@@ -72,12 +77,29 @@ model_list.addEventListener("change", function () {
 
 // 在API密钥输入框中显示保存的密钥
 function inputShowAPI() {
+    const def_input = document.getElementById("def_input");
+    const def_input_url = document.getElementById("def_input_url");
+    const def_input_type = document.getElementById("def_input_type");
     const QwenKey_input = document.getElementById("QwenKey_input");
     const MoonshotKey_input = document.getElementById("MoonshotKey_input");
     const OpenAI_input = document.getElementById("OpenAI_input");
+
+    const def_interface = localStorage.getItem("def_interface");
+    const def_modelType = localStorage.getItem("def_modelType");
+    const apikey0 = localStorage.getItem("apikey0");
     const apikey1 = localStorage.getItem("apikey1");
     const apikey2 = localStorage.getItem("apikey2");
     const apikey3 = localStorage.getItem("apikey3");
+
+    if (def_interface) {
+        def_input_url.value = def_interface;
+    }
+    if (def_modelType) {
+        def_input_type.value = def_modelType;
+    }
+    if (apikey0) {
+        def_input.value = apikey0;
+    }
     if (apikey1) {
         QwenKey_input.value = apikey1;
     }
@@ -87,13 +109,29 @@ function inputShowAPI() {
     if (apikey3) {
         OpenAI_input.value = apikey3;
     }
+
+
 }
 
 // 离开输入框自动保存API密钥
 document.addEventListener('DOMContentLoaded', function () {
+    const def_input = document.getElementById("def_input");
+    const def_input_url = document.getElementById("def_input_url");
+    const def_input_type = document.getElementById("def_input_type");
     const QwenKey_input = document.getElementById("QwenKey_input");
     const MoonshotKey_input = document.getElementById("MoonshotKey_input");
     const OpenAI_input = document.getElementById("OpenAI_input");
+
+    /*自定义模型配置*/
+    def_input.addEventListener('blur', function () {
+        localStorage.setItem("apikey0", def_input.value);
+    });
+    def_input_url.addEventListener('blur', function () {
+        localStorage.setItem("def_interface", def_input_url.value);
+    });
+    def_input_type.addEventListener('blur', function () {
+        localStorage.setItem("def_modelType", def_input_type.value);
+    });
 
     QwenKey_input.addEventListener('blur', function () {
         localStorage.setItem("apikey1", QwenKey_input.value);
@@ -104,17 +142,19 @@ document.addEventListener('DOMContentLoaded', function () {
     OpenAI_input.addEventListener('blur', function () {
         localStorage.setItem("apikey3", OpenAI_input.value);
     });
+
+
 });
 // 与 index 页面通信
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const instructionsButton = document.getElementById('instructions');
 
-    instructionsButton.addEventListener('click', function() {
-      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'showInstructions' });
-      });
+    instructionsButton.addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'showInstructions' });
+        });
     });
-  });
+});
 
 // 页面加载时初始化开关状态
 window.onload = function () {
