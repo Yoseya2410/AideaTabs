@@ -27,16 +27,19 @@
 
         <div class="search_part">
           <form id="search_bar" class="search_bar">
-            <span id="targetArea">
-              <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png"
-                title="Aidea intelligence" />
-              <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/sousuo.png" title="切换引擎" />
-              <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
-                placeholder="搜索或输入网址" id="search_input" />
+            <span id="targetArea" class="d-flex align-items-center">
+              <div class="searchswitch">
+                <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png" title="退出智慧搜索" />
+                <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/search.svg" title="切换引擎" />
+              </div>
+              <input class="search flex-grow-1" type="text" list="url_list" value="" clientidmode="Static"
+                autocomplete="off" placeholder="搜索或输入网址" id="search_input" />
+              <div class="searchtool d-flex align-items-center justify-content-center">
+                <img src="aidea/img/file_input.svg" />
+              </div>
             </span>
           </form>
         </div>
-
 
         <div class="dropdown-menu" id="dropdown-menu">
           <a class="dropdown-item" id="defAI">智慧搜索</a>
@@ -139,7 +142,8 @@
         在 2019 年的夏天，出于对计算机软件的好奇，对写代码一窍不通的我开启了我的第一款软件 Aidea 的制作，它的诞生没有明确的目的，只是我一时的想法，正如它的名字 <strong>A idea</strong> 一样。
         也正是因为它，我误打误撞的踏上了我的计算机学习生涯。随着时间的推移，Aidea 经历了一代又一代变化。直到 2022 年，我躺在被窝里看《爱情公寓》的过程中，萌生了制作网站的想法。
         最初，我只是为了制作一个整蛊同学的网站，但随着我对 web 技术不断的了解，我为 Aidea 找到了新的方向。于是我开始一边学习 web 前端；一边用 JavaScript 重新编写 Aidea。
-        经过一个月的编写， AideaTabs 诞生了！随着GPT等相关技术的兴起，人类社会正快速步入智能时代，Aidea也是。</br>今天，它以全新的面貌继续着它的进化之旅——<strong> Aidea Intelligence </strong>
+        经过一个月的编写， AideaTabs 诞生了！随着GPT等相关技术的兴起，人类社会正快速步入智能时代，Aidea也是。</br>今天，它以全新的面貌继续着它的进化之旅——<strong> Aidea
+          Intelligence </strong>
       </custom-tip>
 
       <div id="$markbody1"></div>
@@ -148,21 +152,21 @@
         <h1>使用 AideaTabs 进行智慧搜索</h1>
         <p>有什么问题尽管问我！</p>
         <ol>
-            <li>除了 Aidea Intelligence，AideaTabs 还支持了其他的第三方语言模型，例如 GPT，Qwen，Moonshot等</li>
-            <li>AideaTabs 将搜索框与大语言模型结合，使用方式与平时切换搜索引擎一样</li>
-            <li>与 Aidea 对话时，它可以模仿人类说话的语气，在需要换气的时候停顿。</li>
+          <li>除了 Aidea Intelligence，AideaTabs 还支持了其他的第三方语言模型，例如 GPT，Qwen，Moonshot等</li>
+          <li>AideaTabs 将搜索框与大语言模型结合，使用方式与平时切换搜索引擎一样</li>
+          <li>与 Aidea 对话时，它可以模仿人类说话的语气，在需要换气的时候停顿。</li>
         </ol>
-    </text-picture-right>
+      </text-picture-right>
 
-    <text-picture-left src="./aidea/img/newVersion/new2.png">
-      <h1>在控制台中对 AideaTabs 进行设置</h1>
-      <p>这个下拉弹窗就是 AideaTabs 的控制中心，用于管理所有的设置选项。</p>
-      <ol>
+      <text-picture-left src="./aidea/img/newVersion/new2.png">
+        <h1>在控制台中对 AideaTabs 进行设置</h1>
+        <p>这个下拉弹窗就是 AideaTabs 的控制中心，用于管理所有的设置选项。</p>
+        <ol>
           <li>在控制台中可以设置记忆模式，默认关闭记忆。关闭记忆时 Aidea 只会记住你说的，不会记住自己说的，这样可以确保在理解上下文的情况下节省更多 Token</li>
           <li>AideaTabs 支持联网搜索，这使它的认知不仅仅局限于固定的数据库，还可以从网络上进行实时的搜索</li>
           <li>在控制台中可以调整模型参数，例如 Temperature 参数越高回答越多样，越低回答越确定</li>
-      </ol>
-  </text-picture-left>
+        </ol>
+      </text-picture-left>
 
     </div>
   </div>
@@ -177,7 +181,7 @@
   -->
 
 
-<!--Markdown 文本-->
+  <!--Markdown 文本-->
   <!--弹窗信息文本-->
   <textarea id="$marktext1" style="display:none">
 ## 使用说明
@@ -214,7 +218,7 @@
 
 </textarea>
 
-<!--JavaScript-->
+  <!--JavaScript-->
   <script src="./aidea/js/marked.min.js"></script>
   <script src="./aidea/js/components.js"></script>
   <script type="text/javascript" src="./aidea/js/aidea.js"></script>

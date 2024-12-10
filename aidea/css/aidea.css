@@ -99,10 +99,64 @@ span {
   margin-top: 20px;
 }
 
+#targetArea {
+  display: flex;
+  align-items: center;
+}
+
 .searchlogo {
-  float: left;
-  margin-top: 9px;
-  margin-left: 5px;
+  height: 25px;
+}
+
+.search {
+  flex-grow: 1;
+}
+
+.searchtool {
+  border-radius: 50%;
+  padding: 6px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchswitch {
+  border-radius: 50%;
+  padding: 6px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchtool {
+  border-radius: 50%;
+  padding: 6px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchtool:hover {
+  background-color: #ffffff;
+}
+
+.searchtool:active {
+  background-color: #3492ff;
+}
+
+.searchswitch:hover {
+  background-color: #ffffff;
+}
+
+.searchtool img:active {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.searchtool img {
+  height: "25px";
 }
 
 /*AI 对话框*/
@@ -157,7 +211,7 @@ span {
   box-shadow: 0 0 2px rgba(70, 70, 40, 0.255);
 }
 
-.message-bubble>p {
+.message-bubble > p {
   display: block;
   margin-block-start: 0em;
   margin-block-end: 0em;
@@ -166,7 +220,7 @@ span {
   unicode-bidi: isolate;
 }
 
-.message-bubble>pre {
+.message-bubble > pre {
   display: block;
   font-family: monospace;
   unicode-bidi: isolate;
@@ -643,7 +697,7 @@ th {
   padding: 0.25rem 0 0.25rem 1rem;
 }
 
-.dialog-content blockquote>p {
+.dialog-content blockquote > p {
   margin: 0;
 }
 
@@ -980,14 +1034,15 @@ th {
 }
 
 /*缺省模式*/
-@media (prefers-color-scheme: no-preference) {}
+@media (prefers-color-scheme: no-preference) {
+}
 
 /*浅色模式*/
-@media (prefers-color-scheme: light) {}
+@media (prefers-color-scheme: light) {
+}
 
 /*深色模式 */
 @media (prefers-color-scheme: dark) {
-
   #main,
   body,
   html {
@@ -996,15 +1051,26 @@ th {
 
   .search_bar {
     background-color: #2d2e3065;
-
   }
 
   .search_bar:hover {
-    box-shadow: 0 0 3px rgba(0, 106, 255, 0.500);
+    box-shadow: 0 0 3px rgba(0, 106, 255, 0.5);
   }
 
   #search_input {
     color: #f6f6f6;
+  }
+
+  .searchtool:hover {
+    background-color: #141516;
+  }
+
+  .searchtool:active {
+    background-color: #155488;
+  }
+
+  .searchswitch:hover {
+    background-color: #141516;
   }
 
   .url {

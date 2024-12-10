@@ -416,7 +416,7 @@ function createApiCaller(apiConfig) {
             if (modelclassExist == "Aidea") {
               typeText(
                 "bot",
-                `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码🥳。如果您没有收到邀请，先试试第三方模型🤖吧！`
+                `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码。如果您没有收到邀请，先试试第三方模型🤖吧！`
               );
             } else {
               typeText(
@@ -1368,3 +1368,21 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
     dialog1.open();
   }
 }
+
+// 搜索框 searchtool 点击样式
+document.addEventListener('DOMContentLoaded', function() {
+  const searchTool = document.querySelector('.searchtool');
+  const searchToolImg = searchTool.querySelector('img');
+
+  searchTool.addEventListener('mousedown', function() {
+    searchToolImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
+  });
+
+  searchTool.addEventListener('mouseup', function() {
+    searchToolImg.style.filter = ''; // 恢复默认样式
+  });
+
+  searchTool.addEventListener('mouseleave', function() {
+    searchToolImg.style.filter = ''; // 鼠标离开时也恢复默认样式
+  });
+});
