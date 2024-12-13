@@ -3,6 +3,14 @@
   margin: 0;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   font-size: 100%;
 }
@@ -71,6 +79,7 @@ img.logo {
 /*搜索框边距*/
 .search_part {
   margin-bottom: auto;
+  overflow: hidden;
 }
 
 /*跨度样式*/
@@ -82,6 +91,63 @@ span {
 
 #contents {
   margin-top: 40px;
+}
+
+/*旋转180度*/
+.rotated {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease;
+}
+
+/*不可选择复制拖拽*/
+.unselectable {
+  user-select: none; 
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.searchtool.flexcapsule2 {
+  float: right;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  width: 25px; 
+}
+
+/* SearchTool 伸缩胶囊*/
+.searchtool.flexcapsule {
+  float: right;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  width: 25px; 
+}
+
+.searchtool.flexcapsule p {
+  margin: 0;
+  display: none;
+  line-height: 0;
+  color: #757575;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.searchtool.flexcapsule img {
+  width: 23px;
+  height: 23px;
 }
 
 /*搜索栏框架样式*/
@@ -97,6 +163,8 @@ span {
   max-width: 100%;
   margin: 0px auto;
   margin-top: 20px;
+  margin-bottom: 5px;
+  transition: height 0.3s ease;
 }
 
 #targetArea {
@@ -156,7 +224,8 @@ span {
 }
 
 .searchtool img {
-  height: "25px";
+  height: 24px;
+  width: 24px;
 }
 
 /*AI 对话框*/

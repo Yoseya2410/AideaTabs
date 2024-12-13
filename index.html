@@ -27,17 +27,33 @@
 
         <div class="search_part">
           <form id="search_bar" class="search_bar">
-            <span id="targetArea" class="d-flex align-items-center">
+            <span id="targetArea">
               <div class="searchswitch">
                 <img class="searchlogo" id="aisearchlogo" height="30px" src="aidea/img/AI.png" title="退出智慧搜索" />
                 <img class="searchlogo" id="searchlogo" height="30px" src="aidea/img/search.svg" title="切换引擎" />
               </div>
-              <input class="search flex-grow-1" type="text" list="url_list" value="" clientidmode="Static"
-                autocomplete="off" placeholder="搜索或输入网址" id="search_input" />
-              <div class="searchtool d-flex align-items-center justify-content-center">
-                <img src="aidea/img/file_input.svg" />
+              <input class="search" type="text" list="url_list" value="" clientidmode="Static" autocomplete="off"
+                placeholder="搜索或输入网址" id="search_input" />
+              <div class="searchtool" id="searchtool1">
+                <img src="aidea/img/unfold.svg" />
               </div>
             </span>
+
+            <div style="display: none;" id="searchtool_list">
+              <div class="searchtool flexcapsule unselectable" id="searchtool2">
+                <img src="aidea/img/web_search.png" />
+                <div style="display: flex;
+              flex-wrap: nowrap;">
+                  <p>Search</p>
+                </div>
+              </div>
+
+              <div class="searchtool flexcapsule2" id="searchtool1">
+                <img src="aidea/img/file_input.svg" />
+              </div>
+
+            </div>
+
           </form>
         </div>
 
@@ -137,10 +153,10 @@
     <div class="dialog-content">
       <span class="close"></span>
       <h1>🥳 AideaTabes 中的新变化</h1>
-      <custom-tip title="好久不见，AideaTabs 更新到了 0.1.6 版本！" color="#646cff24" text_color="#3c3c43">
+      <custom-tip title="好久不见，AideaTabs 更新到了 0.1.6 版本！" color="#3dc99424" text_color="#3c3c43">
         这是 AideaTabs 的新篇章，也是我的新起点。
         在 2019 年的夏天，出于对计算机软件的好奇，对写代码一窍不通的我开启了我的第一款软件 Aidea 的制作，它的诞生没有明确的目的，只是我一时的想法，正如它的名字 <strong>A idea</strong> 一样。
-        也正是因为它，我误打误撞的踏上了我的计算机学习生涯。随着时间的推移，Aidea 经历了一代又一代变化。直到 2022 年，我躺在被窝里看《爱情公寓》的过程中，萌生了制作网站的想法。
+        也正是因为它，我误打误撞的踏上了我的计算机学习生涯。随着时间的推移，Aidea 经历了一代又一代变化。直到 2022 年，在一些机缘巧合下我萌生了制作网站的想法。
         最初，我只是为了制作一个整蛊同学的网站，但随着我对 web 技术不断的了解，我为 Aidea 找到了新的方向。于是我开始一边学习 web 前端；一边用 JavaScript 重新编写 Aidea。
         经过一个月的编写， AideaTabs 诞生了！随着GPT等相关技术的兴起，人类社会正快速步入智能时代，Aidea也是。</br>今天，它以全新的面貌继续着它的进化之旅——<strong> Aidea
           Intelligence </strong>

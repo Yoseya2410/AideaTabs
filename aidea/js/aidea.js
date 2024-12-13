@@ -264,11 +264,11 @@ function none() {
 
 // 与 popup 页面通信
 if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action === 'showInstructions') {
-    dialog1.open()
-  }
-});
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.action === 'showInstructions') {
+      dialog1.open()
+    }
+  });
 }
 
 // 内测邀请码
@@ -363,8 +363,8 @@ const config = {
       model: "gpt-4o-mini",
       temperature: OpenAI_temperature,
     },
-    
-    
+
+
   },
 };
 
@@ -556,7 +556,7 @@ const apiCallers = {
   Qwen: createApiCaller(config.apis.qwen),
   Moonshot: createApiCaller(config.apis.moonshot),
   OpenAI: createApiCaller(config.apis.openai),
-  
+
 };
 
 // 发送消息函数
@@ -1344,7 +1344,7 @@ more.onclick = function () {
     //stow.style.display = "inline";
     //more.style.display = "none";
     //window.localStorage.setItem("stowvalu", "on");
-    window.location.href = "https://fanyi.baidu.com/mtpe-individual/multimodal?query="+ surl +"&lang=auto";
+    window.location.href = "https://fanyi.baidu.com/mtpe-individual/multimodal?query=" + surl + "&lang=auto";
   } else {
     var finalUrl = urlvalue.replace("%s", encodeURIComponent(surl));
     window.location.href = finalUrl;
@@ -1370,19 +1370,141 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
 }
 
 // 搜索框 searchtool 点击样式
-document.addEventListener('DOMContentLoaded', function() {
-  const searchTool = document.querySelector('.searchtool');
-  const searchToolImg = searchTool.querySelector('img');
+document.addEventListener('DOMContentLoaded', function () {
+  const searchTools = document.querySelectorAll('.searchtool');
 
-  searchTool.addEventListener('mousedown', function() {
-    searchToolImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
-  });
+  searchTools.forEach(searchTool => {
+    const searchToolImg = searchTool.querySelector('img');
+    const searchToolp = searchTool.querySelector('p');
 
-  searchTool.addEventListener('mouseup', function() {
-    searchToolImg.style.filter = ''; // 恢复默认样式
-  });
+    searchTool.addEventListener('mousedown', function () {
+      if (searchToolImg) {
+        searchToolImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
+      }
+      if (searchToolp) {
+        searchToolp.style.color = '#ffffff'; // 恢复默认样式
+      }
+    });
 
-  searchTool.addEventListener('mouseleave', function() {
-    searchToolImg.style.filter = ''; // 鼠标离开时也恢复默认样式
+    searchTool.addEventListener('mouseup', function () {
+      if (searchToolImg) {
+        searchToolImg.style.filter = ''; // 恢复默认样式
+      }
+      if (searchToolp) {
+        searchToolp.style.color = '#757575'; // 恢复默认样式
+      }
+    });
+
+    searchTool.addEventListener('mouseleave', function () {
+      if (searchToolImg) {
+        searchToolImg.style.filter = ''; // 鼠标离开时也恢复默认样式
+      }
+      if (searchToolp) {
+        searchToolp.style.color = '#757575'; // 恢复默认样式
+      }
+    });
   });
 });
+
+/* 智慧搜索工具栏展开 */
+document.addEventListener('DOMContentLoaded', function () {
+  const img = document.querySelector('#searchtool1 img');
+  const searchtool1 = document.getElementById("searchtool1");
+  const search_bar = document.getElementById("search_bar")
+  const searchtoolList = document.getElementById('searchtool_list');
+
+  searchtool1.addEventListener('click', function () {
+    img.classList.toggle('rotated');
+    if (searchtoolList.style.display === 'none' || searchtoolList.style.display === '') {
+      search_bar.style.height = '96px'
+      searchtoolList.style.display = 'block';
+    } else {
+      search_bar.style.height = '50px'
+      searchtoolList.style.display = 'none';
+    }
+  });
+});
+
+/*获取当前模型的联网搜索开关*/
+var modelclass = localStorage.getItem("modelclass")
+if (modelclass == "Aidea") {
+  var setx = "set3"
+} else if (modelclass == "Qwen") {
+  var setx = "set4"
+} else {
+
+}
+
+/*联网搜索按钮交互事件*/
+document.addEventListener("DOMContentLoaded", function () {
+  const searchTool = document.getElementById('searchtool2');
+  const searchtool2_p = document.querySelector('#searchtool2 p');
+  const searchtool2_img = document.querySelector('#searchtool2 img');
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+  var isSetxTrue = localStorage.getItem(setx) === 'true';
+
+  // 鼠标进入事件
+  searchTool.addEventListener('mouseenter', function () {
+    if (!isSetxTrue) {
+      searchTool.style.width = "80px";
+      searchTool.querySelector('p').style.display = "inline";
+    }
+  });
+
+  // 鼠标离开事件
+  searchTool.addEventListener('mouseleave', function () {
+    if (!isSetxTrue) {
+      searchTool.style.width = "25px";
+      searchTool.querySelector('p').style.display = "none";
+    } else {
+      searchtool2_p.style.color = '#148fff';
+      searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
+      if (systemTheme.matches) {
+        searchTool.style.background = "#155488";
+      } else {
+        searchTool.style.background = "#d7eeff";
+      }
+    }
+  });
+
+  // 点击事件
+  searchTool.addEventListener('click', function () {
+    if (!isSetxTrue) {
+      localStorage.setItem(setx, 'true');
+      isSetxTrue = true;
+      searchtool2_p.style.color = '#148fff';
+      searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
+      if (systemTheme.matches) {
+        searchTool.style.background = "#155488";
+      } else {
+        searchTool.style.background = "#d7eeff";
+      }
+    } else {
+      localStorage.removeItem(setx);
+      isSetxTrue = false;
+      searchTool.style.background = "";
+      searchtool2_p.style.color = '';
+      searchtool2_img.style.filter = '';
+    }
+
+  });
+});
+
+if (localStorage.getItem(setx) === 'true') {
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+  const searchTool = document.getElementById('searchtool2');
+  const searchtool2_p = document.querySelector('#searchtool2 p');
+  const searchtool2_img = document.querySelector('#searchtool2 img');
+  searchTool.style.width = "80px";
+  searchTool.querySelector('p').style.display = "inline";
+  searchtool2_p.style.color = '#148fff';
+  searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
+
+  if (systemTheme.matches) {
+    searchTool.style.background = "#155488";
+  } else {
+    searchTool.style.background = "#d7eeff";
+  }
+}
+
+
