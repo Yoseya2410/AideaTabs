@@ -101,14 +101,14 @@ span {
 
 /*不可选择复制拖拽*/
 .unselectable {
-  user-select: none; 
+  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-drag: none;
 }
 
-.searchtool.flexcapsule2 {
+.searchtool.searchToolList {
   float: right;
   display: flex;
   flex-wrap: nowrap;
@@ -118,7 +118,7 @@ span {
   overflow: hidden;
   cursor: pointer;
   position: relative;
-  width: 25px; 
+  width: 25px;
 }
 
 /* SearchTool 伸缩胶囊*/
@@ -133,7 +133,7 @@ span {
   overflow: hidden;
   cursor: pointer;
   position: relative;
-  width: 25px; 
+  width: 25px;
 }
 
 .searchtool.flexcapsule p {
@@ -226,6 +226,14 @@ span {
 .searchtool img {
   height: 24px;
   width: 24px;
+}
+
+.search_submit {
+  background-color: #d7eeff;
+}
+.search_submit img {
+  filter: invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg)
+    brightness(104%) contrast(101%);
 }
 
 /*AI 对话框*/
@@ -1140,6 +1148,14 @@ th {
 
   .searchswitch:hover {
     background-color: #141516;
+  }
+
+  .search_submit {
+    background-color: #155488;
+  }
+
+  .search_submit img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(166deg) brightness(104%) contrast(101%);
   }
 
   .url {

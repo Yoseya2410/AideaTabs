@@ -661,7 +661,48 @@ aisearchlogo.onclick = function () {
   document.getElementById("searchlogo").style.display = "inline";
   document.getElementById("search_input").placeholder = "搜索或输入网址";
   document.getElementById("chat_window").style.height = "0";
+  document.getElementById("searchTool_unfold").style.display = "none";
+  document.getElementById("search_bar").style.height = ''
+  document.getElementById('searchtool_list').style.display = 'none';
+  // 检查输入框是否有内容
+  if (document.getElementById('search_input').value.trim() !== '') {
+    document.getElementById("search_submit").style.display = "";
+  } else {
+    document.getElementById("search_submit").style.display = "none";
+  }
+
 };
+
+//切换引擎
+function swintchEngine() {
+  // 切换搜索引擎时提交图标样式的转变
+  var imgElement = document.querySelector('#search_submit img');
+  // 获取输入框元素
+  var searchInput = document.getElementById('search_input');
+
+  // 检查输入框是否有内容
+  if (searchInput.value.trim() !== '') {
+    if (localStorage.getItem('engine') !== null) {
+      search_submit.style.display = "";
+      search_submit.style.pointerEvents = '';
+      if (imgElement) {
+        imgElement.src = 'aidea/img/submit.svg';
+      } else {
+        console.error('未找到元素');
+      }
+    } else {
+      search_submit.style.display = "";
+      search_submit.style.pointerEvents = 'none';
+      if (imgElement) {
+        imgElement.src = 'aidea/img/enter.svg';
+      } else {
+        console.error('未找到元素');
+      }
+    }
+  } else {
+
+  }
+}
 
 //判断搜索模式
 var searchMode = localStorage.getItem("searchMode");
@@ -687,22 +728,27 @@ defAI.onclick = function () {
   document.getElementById("searchlogo").style.display = "none";
   document.getElementById("search_input").placeholder = "有什么问题尽管问我";
   window.localStorage.setItem("searchMode", "ai");
+  document.getElementById("searchTool_unfold").style.display = "";
+  document.getElementById("search_submit").style.display = "none";
 };
 
 defgoogle.onclick = function () {
   window.localStorage.setItem("engine", "https://www.google.com/search?q=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
+  swintchEngine()
 };
 defbaidu.onclick = function () {
   window.localStorage.setItem("engine", "https://www.baidu.com/s?wd=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
+  swintchEngine()
 };
 defbing.onclick = function () {
   window.localStorage.setItem("engine", "https://www.bing.com/search?q=%s");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
+  swintchEngine()
 };
 defcustomize.onclick = function () {
   var enginevalue = window.localStorage.getItem("engine");
@@ -721,11 +767,13 @@ defcustomize.onclick = function () {
   }
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
+  swintchEngine()
 };
 defdefault.onclick = function () {
   window.localStorage.removeItem("engine");
   document.getElementById("dropdown-menu").style.display = "none";
   document.getElementById("search_input").focus();
+  swintchEngine()
 };
 
 /*按钮URL自定义*/
@@ -851,9 +899,23 @@ function resetButtonSettings() {
 updateButtonNames();
 resetButtonSettings();
 
-/*搜索提交事件 */
+/*回车提交搜索内容事件*/
 var search_bar = document.getElementById("search_bar");
-search_bar.onsubmit = function () {
+search_bar.onsubmit = function (event) {
+  event.preventDefault(); // 阻止默认的表单提交行为
+  performSearch();
+};
+
+var search_submit = document.getElementById("search_submit");
+search_submit.style.display = "none";
+/*点击搜索提交按钮事件*/
+search_submit.addEventListener('click', function () {
+  var submitEvent = new Event('submit');
+  search_bar.dispatchEvent(submitEvent);
+});
+
+/* 搜索内容提交逻辑 */
+function performSearch() {
   surl = document.getElementById("search_input").value;
   var searchMode = localStorage.getItem("searchMode");
   var enginevalue = localStorage.getItem("engine");
@@ -923,7 +985,39 @@ search_bar.onsubmit = function () {
     }
   }
   return false;
-};
+}
+
+// 搜索提交按键显示
+document.getElementById("search_input").addEventListener("input", function () {
+  var inputValue = this.value.trim();
+  var imgElement = document.querySelector('#search_submit img');
+  if (inputValue) {
+    if (localStorage.getItem("searchMode") === "ai") {
+      search_submit.style.display = "none";
+    } else {
+      if (localStorage.getItem('engine') !== null) {
+        search_submit.style.display = "";
+        search_submit.style.pointerEvents = '';
+        if (imgElement) {
+          imgElement.src = 'aidea/img/submit.svg';
+        } else {
+          console.error('未找到元素');
+        }
+      } else {
+        search_submit.style.display = "";
+        search_submit.style.pointerEvents = 'none';
+        if (imgElement) {
+          imgElement.src = 'aidea/img/enter.svg';
+        } else {
+          console.error('未找到元素');
+        }
+      }
+    }
+  } else {
+    search_submit.style.display = "none";
+    none()
+  }
+});
 
 //选中搜索框事件
 document.addEventListener("DOMContentLoaded", function () {
@@ -1113,7 +1207,7 @@ targetArea.ondragleave = function (e) {
 //拖拽选中
 targetArea.ondrop = function (e) {
   if (localStorage.getItem("searchMode") == "ai") {
-    //console.log("AI处理文件");
+    console.log("提交文件至多模态模型进行处理");
   } else {
     e = e || window.event;
     var file = e.dataTransfer.files[0];
@@ -1408,24 +1502,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* 智慧搜索工具栏展开 */
 document.addEventListener('DOMContentLoaded', function () {
-  const img = document.querySelector('#searchtool1 img');
-  const searchtool1 = document.getElementById("searchtool1");
+  const img = document.querySelector('#searchTool_unfold img');
+  const searchTool_unfold = document.getElementById("searchTool_unfold");
   const search_bar = document.getElementById("search_bar")
   const searchtoolList = document.getElementById('searchtool_list');
 
-  searchtool1.addEventListener('click', function () {
+  searchTool_unfold.addEventListener('click', function () {
     img.classList.toggle('rotated');
     if (searchtoolList.style.display === 'none' || searchtoolList.style.display === '') {
       search_bar.style.height = '96px'
       searchtoolList.style.display = 'block';
     } else {
-      search_bar.style.height = '50px'
+      search_bar.style.height = ''
       searchtoolList.style.display = 'none';
     }
   });
 });
 
-/*获取当前模型的联网搜索开关*/
+//获取当前模型的联网搜索开关
 var modelclass = localStorage.getItem("modelclass")
 if (modelclass == "Aidea") {
   var setx = "set3"
@@ -1435,11 +1529,29 @@ if (modelclass == "Aidea") {
 
 }
 
+//联网搜索开启时按键状态
+function surfInternet_on() {
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+  const searchTool = document.getElementById('surfInternet');
+  const surfInternet_p = document.querySelector('#surfInternet p');
+  const surfInternet_img = document.querySelector('#surfInternet img');
+
+  searchTool.style.width = "80px";
+  surfInternet_p.style.display = "inline";
+  surfInternet_p.style.color = "#148fff";
+  surfInternet_img.style.filter = "invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)";
+  if (systemTheme.matches) {
+    searchTool.style.background = "#155488";
+  } else {
+    searchTool.style.background = "#d7eeff";
+  }
+}
+
 /*联网搜索按钮交互事件*/
 document.addEventListener("DOMContentLoaded", function () {
-  const searchTool = document.getElementById('searchtool2');
-  const searchtool2_p = document.querySelector('#searchtool2 p');
-  const searchtool2_img = document.querySelector('#searchtool2 img');
+  const searchTool = document.getElementById('surfInternet');
+  const surfInternet_p = document.querySelector('#surfInternet p');
+  const surfInternet_img = document.querySelector('#surfInternet img');
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
   var isSetxTrue = localStorage.getItem(setx) === 'true';
 
@@ -1457,8 +1569,8 @@ document.addEventListener("DOMContentLoaded", function () {
       searchTool.style.width = "25px";
       searchTool.querySelector('p').style.display = "none";
     } else {
-      searchtool2_p.style.color = '#148fff';
-      searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
+      surfInternet_p.style.color = '#148fff';
+      surfInternet_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
       if (systemTheme.matches) {
         searchTool.style.background = "#155488";
       } else {
@@ -1470,41 +1582,31 @@ document.addEventListener("DOMContentLoaded", function () {
   // 点击事件
   searchTool.addEventListener('click', function () {
     if (!isSetxTrue) {
-      localStorage.setItem(setx, 'true');
       isSetxTrue = true;
-      searchtool2_p.style.color = '#148fff';
-      searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
-      if (systemTheme.matches) {
-        searchTool.style.background = "#155488";
-      } else {
-        searchTool.style.background = "#d7eeff";
-      }
+      localStorage.setItem(setx, 'true');
+      surfInternet_on()
     } else {
-      localStorage.removeItem(setx);
       isSetxTrue = false;
-      searchTool.style.background = "";
-      searchtool2_p.style.color = '';
-      searchtool2_img.style.filter = '';
+      localStorage.removeItem(setx);
+      searchTool.style.background = '';
+      searchTool.style.width = '';
+      surfInternet_p.style.display = '';
+      surfInternet_p.style.color = '';
+      surfInternet_img.style.filter = '';
     }
-
   });
 });
 
-if (localStorage.getItem(setx) === 'true') {
-  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-  const searchTool = document.getElementById('searchtool2');
-  const searchtool2_p = document.querySelector('#searchtool2 p');
-  const searchtool2_img = document.querySelector('#searchtool2 img');
-  searchTool.style.width = "80px";
-  searchTool.querySelector('p').style.display = "inline";
-  searchtool2_p.style.color = '#148fff';
-  searchtool2_img.style.filter = 'invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg) brightness(104%) contrast(101%)';
-
-  if (systemTheme.matches) {
-    searchTool.style.background = "#155488";
-  } else {
-    searchTool.style.background = "#d7eeff";
-  }
+//初始化联网搜索按钮状态
+if (localStorage.getItem(setx) == 'true') {
+  surfInternet_on()
 }
+//初始化智慧搜索工具列表展开按键
+if (localStorage.getItem("searchMode") !== "ai") {
+  document.getElementById("searchTool_unfold").style.display = "none";
+}
+
+
+
 
 
