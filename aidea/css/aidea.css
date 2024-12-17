@@ -82,12 +82,13 @@ img.logo {
   overflow: hidden;
 }
 
-/*跨度样式*/
+/*跨度样式（由于影响公式显示暂时禁用）
 span {
   display: block;
   overflow: hidden;
   padding-left: 1px;
 }
+*/
 
 #contents {
   margin-top: 40px;
@@ -360,6 +361,18 @@ code {
   display: none;
 }
 
+#output h1,
+h2,
+h3,h4,h5 {
+  margin-top: 1em;
+}
+
+#output h1,
+h2,
+h3 {
+  margin-bottom: 0.5em;
+}
+
 /*书签图标排版目录样式 */
 #content {
   width: 100%;
@@ -463,8 +476,6 @@ code {
 }
 
 .icon {
-  width: 2.5em;
-  height: 2.5em;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1155,7 +1166,8 @@ th {
   }
 
   .search_submit img {
-    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(166deg) brightness(104%) contrast(101%);
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(166deg)
+      brightness(104%) contrast(101%);
   }
 
   .url {

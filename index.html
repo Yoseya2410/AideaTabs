@@ -5,16 +5,17 @@
   <meta charset="utf-8" />
   <title>AideaTabs</title>
   <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
+  <link rel="stylesheet" href="/module/katex/katex.min.css">
   <link rel="shortcut icon" href="tablogo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="aidea/js/marked.min.js"></script>
+
 
 </head>
 
 <body id="all">
   <div id="main">
     <section class="background" data-spotlight="fullscreen">
-      <img class="logo" id="logo" src="aidea/img/logo.png" title="&copy; 2022 Yoseya. All rights" />
+      <img class="logo" id="logo" src="aidea/img/logo.png" title="右键更改图标（或拖拽图片到这里）" title=" &copy; Yoseya All rights" />
 
       <div id="contents">
         <div style="display: flex ;justify-content: center ;">
@@ -43,14 +44,14 @@
             </span>
 
             <div style="display: none;" id="searchtool_list">
-              <div class="searchtool flexcapsule unselectable" id="surfInternet">
+              <div class="searchtool flexcapsule unselectable" id="surfInternet" title="联网搜索">
                 <img src="aidea/img/web_search.png" />
                 <div style="display: flex; flex-wrap: nowrap;">
                   <p>Search</p>
                 </div>
               </div>
 
-              <div class="searchtool searchToolList" id="inputfile_to_AI">
+              <div class="searchtool searchToolList" id="inputfile_to_AI" title="上传文件">
                 <img src="aidea/img/file_input.svg" />
               </div>
 
@@ -237,9 +238,11 @@
 </textarea>
 
   <!--JavaScript-->
-  <script src="./aidea/js/marked.min.js"></script>
-  <script src="./aidea/js/components.js"></script>
-  <script type="text/javascript" src="./aidea/js/aidea.js"></script>
+  <script src="module/marked/marked.min.js"></script>
+  <script src="module/katex/katex.min.js"></script>
+  <script defer src="module/katex/auto-render.min.js"></script>
+  <script src="aidea/js/components.js"></script>
+  <script src="aidea/js/aidea.js"></script>
 </body>
 
 </html>

@@ -222,6 +222,34 @@ function ishttp() {
   }
 }
 
+/* 将对话框中的 Latex 公式转换为 HTML */
+function latex2html_chat() {
+  function renderMathInElementf(x) {
+    renderMathInElement(x, {
+      delimiters: [
+        { left: '[ ', right: ' ]', display: true },
+        { left: '\[', right: '\]', display: true },
+        { left: '\\\[', right: '\\\]', display: true },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '\( ', right: ' \)', display: false },
+        { left: ' \(', right: ')', display: false },
+      ]
+    });
+  }
+  var chatWindow = document.getElementById('chat_window');
+  if (chatWindow) {
+    var paragraphs = chatWindow.querySelectorAll('p');
+    paragraphs.forEach(function (x) {
+      renderMathInElementf(x)
+    });
+  }
+  var listItems = chatWindow.querySelectorAll('li');
+  listItems.forEach(function (x) {
+    renderMathInElementf(x)
+  });
+}
+
+
 //搜索逻辑
 function search() {
   surl = document.getElementById("search_input").value;
@@ -409,6 +437,7 @@ function createApiCaller(apiConfig) {
       });
 
       if (!response.ok) {
+        console.log("报错，结束思考");
         const errorMessage = await response.text();
         const modelclassExist = localStorage.getItem("modelclass");
         if (modelclassExist) {
@@ -497,7 +526,7 @@ function createApiCaller(apiConfig) {
       const data = await response.json();
       //用于调试智慧搜索API响应
       //console.log(JSON.stringify(data));
-
+      console.log("结束思考");
       // 获取 tokens 数量
       const promptTokens = data.usage.prompt_tokens;
       const completionTokens = data.usage.completion_tokens;
@@ -577,6 +606,7 @@ function sendMessage() {
   const selectedApi = localStorage.getItem("modelclass");
   if (selectedApi) {
     apiCallers[selectedApi](message);
+    console.log("开始思考");
   } else {
     typeText(
       "bot",
@@ -622,11 +652,11 @@ function typeText(role, text) {
       } else {
         delay = 45; // 其他字符，延迟40毫秒
       }
-
       setTimeout(typeNextCharacter, delay);
+    } else {
+      latex2html_chat() // 转换LaTex数学表达式
     }
   }
-
   typeNextCharacter(); // 开始打字效果
 }
 
@@ -1597,16 +1627,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//初始化联网搜索按钮状态
+// 初始化联网搜索按钮状态
 if (localStorage.getItem(setx) == 'true') {
   surfInternet_on()
 }
-//初始化智慧搜索工具列表展开按键
+// 初始化智慧搜索工具列表展开按键
 if (localStorage.getItem("searchMode") !== "ai") {
   document.getElementById("searchTool_unfold").style.display = "none";
 }
-
-
-
-
-
