@@ -789,6 +789,20 @@ th {
   margin: 0;
 }
 
+/* 加载动画 旋转 */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
 /*动画样式*/
 @-webkit-keyframes flipInX {
   0% {

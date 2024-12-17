@@ -1,4 +1,10 @@
 surl = document.getElementById("search_input").value;
+
+// 清除开启AI对话的标记
+if (localStorage.getItem('chatOn') !== null) {
+  localStorage.removeItem("chatOn")
+}
+
 //定位到搜索框
 document.getElementById("search_input").focus();
 //判断用户代理是否为移动端
@@ -249,6 +255,42 @@ function latex2html_chat() {
   });
 }
 
+/* 加载动画（机器输出前的思考）*/
+// 开始思考
+function reflect_on() {
+  var aisearchlogo = document.getElementById('aisearchlogo');
+  aisearchlogo.src = 'aidea/img/loader.svg';
+  aisearchlogo.style.pointerEvents = 'none';
+  aisearchlogo.title = '正在思考...';
+  aisearchlogo.classList.add('rotate');
+}
+// 结束思考
+function reflect_off() {
+  var aisearchlogo = document.getElementById('aisearchlogo');
+  aisearchlogo.src = 'aidea/img/AI.png';
+  aisearchlogo.style.pointerEvents = '';
+  aisearchlogo.title = '';
+  aisearchlogo.classList.remove('rotate');
+}
+
+ // 展开对话框
+ function chatWindowUnfold() {
+  const chatWindow = document.getElementById("chat_window");
+  /*对话框大小适配屏幕*/
+  if (window.innerWidth <= 500) {
+    chatWindow.style.height = "370px";
+  } else {
+    if (window.innerWidth <= 560) {
+      chatWindow.style.height = "360px";
+    } else {
+      if (window.innerWidth <= 750) {
+        chatWindow.style.height = "350px";
+      } else {
+        chatWindow.style.height = "300px";
+      }
+    }
+  }
+}
 
 //搜索逻辑
 function search() {
@@ -344,6 +386,9 @@ const OpenAI_temperature = parseFloat(
   localStorage.getItem("SeekBarOpenAI_temperature")
 );
 
+// 开放给用户用于自己设定AI的接口
+var setMemory = "paimen 是只狗"
+
 // 初始化历史对话记录
 let messageslist = [
   {
@@ -353,6 +398,10 @@ let messageslist = [
       "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
       "Refine and directly answer questions",
     ].join("\n"),
+  },
+  {
+    role: "system",
+    content: setMemory,
   },
 ];
 
@@ -437,7 +486,8 @@ function createApiCaller(apiConfig) {
       });
 
       if (!response.ok) {
-        console.log("报错，结束思考");
+        reflect_off()
+        //console.log("报错，结束思考");
         const errorMessage = await response.text();
         const modelclassExist = localStorage.getItem("modelclass");
         if (modelclassExist) {
@@ -526,7 +576,8 @@ function createApiCaller(apiConfig) {
       const data = await response.json();
       //用于调试智慧搜索API响应
       //console.log(JSON.stringify(data));
-      console.log("结束思考");
+      reflect_off()
+      //console.log("结束思考");
       // 获取 tokens 数量
       const promptTokens = data.usage.prompt_tokens;
       const completionTokens = data.usage.completion_tokens;
@@ -606,7 +657,12 @@ function sendMessage() {
   const selectedApi = localStorage.getItem("modelclass");
   if (selectedApi) {
     apiCallers[selectedApi](message);
-    console.log("开始思考");
+    reflect_on()
+    //console.log("开始思考");
+    /*用于标记是否开启AI对话（开启对话后，当切换至智慧搜索时对话框自动展开）*/
+    if (localStorage.getItem("chatOn") !== 'ture') {
+      localStorage.setItem('chatOn', 'ture');
+    }
   } else {
     typeText(
       "bot",
@@ -707,7 +763,7 @@ aisearchlogo.onclick = function () {
 function swintchEngine() {
   // 切换搜索引擎时提交图标样式的转变
   var imgElement = document.querySelector('#search_submit img');
-  // 获取输入框元素
+  var search_submit = document.getElementById("search_submit");
   var searchInput = document.getElementById('search_input');
 
   // 检查输入框是否有内容
@@ -760,6 +816,9 @@ defAI.onclick = function () {
   window.localStorage.setItem("searchMode", "ai");
   document.getElementById("searchTool_unfold").style.display = "";
   document.getElementById("search_submit").style.display = "none";
+  if (localStorage.getItem("chatOn") == 'ture') {
+    chatWindowUnfold()
+  }
 };
 
 defgoogle.onclick = function () {
@@ -989,22 +1048,9 @@ function performSearch() {
     } else {
       //智慧搜索
 
-      //对话框屏幕适配
       const chatWindow = document.getElementById("chat_window");
       if ((chatWindow.style.height = "0")) {
-        if (window.innerWidth <= 500) {
-          chatWindow.style.height = "370px";
-        } else {
-          if (window.innerWidth <= 560) {
-            chatWindow.style.height = "360px";
-          } else {
-            if (window.innerWidth <= 750) {
-              chatWindow.style.height = "350px";
-            } else {
-              chatWindow.style.height = "300px";
-            }
-          }
-        }
+        chatWindowUnfold()
         //等对话框完全展开后再对话
         setTimeout(function () {
           sendMessage();
@@ -1635,3 +1681,5 @@ if (localStorage.getItem(setx) == 'true') {
 if (localStorage.getItem("searchMode") !== "ai") {
   document.getElementById("searchTool_unfold").style.display = "none";
 }
+
+
