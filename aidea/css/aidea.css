@@ -300,34 +300,36 @@ span {
 
 .message-bubble > pre {
   display: block;
-  font-family: monospace;
+  font-family: consolas;
   unicode-bidi: isolate;
   white-space: pre;
+  overflow-x: auto;
+  background-color: #eeeeee;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.message-bubble > pre::-webkit-scrollbar {
+  height: 5px;
+}
+
+.message-bubble > pre::-webkit-scrollbar-thumb {
+  background: #78787861;
+  border-radius: 10px;
 }
 
 code {
-  display: block;
+  display: inline-block;
   max-width: 100%;
-  /* 代码块的最大宽度不会超过父元素 */
   max-height: 100%;
-  /* 代码块的最大高度不会超过父元素 */
-  overflow: auto;
-  /* 如果代码块内容过多，将出现滚动条 */
-  white-space: pre-wrap;
-  /* 自动换行，避免水平滚动 */
   background-color: #eeeeee;
-  /* 背景色 */
   color: #333;
-  /* 字体颜色 */
-  padding: 10px;
-  /* 内边距 */
-  font-family: monospace;
-  /* 等宽字体 */
+  padding-inline: 5px;
+  font-family: consolas;
   box-sizing: border-box;
   border-radius: 5px;
-  /* 圆角边框 */
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #output {
@@ -363,7 +365,9 @@ code {
 
 #output h1,
 h2,
-h3,h4,h5 {
+h3,
+h4,
+h5 {
   margin-top: 1em;
 }
 

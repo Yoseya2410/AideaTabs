@@ -267,7 +267,7 @@ function reflect_on() {
 // 结束思考
 function reflect_off() {
   var aisearchlogo = document.getElementById('aisearchlogo');
-  aisearchlogo.src = 'aidea/img/AI.png';
+  aisearchlogo.src = 'aidea/img/AI.svg';
   aisearchlogo.style.pointerEvents = '';
   aisearchlogo.title = '';
   aisearchlogo.classList.remove('rotate');
@@ -691,26 +691,38 @@ function typeText(role, text) {
   output.scrollTop = output.scrollHeight;
 
   let index = 0;
+  let isNearBottom = true; // 标记是否接近底部
+
+  // 监听滚动事件
+  output.addEventListener('scroll', () => {
+    // 判断是否接近底部（允许一定误差范围）
+    const scrollThreshold = 24; // 误差范围
+    isNearBottom = output.scrollTop + output.clientHeight + scrollThreshold >= output.scrollHeight;
+  });
 
   function typeNextCharacter() {
     if (index < text.length) {
       messageElement.innerHTML = marked.parse(text.slice(0, index + 1));
       index++;
-      output.scrollTop = output.scrollHeight;
+
+      // 只有在接近底部的情况下才自动滚动到底部
+      if (isNearBottom) {
+        output.scrollTop = output.scrollHeight;
+      }
 
       // 机器人说话换气（模仿人说话的状态）
       const currentChar = text[index - 1];
       let delay;
       if (currentChar.match(/[.。!！？?]/)) {
-        delay = 700; // 如果是 .。!！？?，延迟800毫秒
+        delay = 700; // 如果是 .。!！？?，延迟700毫秒
       } else if (currentChar.match(/[、，,：:]/)) {
-        delay = 450; // 如果是 、，,，延迟500毫秒
+        delay = 450; // 如果是 、，,，延迟450毫秒
       } else {
-        delay = 45; // 其他字符，延迟40毫秒
+        delay = 45; // 其他字符，延迟45毫秒
       }
       setTimeout(typeNextCharacter, delay);
     } else {
-      latex2html_chat() // 转换LaTex数学表达式
+      latex2html_chat(); // 转换LaTex数学表达式
     }
   }
   typeNextCharacter(); // 开始打字效果
@@ -750,6 +762,7 @@ aisearchlogo.onclick = function () {
   document.getElementById("searchTool_unfold").style.display = "none";
   document.getElementById("search_bar").style.height = ''
   document.getElementById('searchtool_list').style.display = 'none';
+  document.querySelector('#searchTool_unfold img').classList.remove('rotated');
   // 检查输入框是否有内容
   if (document.getElementById('search_input').value.trim() !== '') {
     document.getElementById("search_submit").style.display = "";

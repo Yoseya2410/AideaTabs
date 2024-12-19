@@ -199,7 +199,13 @@
 .katex {
   overflow-y: hidden;
 }
-
+.katex::-webkit-scrollbar {
+  height: 5px;
+}
+.katex::-webkit-scrollbar-thumb {
+  background: #78787861;
+  border-radius: 10px;
+}
 .katex .textbf {
   font-weight: 700;
 }
