@@ -259,10 +259,13 @@ function latex2html_chat() {
 // 开始思考
 function reflect_on() {
   var aisearchlogo = document.getElementById('aisearchlogo');
+  var search_input = document.getElementById("search_input");
   aisearchlogo.src = 'aidea/img/loader.svg';
   aisearchlogo.style.pointerEvents = 'none';
   aisearchlogo.title = '正在思考...';
   aisearchlogo.classList.add('rotate');
+  search_input.disabled = true; // 禁用输入框
+  search_input.placeholder = "正在思考...";
 }
 // 结束思考
 function reflect_off() {
@@ -271,10 +274,11 @@ function reflect_off() {
   aisearchlogo.style.pointerEvents = '';
   aisearchlogo.title = '';
   aisearchlogo.classList.remove('rotate');
+  search_input.placeholder = "正在输出...";
 }
 
- // 展开对话框
- function chatWindowUnfold() {
+// 展开对话框
+function chatWindowUnfold() {
   const chatWindow = document.getElementById("chat_window");
   /*对话框大小适配屏幕*/
   if (window.innerWidth <= 500) {
@@ -723,6 +727,9 @@ function typeText(role, text) {
       setTimeout(typeNextCharacter, delay);
     } else {
       latex2html_chat(); // 转换LaTex数学表达式
+      hljs.highlightAll(); // 代码高亮
+      document.getElementById("search_input").disabled = false; // 解除输入框禁用
+      document.getElementById("search_input").placeholder = "有什么问题尽管问我";
     }
   }
   typeNextCharacter(); // 开始打字效果
@@ -1694,5 +1701,4 @@ if (localStorage.getItem(setx) == 'true') {
 if (localStorage.getItem("searchMode") !== "ai") {
   document.getElementById("searchTool_unfold").style.display = "none";
 }
-
 

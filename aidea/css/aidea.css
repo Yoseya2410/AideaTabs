@@ -1266,17 +1266,18 @@ th {
     color: rgb(255, 255, 255);
   }
 
+  .message-bubble > pre {
+    background-color: #2c2c2c;
+  }
+
   code {
     background-color: #2c2c2c;
-    /* 背景色 */
     color: #ffffff;
-    /* 字体颜色 */
   }
 
   /* dialog 弹窗 */
   .dialog {
     background: rgba(0, 0, 0, 0.27);
-    /* 半透明黑色背景 */
   }
 
   .dialog-content {
