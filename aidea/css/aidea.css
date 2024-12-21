@@ -146,10 +146,12 @@ span {
   margin-left: 5px;
 }
 
+/*
 .searchtool.flexcapsule img {
   width: 23px;
   height: 23px;
 }
+ */
 
 /*搜索栏框架样式*/
 .search_bar {
@@ -235,6 +237,18 @@ span {
 .search_submit img {
   filter: invert(39%) sepia(68%) saturate(2284%) hue-rotate(193deg)
     brightness(104%) contrast(101%);
+}
+
+/*下拉工具栏*/
+.tagname {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.tag:hover .tagname {
+  visibility: visible;
+  opacity: 1;
 }
 
 /*AI 对话框*/
@@ -1163,6 +1177,10 @@ th {
     box-shadow: 0 0 3px rgba(0, 106, 255, 0.5);
   }
 
+  .tag-show:hover {
+    box-shadow: 0 0 3px rgba(160, 199, 255, 0.5);
+  }
+
   #search_input {
     color: #f6f6f6;
   }
@@ -1249,7 +1267,7 @@ th {
   }
 
   .tag-show {
-    background-color: #2d2e30;
+    background-color: #1e1f20;
   }
 
   #chat_window {
@@ -1274,7 +1292,7 @@ th {
     background-color: #2c2c2c;
     color: #ffffff;
   }
-
+  
   /* dialog 弹窗 */
   .dialog {
     background: rgba(0, 0, 0, 0.27);
