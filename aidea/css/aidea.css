@@ -412,7 +412,7 @@ h3 {
   position: relative;
   display: inline-block;
   width: 100px;
-  margin-top: 45px;
+  margin-top: 1vh;
   margin-left: 5px;
   margin-right: 5px;
   border: 0;
@@ -807,6 +807,42 @@ th {
   margin: 0;
 }
 
+/* 设置工具栏选项的过渡显示动画延迟 */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.tag {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.tag:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.tag:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.tag:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.tag:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.tag:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.tag:nth-child(1) {
+  animation-delay: 0s;
+}
+
 /* 加载动画 旋转 */
 @keyframes rotate {
   from {
@@ -923,6 +959,15 @@ th {
     transform: translateY(0);
   }
 }
+
+
+
+
+
+
+
+
+
 
 /*响应式布局*/
 @media screen and (max-width: 1250px) {

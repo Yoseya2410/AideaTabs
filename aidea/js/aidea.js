@@ -390,22 +390,24 @@ const OpenAI_temperature = parseFloat(
   localStorage.getItem("SeekBarOpenAI_temperature")
 );
 
-// 开放给用户用于自己设定AI的接口
-var setMemory = "paimen 是只狗"
+// 提示词
+var setPromptIdentity = localStorage.getItem("setPromptIdentity");
+var setPromptWork = localStorage.getItem("setPromptWork");
+var setPromptTone = localStorage.getItem("setPromptTone");
+var prompt_identity = setPromptIdentity || "You are Aidea, an AI assistant developed by Yoseya";
+var prompt_work = setPromptWork || "Your goal is to help users obtain accurate, timely, and useful information";
+var prompt_tone = setPromptTone || "Refine and directly answer questions";
 
 // 初始化历史对话记录
 let messageslist = [
   {
     role: "system",
     content: [
-      "You are Aidea, an AI assistant developed by Yoseya. Your goal is to help users obtain accurate, timely, and useful information",
-      "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺,He is the most handsome man in the universe",
-      "Refine and directly answer questions",
+      prompt_identity,
+      prompt_work,
+      prompt_tone,
+      "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺",
     ].join("\n"),
-  },
-  {
-    role: "system",
-    content: setMemory,
   },
 ];
 
