@@ -1,9 +1,7 @@
-surl = document.getElementById("search_input").value;
-
-// 清除开启AI对话的标记
-if (localStorage.getItem('chatOn') !== null) {
-  localStorage.removeItem("chatOn")
-}
+// 页面刷新事件
+window.addEventListener('beforeunload', function () {
+  this.sessionStorage.clear() //页面刷新时清除所有sessionStorage记录
+});
 
 //定位到搜索框
 document.getElementById("search_input").focus();
@@ -190,7 +188,7 @@ function localStorageresetkey(key) {
 
 /*搜索功能*/
 function fastseek() {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   if (surl == "") {
   } else {
     document.getElementById("url").style.display = "inline";
@@ -261,8 +259,8 @@ function reflect_on() {
   var aisearchlogo = document.getElementById('aisearchlogo');
   var search_input = document.getElementById("search_input");
   aisearchlogo.src = 'aidea/img/loader.svg';
-  aisearchlogo.style.pointerEvents = 'none';
   aisearchlogo.title = '正在思考...';
+  aisearchlogo.style.pointerEvents = 'none';
   aisearchlogo.classList.add('rotate');
   search_input.disabled = true; // 禁用输入框
   search_input.placeholder = "正在思考...";
@@ -270,11 +268,43 @@ function reflect_on() {
 // 结束思考
 function reflect_off() {
   var aisearchlogo = document.getElementById('aisearchlogo');
-  aisearchlogo.src = 'aidea/img/AI.svg';
+  var search_input = document.getElementById("search_input");
+  aisearchlogo.src = 'aidea/img/stop.svg';
+  aisearchlogo.title = '停止输出';
   aisearchlogo.style.pointerEvents = '';
-  aisearchlogo.title = '';
   aisearchlogo.classList.remove('rotate');
   search_input.placeholder = "正在输出...";
+  sessionStorage.setItem('printStatus', 'ture');
+}
+// 输出结束
+function print_off() {
+  var aisearchlogo = document.getElementById('aisearchlogo');
+  var search_input = document.getElementById("search_input")
+  aisearchlogo.src = 'aidea/img/AI.svg';
+  aisearchlogo.title = '退出智慧搜索';
+  search_input.disabled = false; // 解除输入框禁用
+  search_input.placeholder = "有什么问题尽管问我";
+  sessionStorage.removeItem('printStatus');
+  latex2html_chat(); // 转换LaTex数学表达式
+  hljs.highlightAll(); // 代码高亮
+}
+// 退出智慧搜索
+function exit_AIsearch() {
+  window.localStorage.setItem("searchMode", "");
+  document.getElementById("aisearchlogo").style.display = "none";
+  document.getElementById("searchlogo").style.display = "inline";
+  document.getElementById("search_input").placeholder = "搜索或输入网址";
+  document.getElementById("chat_window").style.height = "0";
+  document.getElementById("searchTool_unfold").style.display = "none";
+  document.getElementById("search_bar").style.height = ''
+  document.getElementById('searchtool_list').style.display = 'none';
+  document.querySelector('#searchTool_unfold img').classList.remove('rotated');
+  // 检查输入框是否有内容
+  if (document.getElementById('search_input').value.trim() !== '') {
+    document.getElementById("search_submit").style.display = "";
+  } else {
+    document.getElementById("search_submit").style.display = "none";
+  }
 }
 
 // 展开对话框
@@ -298,7 +328,7 @@ function chatWindowUnfold() {
 
 //搜索逻辑
 function search() {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   document.getElementById("dropdown-menu").style.display = "none";
   if (surl == "/index") {
   } else {
@@ -329,6 +359,7 @@ function search() {
 
 /*此函数方便控件隐藏*/
 function none() {
+  const surl = document.getElementById("search_input")
   document.getElementById("url").style.display = "none";
   document.getElementById("visit").style.display = "none";
   document.getElementById("alltype").style.display = "none";
@@ -666,8 +697,8 @@ function sendMessage() {
     reflect_on()
     //console.log("开始思考");
     /*用于标记是否开启AI对话（开启对话后，当切换至智慧搜索时对话框自动展开）*/
-    if (localStorage.getItem("chatOn") !== 'ture') {
-      localStorage.setItem('chatOn', 'ture');
+    if (sessionStorage.getItem("chatOn") !== 'ture') {
+      sessionStorage.setItem('chatOn', 'ture');
     }
   } else {
     typeText(
@@ -698,6 +729,7 @@ function typeText(role, text) {
 
   let index = 0;
   let isNearBottom = true; // 标记是否接近底部
+  let isPaused = false; // 标记是否暂停
 
   // 监听滚动事件
   output.addEventListener('scroll', () => {
@@ -707,6 +739,10 @@ function typeText(role, text) {
   });
 
   function typeNextCharacter() {
+    if (isPaused) {
+      return; // 停止输出
+    }
+
     if (index < text.length) {
       messageElement.innerHTML = marked.parse(text.slice(0, index + 1));
       index++;
@@ -728,12 +764,30 @@ function typeText(role, text) {
       }
       setTimeout(typeNextCharacter, delay);
     } else {
-      latex2html_chat(); // 转换LaTex数学表达式
-      hljs.highlightAll(); // 代码高亮
-      document.getElementById("search_input").disabled = false; // 解除输入框禁用
-      document.getElementById("search_input").placeholder = "有什么问题尽管问我";
+      print_off() //输出结束
     }
   }
+
+  // 暂停输出
+  function pauseTyping() {
+    print_off()
+    isPaused = true;
+  }
+  //恢复输出
+  function resumeTyping() {
+    isPaused = false;
+    typeNextCharacter(); // 继续打字
+  }
+
+  //点击暂停输出
+  document.getElementById("aisearchlogo").onclick = function () {
+    if (sessionStorage.getItem("printStatus") !== null) {
+      pauseTyping()
+    } else {
+      exit_AIsearch()
+    }
+  };
+
   typeNextCharacter(); // 开始打字效果
 }
 
@@ -760,25 +814,10 @@ searchlogo.onclick = function () {
   document.getElementById("more").style.display = "inline";
   document.getElementById("box").style.display = "none";
 };
-//点击智慧搜索图标
-var aisearchlogo = document.getElementById("aisearchlogo");
-aisearchlogo.onclick = function () {
-  window.localStorage.setItem("searchMode", "");
-  document.getElementById("aisearchlogo").style.display = "none";
-  document.getElementById("searchlogo").style.display = "inline";
-  document.getElementById("search_input").placeholder = "搜索或输入网址";
-  document.getElementById("chat_window").style.height = "0";
-  document.getElementById("searchTool_unfold").style.display = "none";
-  document.getElementById("search_bar").style.height = ''
-  document.getElementById('searchtool_list').style.display = 'none';
-  document.querySelector('#searchTool_unfold img').classList.remove('rotated');
-  // 检查输入框是否有内容
-  if (document.getElementById('search_input').value.trim() !== '') {
-    document.getElementById("search_submit").style.display = "";
-  } else {
-    document.getElementById("search_submit").style.display = "none";
-  }
 
+//点击退出智慧搜索
+document.getElementById("aisearchlogo").onclick = function () {
+  exit_AIsearch()
 };
 
 //切换引擎
@@ -838,7 +877,7 @@ defAI.onclick = function () {
   window.localStorage.setItem("searchMode", "ai");
   document.getElementById("searchTool_unfold").style.display = "";
   document.getElementById("search_submit").style.display = "none";
-  if (localStorage.getItem("chatOn") == 'ture') {
+  if (sessionStorage.getItem("chatOn") == 'ture') {
     chatWindowUnfold()
   }
 };
@@ -1027,7 +1066,7 @@ search_submit.addEventListener('click', function () {
 
 /* 搜索内容提交逻辑 */
 function performSearch() {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var searchMode = localStorage.getItem("searchMode");
   var enginevalue = localStorage.getItem("engine");
   document.getElementById("box").style.display = "none";
@@ -1173,7 +1212,7 @@ function onKeyDown() {
 
     /*下拉搜索项（历史遗留）
     if (window.event.altKey && window.event.keyCode === 40) {
-      surl = document.getElementById("search_input").value;
+      const surl = document.getElementById("search_input").value;
       document.getElementById("dropdown-menu").style.display = "none";
       document.getElementById("visit").style.display = "none";
       document.getElementById("more").style.display = "none";
@@ -1188,7 +1227,7 @@ function onKeyDown() {
     }
   
     if (window.event.altKey && window.event.keyCode === 38) {
-      surl = document.getElementById("search_input").value;
+      const surl = document.getElementById("search_input").value;
       if (surl == "") {
       } else {
         //隐藏更多url选项
@@ -1457,7 +1496,7 @@ visit.onclick = function () {
   }
 };
 baidu.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl1");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.baidu.com/s?ie=&wd=" + surl;
@@ -1468,7 +1507,7 @@ baidu.onclick = function () {
   none();
 };
 google.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl2");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.google.com/search?q=" + surl;
@@ -1479,7 +1518,7 @@ google.onclick = function () {
   none();
 };
 bing.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl3");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.bing.com/search?q=" + surl;
@@ -1490,7 +1529,7 @@ bing.onclick = function () {
   none();
 };
 bilibili.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl4");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://search.bilibili.com/all?keyword=" + surl;
@@ -1501,7 +1540,7 @@ bilibili.onclick = function () {
   none();
 };
 zhihu.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl5");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://www.zhihu.com/search?q=" + surl;
@@ -1512,7 +1551,7 @@ zhihu.onclick = function () {
   none();
 };
 github.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl6");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     window.location.href = "https://github.com/search?q=" + surl;
@@ -1529,7 +1568,7 @@ var stow = document.getElementById("stow");
 var alltype = document.getElementById("alltype");
 
 more.onclick = function () {
-  surl = document.getElementById("search_input").value;
+  const surl = document.getElementById("search_input").value;
   var urlvalue = window.localStorage.getItem("buttonUrl7");
   if (urlvalue == null || urlvalue == "null" || urlvalue == "") {
     //alltype.style.display = "inline";

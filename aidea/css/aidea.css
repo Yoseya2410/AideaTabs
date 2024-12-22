@@ -807,6 +807,43 @@ th {
   margin: 0;
 }
 
+
+
+
+
+
+
+
+
+
+/* 毛玻璃效果 */
+.blur-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  pointer-events: none; /* 使毛玻璃效果不影响点击事件 */
+}
+
+/* 保持 search_part 不被毛玻璃效果覆盖 */
+.search_part {
+  position: relative;
+  z-index: 1000; /* 确保 search_part 在毛玻璃效果之上 */
+}
+
+
+
+
+
+
+
+
+
+
 /* 设置工具栏选项的过渡显示动画延迟 */
 @keyframes fadeIn {
   to {
