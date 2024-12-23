@@ -50,6 +50,11 @@ function getCookie(cname) {
   return "";
 }
 
+// 检查是否为深色模式
+function isDarkMode() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 //从字符串中提取域名
 function extractDomain(url) {
   const domainRegex = /https?:\/\/(www\.)?([^\/]+)/;
@@ -256,8 +261,8 @@ function latex2html_chat() {
 /* 加载动画（机器输出前的思考）*/
 // 开始思考
 function reflect_on() {
-  var aisearchlogo = document.getElementById('aisearchlogo');
-  var search_input = document.getElementById("search_input");
+  const aisearchlogo = document.getElementById('aisearchlogo');
+  const search_input = document.getElementById("search_input");
   aisearchlogo.src = 'aidea/img/loader.svg';
   aisearchlogo.title = '正在思考...';
   aisearchlogo.style.pointerEvents = 'none';
@@ -267,27 +272,42 @@ function reflect_on() {
 }
 // 结束思考
 function reflect_off() {
-  var aisearchlogo = document.getElementById('aisearchlogo');
-  var search_input = document.getElementById("search_input");
+  const aisearchlogo = document.getElementById('aisearchlogo');
+  const search_input = document.getElementById("search_input");
+  const searchswitch = document.getElementById("searchswitch");
   aisearchlogo.src = 'aidea/img/stop.svg';
   aisearchlogo.title = '停止输出';
   aisearchlogo.style.pointerEvents = '';
   aisearchlogo.classList.remove('rotate');
   search_input.placeholder = "正在输出...";
   sessionStorage.setItem('printStatus', 'ture');
+  searchswitch.style.padding = "3px"
+  searchswitch.style.marginRight = "10px"
+
+  if (isDarkMode()) {
+    searchswitch.style.background = "#155488"
+    aisearchlogo.style.filter = "invert(18%) sepia(23%) saturate(3066%) hue-rotate(182deg) brightness(99%) contrast(88%)"
+  } else {
+    searchswitch.style.background = "#d7eeff"
+    aisearchlogo.style.filter = "invert(43%) sepia(42%) saturate(3321%) hue-rotate(190deg) brightness(100%) contrast(101%)"
+  }
 }
 // 输出结束
 function print_off() {
-  var aisearchlogo = document.getElementById('aisearchlogo');
-  var search_input = document.getElementById("search_input")
+  const aisearchlogo = document.getElementById('aisearchlogo');
+  const search_input = document.getElementById("search_input");
+  const searchswitch = document.getElementById("searchswitch");
   aisearchlogo.src = 'aidea/img/AI.svg';
   aisearchlogo.title = '退出智慧搜索';
+  aisearchlogo.style.filter = ""
   search_input.disabled = false; // 解除输入框禁用
   search_input.placeholder = "有什么问题尽管问我";
-  sessionStorage.removeItem('printStatus');
-  latex2html_chat(); // 转换LaTex数学表达式
-  hljs.highlightAll(); // 代码高亮
+  searchswitch.style.background = ""
+  searchswitch.style.padding = ""
+  searchswitch.style.marginRight = ""
+  sessionStorage.removeItem('printStatus'); 
 }
+
 // 退出智慧搜索
 function exit_AIsearch() {
   window.localStorage.setItem("searchMode", "");
@@ -402,8 +422,8 @@ const apikey1 = localStorage.getItem("apikey1");
 const apikey2 = localStorage.getItem("apikey2");
 const apikey3 = localStorage.getItem("apikey3");
 
-const aidea_search = JSON.parse(localStorage.getItem("set3"));
-const qwen_search = JSON.parse(localStorage.getItem("set4"));
+var aidea_search = JSON.parse(localStorage.getItem("set3"));
+var qwen_search = JSON.parse(localStorage.getItem("set4"));
 
 const def_temperature = parseFloat(
   localStorage.getItem("SeekBardef_temperature")
@@ -430,20 +450,19 @@ var prompt_work = setPromptWork || "Your goal is to help users obtain accurate, 
 var prompt_tone = setPromptTone || "Refine and directly answer questions";
 
 // 初始化历史对话记录
-let messageslist = [
+var messageslist = [
   {
     role: "system",
     content: [
       prompt_identity,
       prompt_work,
       prompt_tone,
-      "Yoseya is an independent developer who primarily studies physics and computer science,He comes from China and his Chinese name is 张新旺",
     ].join("\n"),
   },
 ];
 
 // 配置大模型
-const config = {
+var config = {
   apis: {
     AideaIntelligence: {
       apiKey: Aikey,
@@ -500,7 +519,7 @@ function initializeTokenCounters() {
 // 创建 API 调用器
 function createApiCaller(apiConfig) {
   return async function callApi(message) {
-    const payload = {
+    let payload = {
       model: apiConfig.model,
       messages: messageslist,
       enable_search: apiConfig.enable_search,
@@ -533,7 +552,7 @@ function createApiCaller(apiConfig) {
               typeText(
                 "bot",
                 `😅 当前 Aidea Intelligence 还处于内测阶段，如果你是内测用户请添加邀请码。如果您没有收到邀请，先试试第三方模型🤖吧！`
-              );
+                , "error");
             } else {
               typeText(
                 "bot",
@@ -550,7 +569,7 @@ function createApiCaller(apiConfig) {
 **3. 请检查你的 API 密钥是否失效**:
 
 😴如果前两步都没有问题，那就是你的 API 密钥失效了，去供应商那里看看吧，我先休息了。`
-              );
+                , "error");
             }
           } else if (response.status === 429) {
             const error_429 = localStorage.getItem("error_429");
@@ -576,7 +595,7 @@ function createApiCaller(apiConfig) {
  **2. 资源已耗尽，账户里没钱了**：
  
  😱 快！快！快！快去充钱！`
-                );
+                  , "error");
               } else {
                 typeText(
                   "bot",
@@ -584,7 +603,7 @@ function createApiCaller(apiConfig) {
                 );
               }
             } else {
-              typeText("bot", `😵‍💫用脑过度了，让我休息一会。`);
+              typeText("bot", `😵‍💫用脑过度了，让我休息一会。`, "error");
               localStorage.setItem("error_429", "1");
             }
           } else {
@@ -652,11 +671,8 @@ function createApiCaller(apiConfig) {
       }
     } catch (error) {
       //console.error('Error:', error);
-      typeText(
-        "bot",
-        "😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：" +
-        error
-      );
+      
+      typeText("bot", "😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：" + error, "error");
     }
   };
 }
@@ -720,7 +736,7 @@ function addMessage(role, message) {
 }
 
 // 逐字显示文本
-function typeText(role, text) {
+function typeText(role, text, state = "chat") {
   const messageElement = document.createElement("div");
   messageElement.classList.add("message-bubble", role);
   messageElement.innerHTML = marked.parse(text);
@@ -764,6 +780,10 @@ function typeText(role, text) {
       }
       setTimeout(typeNextCharacter, delay);
     } else {
+      if (state == "chat") {
+        latex2html_chat(); // 转换LaTex数学表达式
+        hljs.highlightAll(); // 代码高亮
+      }
       print_off() //输出结束
     }
   }
