@@ -90,6 +90,55 @@ span {
 }
 */
 
+/*顶栏布局*/
+.top-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff00;
+  z-index: 1;
+}
+.top-bar .button {
+  border-radius: 50%;
+  display: flex;
+  margin: 1%;
+  padding: 0.5%;
+  background-color: #00000000;
+}
+
+.top-bar .button img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg) brightness(82%) contrast(90%);
+}
+
+.top-bar .button:hover{
+  background-color:#f3f4f6;
+}
+
+.top-bar .button:hover img {
+  opacity: 1;
+  filter: invert(41%) sepia(6%) saturate(424%) hue-rotate(174deg) brightness(89%) contrast(87%);
+}
+
+.top-bar #configItems:hover img {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease;
+}
+.top-bar #sidebar:hover img {
+  transform: scale(1.1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.right{
+  float: right;
+}
+
+.left{
+  float: left;
+}
+
 #contents {
   margin-top: 40px;
 }
@@ -960,15 +1009,6 @@ th {
   }
 }
 
-
-
-
-
-
-
-
-
-
 /*响应式布局*/
 @media screen and (max-width: 1250px) {
   .contents {
@@ -1337,7 +1377,7 @@ th {
     background-color: #2c2c2c;
     color: #ffffff;
   }
-  
+
   /* dialog 弹窗 */
   .dialog {
     background: rgba(0, 0, 0, 0.27);
@@ -1387,9 +1427,22 @@ th {
   /*内容区块*/
   .dialog-content blockquote {
     font-size: 1rem;
-    color: #999;
+    color: #36393b;
     border-left: 0.2rem solid #dfe2e5;
     margin: 1rem 0;
     padding: 0.25rem 0 0.25rem 1rem;
+  }
+
+/*顶栏控件*/
+  .top-bar .button img {
+    filter: invert(18%) sepia(13%) saturate(247%) hue-rotate(161deg) brightness(91%) contrast(84%);
+  }
+  
+  .top-bar .button:hover{
+    background-color:#1e1f20;
+  }
+  
+  .top-bar .button:hover img {
+    filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg) brightness(82%) contrast(90%);
   }
 }
