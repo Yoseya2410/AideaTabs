@@ -101,20 +101,20 @@ span {
 .top-bar .button {
   border-radius: 50%;
   display: flex;
-  margin: 1%;
-  padding: 0.5%;
+  margin: 0.5em;
+  padding: 0.8em;
   background-color: #00000000;
 }
 
 .top-bar .button img {
   width: 24px;
   height: 24px;
-  opacity: 0.5;
+  opacity: 0.3;
   filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg) brightness(82%) contrast(90%);
 }
 
 .top-bar .button:hover{
-  background-color:#f3f4f6;
+  background-color:#dddddd80;
 }
 
 .top-bar .button:hover img {
@@ -481,6 +481,10 @@ h3 {
 .tag-show:hover {
   box-shadow: 0 1px 6px rgba(32, 33, 36, 0.175);
   border-color: rgba(223, 225, 229, 0);
+}
+.tag-show:hover img{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 /*书签名称样式*/
@@ -865,23 +869,23 @@ th {
 
 .tag {
   opacity: 0;
-  animation: fadeIn 1s forwards;
+  animation: fadeIn 0.5s forwards;
 }
 
 .tag:nth-child(6) {
-  animation-delay: 0.5s;
-}
-
-.tag:nth-child(5) {
-  animation-delay: 0.4s;
-}
-
-.tag:nth-child(4) {
   animation-delay: 0.3s;
 }
 
-.tag:nth-child(3) {
+.tag:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.tag:nth-child(4) {
   animation-delay: 0.2s;
+}
+
+.tag:nth-child(3) {
+  animation-delay: 0.15s;
 }
 
 .tag:nth-child(2) {
@@ -1439,7 +1443,7 @@ th {
   }
   
   .top-bar .button:hover{
-    background-color:#1e1f20;
+    background-color:#2a2c2d80;
   }
   
   .top-bar .button:hover img {

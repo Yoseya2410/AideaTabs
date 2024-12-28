@@ -62,6 +62,15 @@ function extractDomain(url) {
   return match ? match[2] : null;
 }
 
+// 判断当前运行环境是否为浏览器扩展
+function chromeExtension() {
+  if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
+    return true
+  } else {
+    return false
+  }
+}
+
 //从字符串中提取一级域名
 function extractPrimaryDomain(url) {
   try {
@@ -139,8 +148,24 @@ class Dialog {
 const dialog1 = new Dialog(document.getElementById("dialog1"));
 //const dialog2 = new Dialog(document.getElementById('dialog2'));
 
-// 将 markdown 解析为 HTML
-$markbody1.innerHTML = marked.parse($marktext1.value);
+// 读取markdown文件并以HTML显示
+function importMarkdownFile(id, file) {
+  if (chromeExtension()) {
+    var markdownFile = chrome.runtime.getURL(file);
+  } else {
+    var markdownFile = file;
+  }
+  fetch(markdownFile)
+    .then(response => response.text())
+    .then(markdownText => {
+      const htmlContent = marked.parse(markdownText);
+      document.getElementById(id).innerHTML = htmlContent;
+    })
+    .catch(error => console.error('Error reading the file:', error));
+}
+
+// 将markdown文件内容显示在页面
+importMarkdownFile('userManual', 'README.md');
 
 //自定义快捷键(localStorage方法)
 function localStoragecustomkey(key) {
@@ -197,7 +222,7 @@ function fastseek() {
   if (surl == "") {
   } else {
     document.getElementById("url").style.display = "inline";
-    document.getElementById("box").style.display = "none";
+    closeConfigItems()
   }
   return false;
 }
@@ -263,12 +288,15 @@ function latex2html_chat() {
 function reflect_on() {
   const aisearchlogo = document.getElementById('aisearchlogo');
   const search_input = document.getElementById("search_input");
+  const configItems = document.getElementById("configItems");
   aisearchlogo.src = 'aidea/img/loader.svg';
   aisearchlogo.title = '正在思考...';
   aisearchlogo.style.pointerEvents = 'none';
+  configItems.style.pointerEvents = 'none';
   aisearchlogo.classList.add('rotate');
   search_input.disabled = true; // 禁用输入框
   search_input.placeholder = "正在思考...";
+
 }
 // 结束思考
 function reflect_off() {
@@ -277,6 +305,7 @@ function reflect_off() {
   const searchswitch = document.getElementById("searchswitch");
   aisearchlogo.src = 'aidea/img/stop.svg';
   aisearchlogo.title = '停止输出';
+
   aisearchlogo.style.pointerEvents = '';
   aisearchlogo.classList.remove('rotate');
   search_input.placeholder = "正在输出...";
@@ -297,6 +326,7 @@ function print_off() {
   const aisearchlogo = document.getElementById('aisearchlogo');
   const search_input = document.getElementById("search_input");
   const searchswitch = document.getElementById("searchswitch");
+  const configItems = document.getElementById("configItems");
   aisearchlogo.src = 'aidea/img/AI.svg';
   aisearchlogo.title = '退出智慧搜索';
   aisearchlogo.style.filter = ""
@@ -305,26 +335,8 @@ function print_off() {
   searchswitch.style.background = ""
   searchswitch.style.padding = ""
   searchswitch.style.marginRight = ""
-  sessionStorage.removeItem('printStatus'); 
-}
-
-// 退出智慧搜索
-function exit_AIsearch() {
-  window.localStorage.setItem("searchMode", "");
-  document.getElementById("aisearchlogo").style.display = "none";
-  document.getElementById("searchlogo").style.display = "inline";
-  document.getElementById("search_input").placeholder = "搜索或输入网址";
-  document.getElementById("chat_window").style.height = "0";
-  document.getElementById("searchTool_unfold").style.display = "none";
-  document.getElementById("search_bar").style.height = ''
-  document.getElementById('searchtool_list').style.display = 'none';
-  document.querySelector('#searchTool_unfold img').classList.remove('rotated');
-  // 检查输入框是否有内容
-  if (document.getElementById('search_input').value.trim() !== '') {
-    document.getElementById("search_submit").style.display = "";
-  } else {
-    document.getElementById("search_submit").style.display = "none";
-  }
+  configItems.style.pointerEvents = '';
+  sessionStorage.removeItem('printStatus');
 }
 
 // 展开对话框
@@ -345,6 +357,103 @@ function chatWindowUnfold() {
     }
   }
 }
+
+// 折叠对话框
+function chatWindowFold() {
+  document.getElementById("chat_window").style.height = "0";
+}
+
+// 退出智慧搜索
+function exit_AIsearch() {
+  chatWindowFold()
+  window.localStorage.setItem("searchMode", "");
+  document.getElementById("aisearchlogo").style.display = "none";
+  document.getElementById("searchlogo").style.display = "inline";
+  document.getElementById("search_input").placeholder = "搜索或输入网址";
+  document.getElementById("searchTool_unfold").style.display = "none";
+  document.getElementById("search_bar").style.height = ''
+  document.getElementById('searchtool_list').style.display = 'none';
+  document.querySelector('#searchTool_unfold img').classList.remove('rotated');
+  // 检查输入框是否有内容
+  if (document.getElementById('search_input').value.trim() !== '') {
+    document.getElementById("search_submit").style.display = "";
+  } else {
+    document.getElementById("search_submit").style.display = "none";
+  }
+}
+
+//打开下拉工具栏
+function openConfigItems() {
+  const configItems = document.getElementById("configItems");
+  const configItems_img = configItems.querySelector("img");
+  document.getElementById("box").style.display = "inline";
+  document.getElementById("url").style.display = "none";
+  document.getElementById("stow").style.display = "none";
+  document.getElementById("alltype").style.display = "none";
+  document.getElementById("dropdown-menu").style.display = "none";
+  sessionStorage.setItem('configItems', 'true');
+  configItems_img.style.opacity = 1
+  configItems_img.src = "aidea/img/car-fan_filled.svg"
+  if (isDarkMode()) {
+    configItems_img.style.filter = "invert(25%) sepia(27%) saturate(3587%) hue-rotate(185deg) brightness(88%) contrast(87%)"
+    configItems.style.backgroundColor = "#2a2c2d80"
+  } else {
+    configItems_img.style.filter = "invert(51%) sepia(35%) saturate(2608%) hue-rotate(190deg) brightness(99%) contrast(105%)"
+    configItems.style.backgroundColor = "#dddddd80"
+  }
+}
+
+// 关闭下拉工具栏
+function closeConfigItems() {
+  const configItems = document.getElementById("configItems");
+  const configItems_img = configItems.querySelector("img");
+  document.getElementById("box").style.display = "none";
+  sessionStorage.removeItem('configItems');
+  configItems_img.style.filter = ""
+  configItems_img.src = "aidea/img/car-fan.svg"
+  configItems_img.style.opacity = ""
+  configItems.style.backgroundColor = ""
+}
+
+// configItems 点击事件，打开或关闭下拉工具栏
+document.getElementById("configItems").addEventListener('click', function () {
+  if (sessionStorage.getItem('configItems') == "true") {
+    closeConfigItems()
+    if (sessionStorage.getItem("chatOn") == 'true' && localStorage.getItem("searchMode") == "ai") {
+      chatWindowUnfold()
+    }
+  } else {
+
+    if (sessionStorage.getItem("chatOn") == 'true' && localStorage.getItem("searchMode") == "ai" && document.getElementById("chat_window").style.height != "0px") {
+      chatWindowFold()
+      setTimeout(function () {
+        openConfigItems();
+      }, 1000);
+    } else {
+      openConfigItems();
+    }
+
+  }
+
+});
+
+/* 点击页面其他位置隐藏下拉工具栏
+document.addEventListener('click', function (event) {
+  const box = document.getElementById("box");
+  const configItems = document.getElementById("configItems");
+  const tagShows = document.querySelectorAll(".tag-show");
+  let isInsideTagShow = false;
+  tagShows.forEach(tagShow => {
+    if (tagShow.contains(event.target)) {
+      isInsideTagShow = true;
+    }
+  });
+
+  if (!isInsideTagShow && event.target !== configItems && !configItems.contains(event.target)) {
+    closeConfigItems()
+  }
+});
+*/
 
 //搜索逻辑
 function search() {
@@ -671,7 +780,7 @@ function createApiCaller(apiConfig) {
       }
     } catch (error) {
       //console.error('Error:', error);
-      
+
       typeText("bot", "😵请求失败，请检查网络连接。</br>如果网络正常，请[提交错误信息](mailto:yoseya2410@outlook.com?subject=AideaTabs报错)</br>错误信息：" + error, "error");
     }
   };
@@ -713,8 +822,8 @@ function sendMessage() {
     reflect_on()
     //console.log("开始思考");
     /*用于标记是否开启AI对话（开启对话后，当切换至智慧搜索时对话框自动展开）*/
-    if (sessionStorage.getItem("chatOn") !== 'ture') {
-      sessionStorage.setItem('chatOn', 'ture');
+    if (sessionStorage.getItem("chatOn") !== 'true') {
+      sessionStorage.setItem('chatOn', 'true');
     }
   } else {
     typeText(
@@ -832,7 +941,7 @@ searchlogo.onclick = function () {
   none();
   document.getElementById("dropdown-menu").style.display = "inline";
   document.getElementById("more").style.display = "inline";
-  document.getElementById("box").style.display = "none";
+  closeConfigItems()
 };
 
 //点击退出智慧搜索
@@ -897,7 +1006,7 @@ defAI.onclick = function () {
   window.localStorage.setItem("searchMode", "ai");
   document.getElementById("searchTool_unfold").style.display = "";
   document.getElementById("search_submit").style.display = "none";
-  if (sessionStorage.getItem("chatOn") == 'ture') {
+  if (sessionStorage.getItem("chatOn") == 'true') {
     chatWindowUnfold()
   }
 };
@@ -1089,7 +1198,7 @@ function performSearch() {
   const surl = document.getElementById("search_input").value;
   var searchMode = localStorage.getItem("searchMode");
   var enginevalue = localStorage.getItem("engine");
-  document.getElementById("box").style.display = "none";
+  closeConfigItems()
 
   if (surl == "") {
   } else {
@@ -1180,7 +1289,7 @@ document.getElementById("search_input").addEventListener("input", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const search_input = document.getElementById("search_input");
   search_input.addEventListener("focus", function () {
-    document.getElementById("box").style.display = "none";
+    closeConfigItems()
   });
 });
 
@@ -1189,17 +1298,6 @@ document.onkeydown = onKeyDown;
 function onKeyDown() {
   const set1 = localStorage.getItem("set1");
   if (!set1) {
-    //显示/隐藏主页下拉圆形选项
-    if (window.event.ctrlKey && window.event.keyCode === 40) {
-      document.getElementById("box").style.display = "inline";
-      document.getElementById("url").style.display = "none";
-      document.getElementById("stow").style.display = "none";
-      document.getElementById("alltype").style.display = "none";
-      document.getElementById("dropdown-menu").style.display = "none";
-    }
-    if (window.event.ctrlKey && window.event.keyCode === 38) {
-      document.getElementById("box").style.display = "none";
-    }
 
     //搜索框填入上次搜索的内容
     if (window.event.altKey && window.event.keyCode === 72) {
@@ -1268,9 +1366,6 @@ function onKeyDown() {
       56: "8",
       57: "9",
       48: "0",
-      188: ",",
-      190: ".",
-      191: "/",
     };
 
     //快捷键自定义
