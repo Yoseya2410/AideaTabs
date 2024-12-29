@@ -378,7 +378,11 @@ function print_off() {
   searchswitch.style.background = ""
   searchswitch.style.padding = ""
   searchswitch.style.marginRight = ""
-  configItems.style.pointerEvents = '';
+  if (localStorage.getItem('modelclass') == null) {
+    document.getElementById("configItems").style.pointerEvents = 'none';
+  } else {
+    document.getElementById("configItems").style.pointerEvents = '';
+  }
   sessionStorage.removeItem('printStatus');
 }
 
@@ -490,10 +494,10 @@ document.getElementById("configItems").addEventListener('click', function () {
 });
 
 // 当没有选择智慧搜索模型时下拉工具栏按钮无法点击
-if (localStorage.getItem('modelclass') !== null) {
-  document.getElementById("configItems").style.pointerEvents = '';
-} else {
+if (localStorage.getItem('modelclass') == null) {
   document.getElementById("configItems").style.pointerEvents = 'none';
+} else {
+  document.getElementById("configItems").style.pointerEvents = '';
 }
 
 //搜索逻辑
