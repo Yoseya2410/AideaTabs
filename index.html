@@ -20,7 +20,7 @@
       </div>
 
       <div class="button right" id="configItems">
-        <img src="aidea/img/car-fan.svg" />
+        <img src="aidea/img/windmill-off.svg" />
       </div>
     </div>
 
@@ -104,28 +104,28 @@
         <!--下拉工具栏-->
         <div id="box" class="tag_part none">
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="setKeycode_button">
               <p><img class="icon" src="/aidea/img/command.svg" /></p>
             </div>
             <p class="tagname">快捷键</p>
           </div>
 
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="setChatHistory_button">
               <p><img class="icon" src="/aidea/img/chat.svg" /></p>
             </div>
             <p class="tagname">对话</p>
           </div>
 
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="setToolPack_button">
               <p><img class="icon" src="/aidea/img/toolbox.svg" /></p>
             </div>
             <p class="tagname">工具</p>
           </div>
 
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="setAgent_button">
               <p><img class="icon" src="/aidea/img/agent.svg" /></p>
               </a>
             </div>
@@ -133,14 +133,14 @@
           </div>
 
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="setPrompt_button">
               <p><img class="icon" src="/aidea/img/prompt.svg" /></p>
             </div>
             <p class="tagname">提示词</p>
           </div>
 
           <div class="tag">
-            <div class="tag-show">
+            <div class="tag-show" id="settings_button">
               <p><img class="icon" src="aidea/img/settings.svg" /></p>
             </div>
             <p class="tagname">设置</p>
@@ -152,44 +152,63 @@
   </div>
 
   <!-- dialog 弹窗 -->
-  <div id="dialog1" class="dialog">
+
+  <!--使用说明-->
+  <div id="guide" class="dialog">
     <div class="dialog-content">
       <span class="close"></span>
-      <h1>🥳 AideaTabes 中的新变化</h1>
-      <custom-tip title="好久不见，AideaTabs 更新到了 0.1.6 版本！" color="#3dc99424" text_color="#3c3c43">
-        这是 AideaTabs 的新篇章，也是我的新起点。
-        在 2019 年的夏天，出于对计算机软件的好奇，对写代码一窍不通的我开启了我的第一款软件 Aidea 的制作，它的诞生没有明确的目的，只是我一时的想法，正如它的名字 <strong>A idea</strong> 一样。
-        也正是因为它，我误打误撞的踏上了我的计算机学习生涯。随着时间的推移，Aidea 经历了一代又一代变化。直到 2022 年，在一些机缘巧合下我萌生了制作网站的想法。
-        最初，我只是为了制作一个整蛊同学的网站，但随着我对 web 技术不断的了解，我为 Aidea 找到了新的方向。于是我开始一边学习 web 前端；一边用 JavaScript 重新编写 Aidea。
-        经过一个月的编写， AideaTabs 诞生了！随着GPT等相关技术的兴起，人类社会正快速步入智能时代，Aidea也是。</br>今天，它以全新的面貌继续着它的进化之旅——<strong> Aidea
-          Intelligence </strong>
-      </custom-tip>
-
-      <div id="$markbody1"></div>
       <div id="userManual"></div>
+    </div>
+  </div>
 
-      <text-picture-right src="/aidea/img/newVersion/new1.png">
-        <h1>使用 AideaTabs 进行智慧搜索</h1>
-        <p>有什么问题尽管问我！</p>
-        <ol>
-          <li>除了 Aidea Intelligence，AideaTabs 还支持了其他的第三方语言模型，例如 GPT，Qwen，Moonshot等</li>
-          <li>AideaTabs 将搜索框与大语言模型结合，使用方式与平时切换搜索引擎一样</li>
-          <li>与 Aidea 对话时，它可以模仿人类说话的语气，在需要换气的时候停顿。</li>
-        </ol>
-      </text-picture-right>
-
-      <text-picture-left src="./aidea/img/newVersion/new2.png">
-        <h1>在控制台中对 AideaTabs 进行设置</h1>
-        <p>这个下拉弹窗就是 AideaTabs 的控制中心，用于管理所有的设置选项。</p>
-        <ol>
-          <li>在控制台中可以设置记忆模式，默认关闭记忆。关闭记忆时 Aidea 只会记住你说的，不会记住自己说的，这样可以确保在理解上下文的情况下节省更多 Token</li>
-          <li>AideaTabs 支持联网搜索，这使它的认知不仅仅局限于固定的数据库，还可以从网络上进行实时的搜索</li>
-          <li>在控制台中可以调整模型参数，例如 Temperature 参数越高回答越多样，越低回答越确定</li>
-        </ol>
-      </text-picture-left>
+  <!--快捷键设置窗口-->
+  <div id="keycode_window" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
 
     </div>
   </div>
+
+  <!--历史对话窗口-->
+  <div id="chatHistory_window" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+
+    </div>
+  </div>
+
+  <!--工具包窗口-->
+  <div id="toolPack_window" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+
+    </div>
+  </div>
+
+  <!--智能体设置窗口-->
+  <div id="agent_window" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+      <div id="agent_page"></div>
+    </div>
+  </div>
+
+  <!--提示词设置窗口-->
+  <div id="prompt_window" class="dialog">
+    <div class="dialog-content" style="width: 50%;">
+      <span class="close"></span>
+
+    </div>
+  </div>
+
+  <!--设置窗口-->
+  <div id="settings_window" class="dialog">
+    <div class="dialog-content">
+      <span class="close"></span>
+
+    </div>
+  </div>
+
 
   <!-- dialog 弹窗示例
   <div id="dialog2" class="dialog">

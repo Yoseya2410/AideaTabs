@@ -122,10 +122,13 @@ span {
   filter: invert(41%) sepia(6%) saturate(424%) hue-rotate(174deg) brightness(89%) contrast(87%);
 }
 
+/*
 .top-bar #configItems:hover img {
-  transform: rotate(180deg);
+  transform: rotate(360deg);
   transition: transform 0.5s ease;
 }
+*/
+
 .top-bar #sidebar:hover img {
   transform: scale(1.1);
   transition: opacity 0.3s ease, transform 0.3s ease;

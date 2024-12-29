@@ -85,6 +85,26 @@ function extractPrimaryDomain(url) {
   }
 }
 
+// 读取markdown文件并以HTML显示
+function renderMarkdownFile(id, file) {
+  if (chromeExtension()) {
+    var markdownFile = chrome.runtime.getURL(file);
+  } else {
+    var markdownFile = file;
+  }
+  fetch(markdownFile)
+    .then(response => response.text())
+    .then(markdownText => {
+      const htmlContent = marked.parse(markdownText);
+      document.getElementById(id).innerHTML = htmlContent;
+    })
+    .catch(error => console.error('Error reading the file:', error));
+}
+
+// 将markdown文件内容显示在页面
+renderMarkdownFile('userManual', 'README.md');
+
+
 // Dialog 弹窗
 //dialog1.open() 打开弹窗  dialog1.close()关闭弹窗
 class Dialog {
@@ -145,27 +165,50 @@ class Dialog {
 }
 
 // 注册 Dialog 弹窗
-const dialog1 = new Dialog(document.getElementById("dialog1"));
-//const dialog2 = new Dialog(document.getElementById('dialog2'));
+const guide = new Dialog(document.getElementById("guide"));
+const keycode_window = new Dialog(document.getElementById('keycode_window'));
+const chatHistory_window = new Dialog(document.getElementById('chatHistory_window'));
+const toolPack_window = new Dialog(document.getElementById('toolPack_window'));
+const agent_window = new Dialog(document.getElementById('agent_window'));
+const prompt_window = new Dialog(document.getElementById('prompt_window'));
+const settings_window = new Dialog(document.getElementById('settings_window'));
 
-// 读取markdown文件并以HTML显示
-function importMarkdownFile(id, file) {
-  if (chromeExtension()) {
-    var markdownFile = chrome.runtime.getURL(file);
-  } else {
-    var markdownFile = file;
-  }
-  fetch(markdownFile)
-    .then(response => response.text())
-    .then(markdownText => {
-      const htmlContent = marked.parse(markdownText);
-      document.getElementById(id).innerHTML = htmlContent;
-    })
-    .catch(error => console.error('Error reading the file:', error));
-}
 
-// 将markdown文件内容显示在页面
-importMarkdownFile('userManual', 'README.md');
+// 点击打开弹窗事件
+document.addEventListener('DOMContentLoaded', function () {
+  const setKeycode_button = document.getElementById('setKeycode_button');
+  const setChatHistory_button = document.getElementById('setChatHistory_button');
+  const setToolPack_button = document.getElementById('setToolPack_button');
+  const setAgent_button = document.getElementById('setAgent_button');
+  const setPrompt_button = document.getElementById('setPrompt_button');
+  const settings_button = document.getElementById('settings_button');
+
+  setKeycode_button.addEventListener('click', function () {
+    keycode_window.open()
+  });
+
+  setChatHistory_button.addEventListener('click', function () {
+    chatHistory_window.open()
+  });
+
+  setToolPack_button.addEventListener('click', function () {
+    toolPack_window.open()
+  });
+
+  setAgent_button.addEventListener('click', function () {
+    agent_window.open()
+    renderMarkdownFile("agent_page", "page/md/agent.md")
+  });
+
+  setPrompt_button.addEventListener('click', function () {
+    prompt_window.open()
+  });
+
+  settings_button.addEventListener('click', function () {
+    settings_window.open()
+  });
+
+});
 
 //自定义快捷键(localStorage方法)
 function localStoragecustomkey(key) {
@@ -382,8 +425,21 @@ function exit_AIsearch() {
   }
 }
 
+// 取消样式的方法
+function ConfigItemsButtonStyles(value = true) {
+  const configItems = document.getElementById("configItems");
+  const configItems_img = configItems.querySelector("img");
+  if (value == true) {
+    configItems_img.style.transition = 'transform 0.5s ease';
+    configItems_img.style.transform = 'rotate(180deg)';
+  } else {
+    configItems_img.style.transition = '';
+    configItems_img.style.transform = '';
+  }
+}
 //打开下拉工具栏
 function openConfigItems() {
+  ConfigItemsButtonStyles(true)
   const configItems = document.getElementById("configItems");
   const configItems_img = configItems.querySelector("img");
   document.getElementById("box").style.display = "inline";
@@ -393,7 +449,7 @@ function openConfigItems() {
   document.getElementById("dropdown-menu").style.display = "none";
   sessionStorage.setItem('configItems', 'true');
   configItems_img.style.opacity = 1
-  configItems_img.src = "aidea/img/car-fan_filled.svg"
+  configItems_img.src = "aidea/img/car-fan.svg"
   if (isDarkMode()) {
     configItems_img.style.filter = "invert(25%) sepia(27%) saturate(3587%) hue-rotate(185deg) brightness(88%) contrast(87%)"
     configItems.style.backgroundColor = "#2a2c2d80"
@@ -402,19 +458,18 @@ function openConfigItems() {
     configItems.style.backgroundColor = "#dddddd80"
   }
 }
-
 // 关闭下拉工具栏
 function closeConfigItems() {
+  ConfigItemsButtonStyles(false)
   const configItems = document.getElementById("configItems");
   const configItems_img = configItems.querySelector("img");
   document.getElementById("box").style.display = "none";
   sessionStorage.removeItem('configItems');
   configItems_img.style.filter = ""
-  configItems_img.src = "aidea/img/car-fan.svg"
+  configItems_img.src = "aidea/img/windmill-off.svg"
   configItems_img.style.opacity = ""
   configItems.style.backgroundColor = ""
 }
-
 // configItems 点击事件，打开或关闭下拉工具栏
 document.getElementById("configItems").addEventListener('click', function () {
   if (sessionStorage.getItem('configItems') == "true") {
@@ -423,7 +478,6 @@ document.getElementById("configItems").addEventListener('click', function () {
       chatWindowUnfold()
     }
   } else {
-
     if (sessionStorage.getItem("chatOn") == 'true' && localStorage.getItem("searchMode") == "ai" && document.getElementById("chat_window").style.height != "0px") {
       chatWindowFold()
       setTimeout(function () {
@@ -432,28 +486,15 @@ document.getElementById("configItems").addEventListener('click', function () {
     } else {
       openConfigItems();
     }
-
-  }
-
-});
-
-/* 点击页面其他位置隐藏下拉工具栏
-document.addEventListener('click', function (event) {
-  const box = document.getElementById("box");
-  const configItems = document.getElementById("configItems");
-  const tagShows = document.querySelectorAll(".tag-show");
-  let isInsideTagShow = false;
-  tagShows.forEach(tagShow => {
-    if (tagShow.contains(event.target)) {
-      isInsideTagShow = true;
-    }
-  });
-
-  if (!isInsideTagShow && event.target !== configItems && !configItems.contains(event.target)) {
-    closeConfigItems()
   }
 });
-*/
+
+// 当没有选择智慧搜索模型时下拉工具栏按钮无法点击
+if (localStorage.getItem('modelclass') !== null) {
+  document.getElementById("configItems").style.pointerEvents = '';
+} else {
+  document.getElementById("configItems").style.pointerEvents = 'none';
+}
 
 //搜索逻辑
 function search() {
@@ -500,7 +541,7 @@ function none() {
 if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action === 'showInstructions') {
-      dialog1.open()
+      guide.open()
     }
   });
 }
@@ -1711,7 +1752,7 @@ if (typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined") {
   const manifest = chrome.runtime.getManifest();
   if (version != manifest.version) {
     localStorage.setItem("version", manifest.version);
-    dialog1.open();
+    guide.open();
   }
 }
 
