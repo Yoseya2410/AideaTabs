@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>AideaTabs</title>
+  <link rel="stylesheet" href="module/atom/css/base.css" type="text/css" />
   <link rel="stylesheet" href="aidea/css/aidea.css" type="text/css" />
   <link rel="stylesheet" href="/module/katex/katex.min.css">
   <link rel="stylesheet" href="/module/highlight/aideacode.css">
@@ -197,7 +198,20 @@
   <div id="prompt_window" class="dialog">
     <div class="dialog-content">
       <span class="close"></span>
-
+      <div id="prompt_page"></div>
+      <button class=" atom right"> 示例模板 </button>
+      <h2>角色</h2>
+      <div>
+        <textarea id="prompt_role" class="atom" placeholder="请输入角色身份"></textarea>
+      </div>
+      <h2>任务</h2>
+      <div>
+        <textarea id="prompt_task" class="atom" placeholder="请输入模型的任务" style="height:300px;"></textarea>
+      </div>
+      <h2>限制</h2>
+      <div>
+        <textarea id="prompt_restrict" class="atom" placeholder="请输入限制条件" style="height:200px;"></textarea>
+      </div>
     </div>
   </div>
 
@@ -225,6 +239,7 @@
   <script defer src="module/katex/auto-render.min.js"></script>
   <script src="/module/highlight/highlight.min.js"></script>
   <script src="aidea/js/components.js"></script>
+  <script src="module/ducklib/ducklib.js"></script>
   <script src="aidea/js/aidea.js"></script>
 </body>
 

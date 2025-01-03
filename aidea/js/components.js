@@ -37,7 +37,7 @@ class CustomTip extends HTMLElement {
                 margin: 16px 0;
                 }
                 @media (prefers-color-scheme: dark) {
-                    .custom-block p,a {
+                    .custom-block p,a,li,strong {
                         color:#e1e1db;
                     }
                 }

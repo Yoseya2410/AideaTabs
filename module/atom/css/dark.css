@@ -1,0 +1,92 @@
+/*深色模式 */
+@media (prefers-color-scheme: dark) {
+  html.atom,
+  body.atom{
+    background-color: #1a1a1a;
+  }
+
+  h1.atom,
+  h2.atom,
+  h3.atom,
+  h4.atom,
+  h5.atom,
+  h6.atom {
+    color: #e1e1e1;
+  }
+
+  a.atom {
+    color: #e1e1e1;
+  }
+
+  p.atom {
+    color: #e1e1e1;
+  }
+
+  .code pre.atom {
+    background: #242424;
+    border: 1px solid #242424;
+  }
+
+  button.atom {
+    color: #cccccc;
+    background-color: #242424;
+  }
+
+  .green-b {
+    color: #1a1a1a !important;
+  }
+
+  .blue-b {
+    color: #1a1a1a !important;
+  }
+
+  .yellow-b {
+    color: #1a1a1a !important;
+  }
+
+  .orange-b {
+    color: #1a1a1a !important;
+  }
+
+  .pink-b {
+    color: #1a1a1a !important;
+  }
+
+  .purple-b {
+    color: #e1e1e1 !important;
+  }
+
+  .cyan-b {
+    color: #1a1a1a !important;
+  }
+
+  .red-b {
+    color: #e1e1e1 !important;
+  }
+
+  .ground-glass {
+    background-color: #3b3b3b2e;
+    color: #ffffff75;
+  }
+
+  button.atom:hover {
+    background-color: #26272b;
+    color: #e1e1e1;
+  }
+
+  .dropdown-content {
+    background-color: #242424 !important;
+  }
+
+  .switch-background {
+    background-color: #242424;
+  }
+
+  .slider {
+    border: 0.0625rem solid #323232;
+  }
+
+  .slider:before {
+    background-color: #1a1a1a;
+  }
+}

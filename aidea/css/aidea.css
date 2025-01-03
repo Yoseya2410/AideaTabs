@@ -110,16 +110,18 @@ span {
   width: 24px;
   height: 24px;
   opacity: 0.3;
-  filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg) brightness(82%) contrast(90%);
+  filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg)
+    brightness(82%) contrast(90%);
 }
 
-.top-bar .button:hover{
-  background-color:#dddddd80;
+.top-bar .button:hover {
+  background-color: #dddddd80;
 }
 
 .top-bar .button:hover img {
   opacity: 1;
-  filter: invert(41%) sepia(6%) saturate(424%) hue-rotate(174deg) brightness(89%) contrast(87%);
+  filter: invert(41%) sepia(6%) saturate(424%) hue-rotate(174deg)
+    brightness(89%) contrast(87%);
 }
 
 /*
@@ -134,11 +136,11 @@ span {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.right{
+.right {
   float: right;
 }
 
-.left{
+.left {
   float: left;
 }
 
@@ -334,7 +336,8 @@ span {
   display: inline-block;
   max-width: 70%;
   min-height: 20px;
-  /* 最小高度 */
+
+  overflow: hidden;
 }
 
 .message-bubble.user {
@@ -382,6 +385,11 @@ span {
 .message-bubble > pre::-webkit-scrollbar-thumb {
   background: #78787861;
   border-radius: 10px;
+}
+
+.message-bubble img {
+  max-width: 100%;
+  height: auto;
 }
 
 code {
@@ -485,7 +493,7 @@ h3 {
   box-shadow: 0 1px 6px rgba(32, 33, 36, 0.175);
   border-color: rgba(223, 225, 229, 0);
 }
-.tag-show:hover img{
+.tag-show:hover img {
   transform: scale(1.1);
   transition: transform 0.3s ease;
 }
@@ -672,9 +680,7 @@ h3 {
 /* dialog 弹窗 */
 .dialog {
   visibility: hidden;
-  /* 默认隐藏 */
   opacity: 0;
-  /* 初始透明度为0 */
   position: fixed;
   z-index: 1;
   left: 0;
@@ -683,21 +689,15 @@ h3 {
   height: 100%;
   overflow: auto;
   background: rgba(160, 160, 160, 0.27);
-  /* 半透明黑色背景 */
   backdrop-filter: blur(0px);
-  /* 初始状态无模糊 */
   transition: opacity 0.2s ease-in-out, backdrop-filter 0.5s ease-in-out,
     visibility 0.2s ease-in-out;
-  /* 平滑过渡效果 */
 }
 
 .dialog.show {
   visibility: visible;
-  /* 显示 */
   opacity: 1;
-  /* 不透明 */
   backdrop-filter: blur(10px);
-  /* 显示时的模糊效果 */
 }
 
 .dialog-content {
@@ -707,39 +707,30 @@ h3 {
   border: 0px solid #888;
   max-height: 75%;
   max-width: 80%;
-  /* 最大宽度 */
   border-radius: 12px;
-  /* 圆角 */
   box-shadow: 0 0 3px rgba(56, 56, 56, 0.2);
-  /* 立体感 */
   overflow-y: auto;
 }
 
 /* dialog 弹窗滚动条样式 */
 .dialog-content::-webkit-scrollbar {
   width: 5px;
-  /* 滚动条宽度 */
 }
 
 .dialog-content::-webkit-scrollbar-track {
   background: transparent;
-  /* 滚动条轨道背景色 */
 }
 
 .dialog-content::-webkit-scrollbar-thumb {
   background: rgba(108, 108, 108, 0.2);
-  /* 滚动条拇指背景色 */
   border-radius: 10px;
-  /* 滚动条拇指圆角 */
 }
 
 .dialog-content::-webkit-scrollbar-thumb:hover {
   background: #00000027;
-  /* 滚动条拇指悬停时背景色 */
 }
 
 /* dialog 弹窗元素样式*/
-
 /*公有样式*/
 .dialog-content p,
 code,
@@ -1440,16 +1431,18 @@ th {
     padding: 0.25rem 0 0.25rem 1rem;
   }
 
-/*顶栏控件*/
+  /*顶栏控件*/
   .top-bar .button img {
-    filter: invert(18%) sepia(13%) saturate(247%) hue-rotate(161deg) brightness(91%) contrast(84%);
+    filter: invert(18%) sepia(13%) saturate(247%) hue-rotate(161deg)
+      brightness(91%) contrast(84%);
   }
-  
-  .top-bar .button:hover{
-    background-color:#2a2c2d80;
+
+  .top-bar .button:hover {
+    background-color: #2a2c2d80;
   }
-  
+
   .top-bar .button:hover img {
-    filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg) brightness(82%) contrast(90%);
+    filter: invert(100%) sepia(0%) saturate(7397%) hue-rotate(242deg)
+      brightness(82%) contrast(90%);
   }
 }

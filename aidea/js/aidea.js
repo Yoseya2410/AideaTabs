@@ -1,3 +1,9 @@
+const loader = new importFile();
+
+// 导入CSS文件
+loader.css('module/atom/css/color.css')
+loader.css('module/atom/css/dark.css')
+
 // 页面刷新事件
 window.addEventListener('beforeunload', function () {
   this.sessionStorage.clear() //页面刷新时清除所有sessionStorage记录
@@ -202,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setPrompt_button.addEventListener('click', function () {
     prompt_window.open()
+    renderMarkdownFile("prompt_page", "page/md/prompt.md")
   });
 
   settings_button.addEventListener('click', function () {
@@ -1903,3 +1910,41 @@ if (localStorage.getItem("searchMode") !== "ai") {
   document.getElementById("searchTool_unfold").style.display = "none";
 }
 
+/*提示词文本框内容显示与保存*/
+document.addEventListener("DOMContentLoaded", function () {
+  const prompt_role = document.getElementById("prompt_role");
+  const prompt_task = document.getElementById("prompt_task");
+  const prompt_restrict = document.getElementById("prompt_restrict");
+  const setPromptIdentity = localStorage.getItem("setPromptIdentity");
+  const setPromptWork = localStorage.getItem("setPromptWork");
+  const setPromptTone = localStorage.getItem("setPromptTone");
+
+  prompt_role.value = setPromptIdentity;
+  prompt_task.value = setPromptWork;
+  prompt_restrict.value = setPromptTone;
+
+  // 离开文本框时保存内容
+  prompt_role.addEventListener("blur", function () {
+    if (prompt_role.value.trim() === '') {
+      localStorage.removeItem("setPromptIdentity");
+    } else {
+      localStorage.setItem("setPromptIdentity", prompt_role.value);
+    }
+  });
+
+  prompt_task.addEventListener("blur", function () {
+    if (prompt_task.value.trim() === '') {
+      localStorage.removeItem("setPromptWork");
+    } else {
+      localStorage.setItem("setPromptWork", prompt_task.value);
+    }
+  });
+
+  prompt_restrict.addEventListener("blur", function () {
+    if (prompt_restrict.value.trim() === '') {
+      localStorage.removeItem("setPromptTone");
+    } else {
+      localStorage.setItem("setPromptTone", prompt_restrict.value);
+    }
+  });
+});

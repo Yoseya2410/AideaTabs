@@ -1,0 +1,63 @@
+/* <textarea> */
+textarea.atom {
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  background-color: #f3f4f6;
+  box-shadow: 0 0 2px #46462841;
+  resize: none;
+  outline: none;
+  font-size: 1.3em;
+}
+
+textarea.atom:focus {
+  border: none;
+}
+
+textarea.atom::-webkit-scrollbar {
+  width: 5px;
+}
+
+textarea.atom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea.atom::-webkit-scrollbar-thumb {
+  background: #6c6c6c33;
+  border-radius: 10px;
+}
+
+ textarea.atom::-webkit-scrollbar-thumb:hover {
+  background: #00000027;
+}
+
+@media (prefers-color-scheme: dark) {
+  textarea.atom {
+    background-color: #1e1f20;
+    color: #ffffff;
+  }
+  textarea.atom::-webkit-scrollbar-thumb:hover {
+    background: #ffffffd7;
+  }
+}
+
+/*<button>*/
+button.atom  {
+  font-size: 16px;
+  border: 0 solid;
+  display: inline-block;
+  text-decoration: inherit;
+  color: #263646;
+  background-color: #f1f1f1;
+  padding: 10px 18px;
+  border-radius: 8px;
+  user-select: none;
+}
+
+ button.atom:hover {
+  background-color: #dfdfdf27;
+  box-shadow: 0 0 2px #46462841;
+}

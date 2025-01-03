@@ -1,0 +1,198 @@
+/*背景色*/
+.green-b {
+    background-color: #42b883 !important;
+    color: #ffffff !important;
+  }
+  
+  .blue-b {
+    background-color: #4b8bf5 !important;
+    color: #ffffff !important;
+  }
+  
+  .yellow-b {
+    background-color: #ffce44 !important;
+    color: #505050 !important;
+  }
+  
+  .orange-b {
+    background-color: #e57a21 !important;
+    color: #ffffff !important;
+  }
+  
+  .pink-b {
+    background-color: #fb7299 !important;
+    color: #ffffff !important;
+  }
+  
+  .purple-b {
+    background-color: #894bff !important;
+    color: #ffffff !important;
+  }
+  
+  .cyan-b {
+    background-color: #25c0f8 !important;
+    color: #ffffff !important;
+  }
+  
+  .red-b {
+    background-color: #dd5044 !important;
+    color: #ffffff !important;
+  }
+  
+  .white-b {
+    background-color: #ffffff !important;
+    color: #213547 !important;
+  }
+  
+  .black-b {
+    background-color: #242424 !important;
+    color: #cccccc !important;
+  }
+  
+  button.green-b:hover {
+    background-color: #33a06f !important;
+  }
+  
+  button.blue-b:hover {
+    background-color: #447edb !important;
+  }
+  
+  button.yellow-b:hover {
+    background-color: #dbb13c !important;
+  }
+  
+  button.orange-b:hover {
+    background-color: #d4711f !important;
+  }
+  
+  button.pink-b:hover {
+    background-color: #d66182 !important;
+  }
+  
+  button.purple-b:hover {
+    background-color: #7542d4 !important;
+  }
+  
+  button.cyan-b:hover {
+    background-color: #25b7ec !important;
+  }
+  
+  button.red-b:hover {
+    background-color: #ba473d !important;
+  }
+  
+  button.white-b:hover {
+    background-color: #d6d6d6 !important;
+  }
+  
+  button.black-b:hover {
+    background-color: #383737e0 !important;
+    color: #cccccc !important;
+  }
+  
+  /*颜色*/
+  .green {
+    color: #42b883 !important;
+  }
+  
+  .blue {
+    color: #4b8bf5 !important;
+  }
+  
+  .yellow {
+    color: #ffce44 !important;
+  }
+  
+  .red {
+    color: #dd5044 !important;
+  }
+  
+  .orange {
+    color: #e57a21 !important;
+  }
+  
+  .pink {
+    color: #fb7299 !important;
+  }
+  
+  .purple {
+    color: #894bff !important;
+  }
+  
+  .cyan {
+    color: #25c0f8 !important;
+  }
+  
+  .white {
+    color: #ffffff !important;
+  }
+  
+  .black {
+    color: #242424 !important;
+  }
+  
+  /*开关颜色*/
+  .switch.green .slider:before  {
+    background-color: #42b883;
+  }
+  
+  .switch.blue .slider:before {
+    background-color: #4987ee;
+  }
+  
+  .switch.yellow .slider:before {
+    background-color: #ffce44;
+  }
+  
+  .switch.orange .slider:before {
+    background-color: #e57a21;
+  }
+  
+  .switch.pink .slider:before {
+    background-color: #fb7299;
+  }
+  
+  .switch.red .slider:before {
+    background-color: #dd5044;
+  }
+  
+  .switch.purple .slider:before {
+    background-color: #894bff;
+  }
+  
+  .switch.white .slider:before {
+    background-color: #fff;
+  }
+  
+  .switch-toggle input:checked + .blue-sl:before {
+    background-color: #288cff;
+  }
+  
+  .switch-toggle input:checked + .green-sl:before {
+    background-color: #42b883;
+  }
+  
+  .switch-toggle input:checked + .yellow-sl:before {
+    background-color: #ffce44;
+  }
+  
+  .switch-toggle input:checked + .orange-sl:before {
+    background-color: #e57a21;
+  }
+  
+  .switch-toggle input:checked + .pink-sl:before {
+    background-color: #fb7299;
+  }
+  
+  .switch-toggle input:checked + .red-sl:before {
+    background-color: #dd5044;
+  }
+  
+  .switch-toggle input:checked + .purple-sl:before {
+    background-color: #894bff;
+  }
+  
+  .switch-toggle input:checked + .white-sl:before {
+    background-color: #fff;
+  }
+  
