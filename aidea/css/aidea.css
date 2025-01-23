@@ -59,8 +59,8 @@ img {
 /*图标样式 */
 img.logo {
   width: auto;
-  height: 150px;
-  margin-top: 10%;
+  height: 18.18vh;
+  margin-top: 10vw;
 }
 
 /*翻译搜索栏字体样式 */
@@ -215,12 +215,12 @@ span {
   border-radius: 20px;
   display: table;
   vertical-align: middle;
-  width: 50%;
-  height: 50px;
+  width: 50vw;
+  height: 6.06vh;
   max-width: 100%;
   margin: 0px auto;
-  margin-top: 20px;
-  margin-bottom: 5px;
+  margin-top: 2.42vh;
+  margin-bottom: 0.61vh;
   transition: height 0.3s ease;
 }
 
@@ -650,8 +650,8 @@ h3 {
 .dropdown-item {
   user-select: none;
   display: block;
-  width: 70%;
-  padding: 0.618rem 1.5rem;
+  width: 6.08vw;
+  padding: 1.20vh 1.67vw;
   clear: both;
   font-weight: 520;
   color: #212529;
@@ -1015,13 +1015,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 60%;
+    width: 60vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 12%;
+    margin-top: 12vw;
   }
 
   .dropdown-menu {
@@ -1036,13 +1034,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 62%;
+    width: 62vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 13%;
+    margin-top: 13vw;
   }
 }
 
@@ -1053,13 +1049,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 65%;
+    width: 65vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 14%;
+    margin-top: 14vw;
   }
 
   .dropdown-menu {
@@ -1078,7 +1072,7 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 70%;
+    width: 70vw;
   }
 
   .dropdown-menu {
@@ -1087,9 +1081,7 @@ th {
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 15%;
+    margin-top: 15vw;
   }
 }
 
@@ -1100,13 +1092,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 75%;
+    width: 75vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 16%;
+    margin-top: 16vw;
   }
 
   .dropdown-menu {
@@ -1121,13 +1111,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 80%;
+    width: 80vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 17%;
+    margin-top: 17vw;
   }
 
   .dropdown-menu {
@@ -1142,13 +1130,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 85%;
+    width: 85vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 18%;
+    margin-top: 18vw;
   }
 
   .dropdown-menu {
@@ -1163,13 +1149,11 @@ th {
 
   .search_bar,
   #chat_window {
-    width: 88%;
+    width: 88vw;
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 19%;
+    margin-top: 19vw;
   }
 
   .dropdown-menu {
@@ -1183,9 +1167,7 @@ th {
   }
 
   img.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 20%;
+    margin-top: 20vw;
   }
 
   .contents {
@@ -1197,9 +1179,9 @@ th {
   }
 
   .search_bar {
-    width: 90%;
+    width: 90vw;
     border-radius: 15px;
-    height: 40px;
+    height: 4.85vh;
   }
 
   .url_part {
@@ -1230,9 +1212,8 @@ th {
 
 @media screen and (max-width: 500px) {
   img.logo {
-    width: 110px;
-    height: 110px;
-    margin-top: 35%;
+    height: 13.33vh;
+    margin-top: 35vw;
   }
 }
 
