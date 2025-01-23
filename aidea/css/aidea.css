@@ -60,7 +60,7 @@ img {
 img.logo {
   width: auto;
   height: 18.18vh;
-  margin-top: 10vw;
+  margin-top: 18vh;
 }
 
 /*翻译搜索栏字体样式 */
@@ -651,7 +651,7 @@ h3 {
   user-select: none;
   display: block;
   width: 6.08vw;
-  padding: 1.20vh 1.5rem;
+  padding: 1.2vh 1.5rem;
   clear: both;
   font-weight: 520;
   color: #212529;
@@ -1019,7 +1019,7 @@ th {
   }
 
   img.logo {
-    margin-top: 12vw;
+    margin-top: 20.95vh;
   }
 
   .dropdown-menu {
@@ -1038,7 +1038,7 @@ th {
   }
 
   img.logo {
-    margin-top: 13vw;
+    margin-top: 22.69vh;
   }
 }
 
@@ -1053,7 +1053,7 @@ th {
   }
 
   img.logo {
-    margin-top: 14vw;
+    margin-top: 24.44vh;
   }
 
   .dropdown-menu {
@@ -1081,7 +1081,7 @@ th {
   }
 
   img.logo {
-    margin-top: 15vw;
+    margin-top: 22vh;
   }
 }
 
@@ -1096,7 +1096,7 @@ th {
   }
 
   img.logo {
-    margin-top: 16vw;
+    margin-top: 22vh;
   }
 
   .dropdown-menu {
@@ -1115,7 +1115,7 @@ th {
   }
 
   img.logo {
-    margin-top: 17vw;
+    margin-top: 22vh;
   }
 
   .dropdown-menu {
@@ -1134,7 +1134,7 @@ th {
   }
 
   img.logo {
-    margin-top: 18vw;
+    margin-top: 20vh;
   }
 
   .dropdown-menu {
@@ -1153,7 +1153,7 @@ th {
   }
 
   img.logo {
-    margin-top: 19vw;
+    margin-top: 20vh;
   }
 
   .dropdown-menu {
@@ -1167,7 +1167,7 @@ th {
   }
 
   img.logo {
-    margin-top: 20vw;
+    margin-top: 18vh;
   }
 
   .contents {
@@ -1213,7 +1213,7 @@ th {
 @media screen and (max-width: 500px) {
   img.logo {
     height: 13.33vh;
-    margin-top: 35vw;
+    margin-top: 20vh;
   }
 }
 
