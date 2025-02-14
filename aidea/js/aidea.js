@@ -582,6 +582,8 @@ const apikey0 = localStorage.getItem("apikey0");
 const apikey1 = localStorage.getItem("apikey1");
 const apikey2 = localStorage.getItem("apikey2");
 const apikey3 = localStorage.getItem("apikey3");
+const apikey4 = localStorage.getItem("apikey4");
+const apikey5 = localStorage.getItem("apikey5");
 
 var aidea_search = JSON.parse(localStorage.getItem("set3"));
 var qwen_search = JSON.parse(localStorage.getItem("set4"));
@@ -600,6 +602,12 @@ const Qwen_temperature = parseFloat(
 );
 const OpenAI_temperature = parseFloat(
   localStorage.getItem("SeekBarOpenAI_temperature")
+);
+const DeepSeek_temperature = parseFloat(
+  localStorage.getItem("SeekBarDeepSeek_temperature")
+);
+const BigModel_temperature = parseFloat(
+  localStorage.getItem("SeekBarBigModel_temperature")
 );
 
 // 提示词
@@ -657,7 +665,18 @@ var config = {
       model: "gpt-4o-mini",
       temperature: OpenAI_temperature,
     },
-
+    deepseek: {
+      apiKey: apikey4,
+      url: "https://api.deepseek.com/chat/completions",
+      model: "deepseek-chat",
+      temperature:DeepSeek_temperature,
+    },
+    bigmodel: {
+      apiKey: apikey5,
+      url: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+      model: "glm-4-plus",
+      temperature:BigModel_temperature,
+    },
 
   },
 };
@@ -850,6 +869,8 @@ const apiCallers = {
   Qwen: createApiCaller(config.apis.qwen),
   Moonshot: createApiCaller(config.apis.moonshot),
   OpenAI: createApiCaller(config.apis.openai),
+  DeepSeek: createApiCaller(config.apis.deepseek),
+  BigModel: createApiCaller(config.apis.bigmodel),
 
 };
 

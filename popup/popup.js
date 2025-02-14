@@ -21,6 +21,8 @@ function InitializeModelSetList() {
     const Qwen_Set = document.getElementById("Qwen_Set");
     const Moonshot_Set = document.getElementById("Moonshot_Set");
     const OpenAI_Set = document.getElementById("OpenAI_Set");
+    const DeepSeek_Set = document.getElementById("DeepSeek_Set");
+    const BigModel_Set = document.getElementById("BigModel_Set");
     
     const modelclass = localStorage.getItem("modelclass");
 
@@ -30,6 +32,8 @@ function InitializeModelSetList() {
     Qwen_Set.style.display = "none";
     Moonshot_Set.style.display = "none";
     OpenAI_Set.style.display = "none";
+    DeepSeek_Set.style.display = "none";
+    BigModel_Set.style.display = "none";
    
 
     //再显示当前使用模型的设置列表
@@ -43,6 +47,10 @@ function InitializeModelSetList() {
         Moonshot_Set.style.display = "inline";
     } else if (modelclass == "OpenAI") {
         OpenAI_Set.style.display = "inline";
+    }else if (modelclass == "DeepSeek") {
+        DeepSeek_Set.style.display = "inline";
+    } else if (modelclass == "BigModel") {
+        BigModel_Set.style.display = "inline";
     } else {
     }
 }
@@ -83,6 +91,8 @@ function inputShowAPI() {
     const QwenKey_input = document.getElementById("QwenKey_input");
     const MoonshotKey_input = document.getElementById("MoonshotKey_input");
     const OpenAI_input = document.getElementById("OpenAI_input");
+    const DeepSeek_input = document.getElementById("DeepSeek_input");
+    const BigModel_input = document.getElementById("BigModel_input");
 
     const def_interface = localStorage.getItem("def_interface");
     const def_modelType = localStorage.getItem("def_modelType");
@@ -90,6 +100,8 @@ function inputShowAPI() {
     const apikey1 = localStorage.getItem("apikey1");
     const apikey2 = localStorage.getItem("apikey2");
     const apikey3 = localStorage.getItem("apikey3");
+    const apikey4 = localStorage.getItem("apikey4");
+    const apikey5 = localStorage.getItem("apikey5");
 
     if (def_interface) {
         def_input_url.value = def_interface;
@@ -109,6 +121,12 @@ function inputShowAPI() {
     if (apikey3) {
         OpenAI_input.value = apikey3;
     }
+    if (apikey4) {
+        DeepSeek_input.value = apikey4;
+    }
+    if (apikey5) {
+        BigModel_input.value = apikey5;
+    }
 
 
 }
@@ -121,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const QwenKey_input = document.getElementById("QwenKey_input");
     const MoonshotKey_input = document.getElementById("MoonshotKey_input");
     const OpenAI_input = document.getElementById("OpenAI_input");
+    const DeepSeek_input = document.getElementById("DeepSeek_input");
+    const BigModel_input = document.getElementById("BigModel_input");
 
     /*自定义模型配置*/
     def_input.addEventListener('blur', function () {
@@ -141,6 +161,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     OpenAI_input.addEventListener('blur', function () {
         localStorage.setItem("apikey3", OpenAI_input.value);
+    });
+    DeepSeek_input.addEventListener('blur', function () {
+        localStorage.setItem("apikey4", DeepSeek_input.value);
+    });
+    BigModel_input.addEventListener('blur', function () {
+        localStorage.setItem("apikey5", BigModel_input.value);
     });
 
 

@@ -38,6 +38,8 @@
         <option value="Qwen">Qwen</option>
         <option value="Moonshot">Moonshot</option>
         <option value="OpenAI">GPT-4o</option>
+        <option value="DeepSeek">DeepSeek</option>
+        <option value="BigModel">GLM-4</option>
         <option value="defmodel">自定义模型</option>
       </select>
     </div>
@@ -121,6 +123,44 @@
 
       <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="0.7" text="T"
         title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 2)" data-id="OpenAI_temperature"></seek-bar>
+    </div>
+
+    <!--DeepSeek 配置-->
+    <div id="DeepSeek_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="" />
+          <label for="toggle7"></label>
+          <!--localStorageKey:set7-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
+        <input type="password" id="DeepSeek_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="2" min="0" step="0.1" id="volume1" value="1.0" text="T"
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 2)" data-id="DeepSeek_temperature"></seek-bar>
+    </div>
+
+    <!--BigModel 配置-->
+    <div id="BigModel_Set" class="modelSet">
+      <div class="set-item">
+        <span class="set_text">联网搜索</span>
+        <div class="switch">
+          <input type="checkbox" id="" />
+          <label for="toggle8"></label>
+          <!--localStorageKey:set8-->
+        </div>
+      </div>
+
+      <div class="set-item" id="apikey">
+        <input type="password" id="BigModel_input" name="apikey_input" placeholder="输入API密钥" />
+      </div>
+
+      <seek-bar name="volume" max="1" min="0" step="0.01" id="volume1" value="0.95" text="T"
+        title="Temperature&#10参数越高生成的内容越多样，反之生成的内容更确定&#10取值范围：[0, 1)" data-id="BigModel_temperature"></seek-bar>
     </div>
 
         <!--自定义模型配置-->
